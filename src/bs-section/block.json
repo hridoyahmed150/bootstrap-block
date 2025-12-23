@@ -1,0 +1,41 @@
+{
+  "apiVersion": 2,
+  "name": "bootstrap-blocks/bs-section",
+  "title": "Bootstrap Section",
+  "category": "layout",
+  "icon": "layout",
+  "description": "A Bootstrap section wrapper block that can contain multiple rows.",
+  "supports": {
+    "html": false
+  },
+  "attributes": {
+    "uniqueId": { "type": "string", "default": "" },
+    "className": { "type": "string", "default": "" },
+    "backgroundType": { "type": "string", "default": "none" },
+    "backgroundColor": { "type": "string", "default": "" },
+    "backgroundImage": { "type": "string", "default": "" },
+    "backgroundImageUrl": { "type": "string", "default": "" },
+    "backgroundImageId": { "type": "number", "default": 0 },
+    "backgroundImageSize": { "type": "string", "default": "cover" },
+    "backgroundImagePosition": { "type": "string", "default": "center center" },
+    "backgroundImageRepeat": { "type": "string", "default": "no-repeat" },
+    "gradientType": { "type": "string", "default": "linear" },
+    "gradientDirection": { "type": "string", "default": "to right" },
+    "gradientColor1": { "type": "string", "default": "#000000" },
+    "gradientColor2": { "type": "string", "default": "#ffffff" },
+    "gradientStop1": { "type": "number", "default": 0 },
+    "gradientStop2": { "type": "number", "default": 100 },
+    "overlayType": { "type": "string", "default": "none" },
+    "overlayColor": { "type": "string", "default": "#000000" },
+    "overlayOpacity": { "type": "number", "default": 50 },
+    "default": { "type": "object", "default": { "paddingTop": 70, "paddingRight": 0, "paddingBottom": 70, "paddingLeft": 0, "marginTop": 0, "marginRight": 0, "marginBottom": 0, "marginLeft": 0 } },
+    "sm": { "type": "object", "default": { "paddingTop": 70, "paddingRight": 0, "paddingBottom": 70, "paddingLeft": 0, "marginTop": 0, "marginRight": 0, "marginBottom": 0, "marginLeft": 0 } },
+    "md": { "type": "object", "default": { "paddingTop": 70, "paddingRight": 0, "paddingBottom": 70, "paddingLeft": 0, "marginTop": 0, "marginRight": 0, "marginBottom": 0, "marginLeft": 0 } },
+    "lg": { "type": "object", "default": { "paddingTop": 70, "paddingRight": 0, "paddingBottom": 70, "paddingLeft": 0, "marginTop": 0, "marginRight": 0, "marginBottom": 0, "marginLeft": 0 } },
+    "xl": { "type": "object", "default": { "paddingTop": 70, "paddingRight": 0, "paddingBottom": 70, "paddingLeft": 0, "marginTop": 0, "marginRight": 0, "marginBottom": 0, "marginLeft": 0 } },
+    "xxl": { "type": "object", "default": { "paddingTop": 70, "paddingRight": 0, "paddingBottom": 70, "paddingLeft": 0, "marginTop": 0, "marginRight": 0, "marginBottom": 0, "marginLeft": 0 } }
+  },
+  "editorScript": "file:./index.js",
+  "style": "file:./style.css"
+}
+

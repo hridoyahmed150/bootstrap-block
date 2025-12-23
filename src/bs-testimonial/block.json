@@ -1,0 +1,121 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "bootstrap-blocks/bs-testimonial",
+    "version": "1.0.0",
+    "title": "BS Testimonial",
+    "category": "bootstrap-blocks",
+    "icon": "format-quote",
+    "description": "A simple testimonial block for testing.",
+    "keywords": ["testimonial", "simple"],
+    "textdomain": "bootstrap-blocks",
+    "supports": {
+        "html": false,
+        "align": ["wide", "full"]
+    },
+    "attributes": {
+        "uniqueId": {
+            "type": "string",
+            "default": ""
+        },
+        "testimonials": {
+            "type": "array",
+            "default": [
+                {
+                    "id": "testimonial-1",
+                    "name": "John Doe",
+                    "company": "ABC Company",
+                    "text": "This is a sample testimonial text."
+                }
+            ]
+        },
+        "blockTitle": {
+            "type": "string",
+            "default": "Testimonials"
+        },
+        "slidesToShow": {
+            "type": "number",
+            "default": 3
+        },
+        "autoplay": {
+            "type": "boolean",
+            "default": true
+        },
+        "autoplaySpeed": {
+            "type": "number",
+            "default": 3000
+        },
+        "showArrows": {
+            "type": "boolean",
+            "default": false
+        },
+        "showDots": {
+            "type": "boolean",
+            "default": true
+        },
+        "sliderStyle": {
+            "type": "string",
+            "default": "default"
+        },
+        "responsive": {
+            "type": "object",
+            "default": {
+                "mobile": { "slidesToShow": 1, "slidesToScroll": 1, "minWidth": 600 },
+                "tablet": { "slidesToShow": 2, "slidesToScroll": 1, "minWidth": 768 },
+                "desktop": { "slidesToShow": 3, "slidesToScroll": 1, "minWidth": 1024 }
+            }
+        },
+        "wordLimit": {
+            "type": "number",
+            "default": 20
+        },
+        "showDate": {
+            "type": "boolean",
+            "default": false
+        },
+        "showRating": {
+            "type": "boolean",
+            "default": true
+        },
+        "slideBackground": {
+            "type": "string",
+            "default": "#ffffff"
+        },
+        "titleColor": {
+            "type": "string",
+            "default": "#333333"
+        },
+        "textColor": {
+            "type": "string",
+            "default": "#666666"
+        },
+        "borderColor": {
+            "type": "string",
+            "default": "#e0e0e0"
+        },
+        "borderWidth": {
+            "type": "number",
+            "default": 1
+        },
+        "borderRadius": {
+            "type": "number",
+            "default": 8
+        },
+        "slideGap": {
+            "type": "number",
+            "default": 20
+        },
+        "arrowTheme": {
+            "type": "string",
+            "default": "light"
+        },
+        "dotColor": {
+            "type": "string",
+            "default": "#D0D7E0"
+        },
+        "dotActiveColor": {
+            "type": "string",
+            "default": "#007cba"
+        }
+    }
+}

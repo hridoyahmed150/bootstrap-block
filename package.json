@@ -1,0 +1,38 @@
+{
+  "name": "bootstrap-blocks",
+  "version": "1.0.0",
+  "description": "WordPress plugin providing custom Gutenberg blocks styled with Bootstrap",
+  "main": "index.js",
+  "scripts": {
+    "build": "WP_NO_RTL=true wp-scripts build && npm run clean-rtl",
+    "start": "WP_NO_RTL=true wp-scripts start",
+    "clean-rtl": "find build -name '*-rtl.css' -delete",
+    "format": "wp-scripts format",
+    "lint:css": "wp-scripts lint-style",
+    "lint:js": "wp-scripts lint-js",
+    "lint:md:docs": "wp-scripts lint-md-docs",
+    "lint:pkg-json": "wp-scripts lint-pkg-json",
+    "packages-update": "wp-scripts packages-update",
+    "plugin-zip": "wp-scripts plugin-zip",
+    "test:e2e": "wp-scripts test-e2e",
+    "test:unit": "wp-scripts test-unit-js"
+  },
+  "devDependencies": {
+    "@wordpress/scripts": "^30.19.0"
+  },
+  "dependencies": {
+    "@wordpress/block-editor": "^12.15.0",
+    "@wordpress/blocks": "^12.29.0",
+    "@wordpress/components": "^25.13.0",
+    "@wordpress/element": "^5.29.0",
+    "@wordpress/i18n": "^4.47.0"
+  },
+  "keywords": [
+    "wordpress",
+    "gutenberg",
+    "blocks",
+    "bootstrap"
+  ],
+  "author": "Himel Kazi",
+  "license": "GPL-2.0-or-later"
+}

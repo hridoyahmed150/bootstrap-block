@@ -1,0 +1,2828 @@
+JQMIGRATE: Migrate is installed, version 3.4.1 load-scripts.php:5:981
+InstallTrigger is deprecated and will be removed in the future. utils.min.js:1:42435
+wp.editPost.PluginPostStatusInfo is deprecated since version 6.6. Please use wp.editor.PluginPostStatusInfo instead. deprecated.min.js:2:582
+wp.editPost.PluginSidebarMoreMenuItem is deprecated since version 6.6. Please use wp.editor.PluginSidebarMoreMenuItem instead. deprecated.min.js:2:582
+wp.editPost.PluginSidebar is deprecated since version 6.6. Please use wp.editor.PluginSidebar instead. deprecated.min.js:2:582
+wp.editPost.PluginPrePublishPanel is deprecated since version 6.6. Please use wp.editor.PluginPrePublishPanel instead. deprecated.min.js:2:582
+wp.editPost.PluginPostPublishPanel is deprecated since version 6.6. Please use wp.editor.PluginPostPublishPanel instead. deprecated.min.js:2:582
+wp.editPost.PluginDocumentSettingPanel is deprecated since version 6.6. Please use wp.editor.PluginDocumentSettingPanel instead. deprecated.min.js:2:582
+wp.editPost.PluginBlockSettingsMenuItem is deprecated since version 6.6. Please use wp.editor.PluginBlockSettingsMenuItem instead. deprecated.min.js:2:582
+MouseEvent.mozPressure is deprecated. Use PointerEvent.pressure instead. wp-tinymce.js:3:8857
+MouseEvent.mozInputSource is deprecated. Use PointerEvent.pointerType instead. wp-tinymce.js:3:8857
+generateSlickConfig called with: 
+Object { slidesToShow: 3, autoplay: true, autoplaySpeed: 3000, showArrows: false, showDots: true, responsive: '{\n  "mobile": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 600\n  },\n  "tablet": {\n    "slidesToShow": 2,\n    "slidesToScroll": 1,\n    "minWidth": 768\n  },\n  "desktop": {\n    "slidesToShow": 3,\n    "slidesToScroll": 1,\n    "minWidth": 1024\n  }\n}', responsiveType: "object", responsiveKeys: (3) […] }
+index.js:1:3275
+finalResponsive: {
+  "mobile": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 600
+  },
+  "tablet": {
+    "slidesToShow": 2,
+    "slidesToScroll": 1,
+    "minWidth": 768
+  },
+  "desktop": {
+    "slidesToShow": 3,
+    "slidesToScroll": 1,
+    "minWidth": 1024
+  }
+} index.js:1:3654
+Final Slick Config: {
+  "slidesToShow": 3,
+  "slidesToScroll": 1,
+  "fade": false,
+  "dots": true,
+  "autoplay": true,
+  "autoplaySpeed": 3000,
+  "arrows": false,
+  "infinite": true,
+  "responsive": [
+    {
+      "breakpoint": 1024,
+      "settings": {
+        "slidesToShow": 3,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 768,
+      "settings": {
+        "slidesToShow": 2,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 600,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    }
+  ]
+} index.js:1:4306
+generateSlickConfig called with: 
+Object { slidesToShow: 3, autoplay: true, autoplaySpeed: 3000, showArrows: false, showDots: true, responsive: '{\n  "mobile": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 600\n  },\n  "tablet": {\n    "slidesToShow": 2,\n    "slidesToScroll": 1,\n    "minWidth": 768\n  },\n  "desktop": {\n    "slidesToShow": 3,\n    "slidesToScroll": 1,\n    "minWidth": 1024\n  }\n}', responsiveType: "object", responsiveKeys: (3) […] }
+index.js:1:3275
+finalResponsive: {
+  "mobile": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 600
+  },
+  "tablet": {
+    "slidesToShow": 2,
+    "slidesToScroll": 1,
+    "minWidth": 768
+  },
+  "desktop": {
+    "slidesToShow": 3,
+    "slidesToScroll": 1,
+    "minWidth": 1024
+  }
+} index.js:1:3654
+Final Slick Config: {
+  "slidesToShow": 3,
+  "slidesToScroll": 1,
+  "fade": false,
+  "dots": true,
+  "autoplay": true,
+  "autoplaySpeed": 3000,
+  "arrows": false,
+  "infinite": true,
+  "responsive": [
+    {
+      "breakpoint": 1024,
+      "settings": {
+        "slidesToShow": 3,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 768,
+      "settings": {
+        "slidesToShow": 2,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 600,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    }
+  ]
+} index.js:1:4306
+generateSlickConfig called with: 
+Object { slidesToShow: 3, autoplay: true, autoplaySpeed: 3000, showArrows: false, showDots: true, responsive: '{\n  "mobile": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 600\n  },\n  "tablet": {\n    "slidesToShow": 2,\n    "slidesToScroll": 1,\n    "minWidth": 768\n  },\n  "desktop": {\n    "slidesToShow": 3,\n    "slidesToScroll": 1,\n    "minWidth": 1024\n  }\n}', responsiveType: "object", responsiveKeys: (3) […] }
+index.js:1:3275
+finalResponsive: {
+  "mobile": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 600
+  },
+  "tablet": {
+    "slidesToShow": 2,
+    "slidesToScroll": 1,
+    "minWidth": 768
+  },
+  "desktop": {
+    "slidesToShow": 3,
+    "slidesToScroll": 1,
+    "minWidth": 1024
+  }
+} index.js:1:3654
+Final Slick Config: {
+  "slidesToShow": 3,
+  "slidesToScroll": 1,
+  "fade": false,
+  "dots": true,
+  "autoplay": true,
+  "autoplaySpeed": 3000,
+  "arrows": false,
+  "infinite": true,
+  "responsive": [
+    {
+      "breakpoint": 1024,
+      "settings": {
+        "slidesToShow": 3,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 768,
+      "settings": {
+        "slidesToShow": 2,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 600,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    }
+  ]
+} index.js:1:4306
+36px default size for wp.components.TextControl is deprecated since version 6.8 and will be removed in version 7.1. Note: Set the `__next40pxDefaultSize` prop to true to start opting into the new default size, which will become the default in a future version. deprecated.min.js:2:582
+Bottom margin styles for wp.components.TextControl is deprecated since version 6.7 and will be removed in version 7.0. Note: Set the `__nextHasNoMarginBottom` prop to true to start opting into the new styles, which will become the default in a future version. deprecated.min.js:2:582
+Bottom margin styles for wp.components.TextareaControl is deprecated since version 6.7 and will be removed in version 7.0. Note: Set the `__nextHasNoMarginBottom` prop to true to start opting into the new styles, which will become the default in a future version. deprecated.min.js:2:582
+generateSlickConfig called with: 
+Object { slidesToShow: 3, autoplay: true, autoplaySpeed: 3000, showArrows: false, showDots: true, responsive: '{\n  "mobile": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 600\n  },\n  "tablet": {\n    "slidesToShow": 2,\n    "slidesToScroll": 1,\n    "minWidth": 768\n  },\n  "desktop": {\n    "slidesToShow": 3,\n    "slidesToScroll": 1,\n    "minWidth": 1024\n  }\n}', responsiveType: "object", responsiveKeys: (3) […] }
+index.js:1:3275
+finalResponsive: {
+  "mobile": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 600
+  },
+  "tablet": {
+    "slidesToShow": 2,
+    "slidesToScroll": 1,
+    "minWidth": 768
+  },
+  "desktop": {
+    "slidesToShow": 3,
+    "slidesToScroll": 1,
+    "minWidth": 1024
+  }
+} index.js:1:3654
+Final Slick Config: {
+  "slidesToShow": 3,
+  "slidesToScroll": 1,
+  "fade": false,
+  "dots": true,
+  "autoplay": true,
+  "autoplaySpeed": 3000,
+  "arrows": false,
+  "infinite": true,
+  "responsive": [
+    {
+      "breakpoint": 1024,
+      "settings": {
+        "slidesToShow": 3,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 768,
+      "settings": {
+        "slidesToShow": 2,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 600,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    }
+  ]
+} index.js:1:4306
+generateSlickConfig called with: 
+Object { slidesToShow: 3, autoplay: true, autoplaySpeed: 3000, showArrows: false, showDots: true, responsive: '{\n  "mobile": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 600\n  },\n  "tablet": {\n    "slidesToShow": 2,\n    "slidesToScroll": 1,\n    "minWidth": 768\n  },\n  "desktop": {\n    "slidesToShow": 3,\n    "slidesToScroll": 1,\n    "minWidth": 1024\n  }\n}', responsiveType: "object", responsiveKeys: (3) […] }
+index.js:1:3275
+finalResponsive: {
+  "mobile": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 600
+  },
+  "tablet": {
+    "slidesToShow": 2,
+    "slidesToScroll": 1,
+    "minWidth": 768
+  },
+  "desktop": {
+    "slidesToShow": 3,
+    "slidesToScroll": 1,
+    "minWidth": 1024
+  }
+} index.js:1:3654
+Final Slick Config: {
+  "slidesToShow": 3,
+  "slidesToScroll": 1,
+  "fade": false,
+  "dots": true,
+  "autoplay": true,
+  "autoplaySpeed": 3000,
+  "arrows": false,
+  "infinite": true,
+  "responsive": [
+    {
+      "breakpoint": 1024,
+      "settings": {
+        "slidesToShow": 3,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 768,
+      "settings": {
+        "slidesToShow": 2,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 600,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    }
+  ]
+} index.js:1:4306
+generateSlickConfig called with: 
+Object { slidesToShow: 3, autoplay: true, autoplaySpeed: 3000, showArrows: false, showDots: true, responsive: '{\n  "mobile": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 600\n  },\n  "tablet": {\n    "slidesToShow": 2,\n    "slidesToScroll": 1,\n    "minWidth": 768\n  },\n  "desktop": {\n    "slidesToShow": 3,\n    "slidesToScroll": 1,\n    "minWidth": 1024\n  }\n}', responsiveType: "object", responsiveKeys: (3) […] }
+index.js:1:3275
+finalResponsive: {
+  "mobile": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 600
+  },
+  "tablet": {
+    "slidesToShow": 2,
+    "slidesToScroll": 1,
+    "minWidth": 768
+  },
+  "desktop": {
+    "slidesToShow": 3,
+    "slidesToScroll": 1,
+    "minWidth": 1024
+  }
+} index.js:1:3654
+Final Slick Config: {
+  "slidesToShow": 3,
+  "slidesToScroll": 1,
+  "fade": false,
+  "dots": true,
+  "autoplay": true,
+  "autoplaySpeed": 3000,
+  "arrows": false,
+  "infinite": true,
+  "responsive": [
+    {
+      "breakpoint": 1024,
+      "settings": {
+        "slidesToShow": 3,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 768,
+      "settings": {
+        "slidesToShow": 2,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 600,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    }
+  ]
+} index.js:1:4306
+generateSlickConfig called with: 
+Object { slidesToShow: 3, autoplay: true, autoplaySpeed: 3000, showArrows: false, showDots: true, responsive: '{\n  "mobile": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 600\n  },\n  "tablet": {\n    "slidesToShow": 2,\n    "slidesToScroll": 1,\n    "minWidth": 768\n  },\n  "desktop": {\n    "slidesToShow": 3,\n    "slidesToScroll": 1,\n    "minWidth": 1024\n  }\n}', responsiveType: "object", responsiveKeys: (3) […] }
+index.js:1:3275
+finalResponsive: {
+  "mobile": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 600
+  },
+  "tablet": {
+    "slidesToShow": 2,
+    "slidesToScroll": 1,
+    "minWidth": 768
+  },
+  "desktop": {
+    "slidesToShow": 3,
+    "slidesToScroll": 1,
+    "minWidth": 1024
+  }
+} index.js:1:3654
+Final Slick Config: {
+  "slidesToShow": 3,
+  "slidesToScroll": 1,
+  "fade": false,
+  "dots": true,
+  "autoplay": true,
+  "autoplaySpeed": 3000,
+  "arrows": false,
+  "infinite": true,
+  "responsive": [
+    {
+      "breakpoint": 1024,
+      "settings": {
+        "slidesToShow": 3,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 768,
+      "settings": {
+        "slidesToShow": 2,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 600,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    }
+  ]
+} index.js:1:4306
+generateSlickConfig called with: 
+Object { slidesToShow: 3, autoplay: true, autoplaySpeed: 3000, showArrows: false, showDots: true, responsive: '{\n  "mobile": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 600\n  },\n  "tablet": {\n    "slidesToShow": 2,\n    "slidesToScroll": 1,\n    "minWidth": 768\n  },\n  "desktop": {\n    "slidesToShow": 3,\n    "slidesToScroll": 1,\n    "minWidth": 1024\n  }\n}', responsiveType: "object", responsiveKeys: (3) […] }
+index.js:1:3275
+finalResponsive: {
+  "mobile": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 600
+  },
+  "tablet": {
+    "slidesToShow": 2,
+    "slidesToScroll": 1,
+    "minWidth": 768
+  },
+  "desktop": {
+    "slidesToShow": 3,
+    "slidesToScroll": 1,
+    "minWidth": 1024
+  }
+} index.js:1:3654
+Final Slick Config: {
+  "slidesToShow": 3,
+  "slidesToScroll": 1,
+  "fade": false,
+  "dots": true,
+  "autoplay": true,
+  "autoplaySpeed": 3000,
+  "arrows": false,
+  "infinite": true,
+  "responsive": [
+    {
+      "breakpoint": 1024,
+      "settings": {
+        "slidesToShow": 3,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 768,
+      "settings": {
+        "slidesToShow": 2,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 600,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    }
+  ]
+} index.js:1:4306
+generateSlickConfig called with: 
+Object { slidesToShow: 3, autoplay: true, autoplaySpeed: 3000, showArrows: false, showDots: true, responsive: '{\n  "mobile": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 600\n  },\n  "tablet": {\n    "slidesToShow": 2,\n    "slidesToScroll": 1,\n    "minWidth": 768\n  },\n  "desktop": {\n    "slidesToShow": 3,\n    "slidesToScroll": 1,\n    "minWidth": 1024\n  }\n}', responsiveType: "object", responsiveKeys: (3) […] }
+index.js:1:3275
+finalResponsive: {
+  "mobile": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 600
+  },
+  "tablet": {
+    "slidesToShow": 2,
+    "slidesToScroll": 1,
+    "minWidth": 768
+  },
+  "desktop": {
+    "slidesToShow": 3,
+    "slidesToScroll": 1,
+    "minWidth": 1024
+  }
+} index.js:1:3654
+Final Slick Config: {
+  "slidesToShow": 3,
+  "slidesToScroll": 1,
+  "fade": false,
+  "dots": true,
+  "autoplay": true,
+  "autoplaySpeed": 3000,
+  "arrows": false,
+  "infinite": true,
+  "responsive": [
+    {
+      "breakpoint": 1024,
+      "settings": {
+        "slidesToShow": 3,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 768,
+      "settings": {
+        "slidesToShow": 2,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 600,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    }
+  ]
+} index.js:1:4306
+generateSlickConfig called with: 
+Object { slidesToShow: 3, autoplay: true, autoplaySpeed: 3000, showArrows: false, showDots: true, responsive: '{\n  "mobile": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 600\n  },\n  "tablet": {\n    "slidesToShow": 2,\n    "slidesToScroll": 1,\n    "minWidth": 768\n  },\n  "desktop": {\n    "slidesToShow": 3,\n    "slidesToScroll": 1,\n    "minWidth": 1024\n  }\n}', responsiveType: "object", responsiveKeys: (3) […] }
+index.js:1:3275
+finalResponsive: {
+  "mobile": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 600
+  },
+  "tablet": {
+    "slidesToShow": 2,
+    "slidesToScroll": 1,
+    "minWidth": 768
+  },
+  "desktop": {
+    "slidesToShow": 3,
+    "slidesToScroll": 1,
+    "minWidth": 1024
+  }
+} index.js:1:3654
+Final Slick Config: {
+  "slidesToShow": 3,
+  "slidesToScroll": 1,
+  "fade": false,
+  "dots": true,
+  "autoplay": true,
+  "autoplaySpeed": 3000,
+  "arrows": false,
+  "infinite": true,
+  "responsive": [
+    {
+      "breakpoint": 1024,
+      "settings": {
+        "slidesToShow": 3,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 768,
+      "settings": {
+        "slidesToShow": 2,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 600,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    }
+  ]
+} index.js:1:4306
+generateSlickConfig called with: 
+Object { slidesToShow: 3, autoplay: true, autoplaySpeed: 3000, showArrows: false, showDots: true, responsive: '{\n  "mobile": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 600\n  },\n  "tablet": {\n    "slidesToShow": 2,\n    "slidesToScroll": 1,\n    "minWidth": 768\n  },\n  "desktop": {\n    "slidesToShow": 3,\n    "slidesToScroll": 1,\n    "minWidth": 1024\n  }\n}', responsiveType: "object", responsiveKeys: (3) […] }
+index.js:1:3275
+finalResponsive: {
+  "mobile": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 600
+  },
+  "tablet": {
+    "slidesToShow": 2,
+    "slidesToScroll": 1,
+    "minWidth": 768
+  },
+  "desktop": {
+    "slidesToShow": 3,
+    "slidesToScroll": 1,
+    "minWidth": 1024
+  }
+} index.js:1:3654
+Final Slick Config: {
+  "slidesToShow": 3,
+  "slidesToScroll": 1,
+  "fade": false,
+  "dots": true,
+  "autoplay": true,
+  "autoplaySpeed": 3000,
+  "arrows": false,
+  "infinite": true,
+  "responsive": [
+    {
+      "breakpoint": 1024,
+      "settings": {
+        "slidesToShow": 3,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 768,
+      "settings": {
+        "slidesToShow": 2,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 600,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    }
+  ]
+} index.js:1:4306
+generateSlickConfig called with: 
+Object { slidesToShow: 3, autoplay: true, autoplaySpeed: 3000, showArrows: false, showDots: true, responsive: '{\n  "mobile": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 600\n  },\n  "tablet": {\n    "slidesToShow": 2,\n    "slidesToScroll": 1,\n    "minWidth": 768\n  },\n  "desktop": {\n    "slidesToShow": 3,\n    "slidesToScroll": 1,\n    "minWidth": 1024\n  }\n}', responsiveType: "object", responsiveKeys: (3) […] }
+index.js:1:3275
+finalResponsive: {
+  "mobile": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 600
+  },
+  "tablet": {
+    "slidesToShow": 2,
+    "slidesToScroll": 1,
+    "minWidth": 768
+  },
+  "desktop": {
+    "slidesToShow": 3,
+    "slidesToScroll": 1,
+    "minWidth": 1024
+  }
+} index.js:1:3654
+Final Slick Config: {
+  "slidesToShow": 3,
+  "slidesToScroll": 1,
+  "fade": false,
+  "dots": true,
+  "autoplay": true,
+  "autoplaySpeed": 3000,
+  "arrows": false,
+  "infinite": true,
+  "responsive": [
+    {
+      "breakpoint": 1024,
+      "settings": {
+        "slidesToShow": 3,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 768,
+      "settings": {
+        "slidesToShow": 2,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 600,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    }
+  ]
+} index.js:1:4306
+generateSlickConfig called with: 
+Object { slidesToShow: 3, autoplay: true, autoplaySpeed: 3000, showArrows: false, showDots: true, responsive: '{\n  "mobile": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 600\n  },\n  "tablet": {\n    "slidesToShow": 2,\n    "slidesToScroll": 1,\n    "minWidth": 768\n  },\n  "desktop": {\n    "slidesToShow": 3,\n    "slidesToScroll": 1,\n    "minWidth": 1024\n  }\n}', responsiveType: "object", responsiveKeys: (3) […] }
+index.js:1:3275
+finalResponsive: {
+  "mobile": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 600
+  },
+  "tablet": {
+    "slidesToShow": 2,
+    "slidesToScroll": 1,
+    "minWidth": 768
+  },
+  "desktop": {
+    "slidesToShow": 3,
+    "slidesToScroll": 1,
+    "minWidth": 1024
+  }
+} index.js:1:3654
+Final Slick Config: {
+  "slidesToShow": 3,
+  "slidesToScroll": 1,
+  "fade": false,
+  "dots": true,
+  "autoplay": true,
+  "autoplaySpeed": 3000,
+  "arrows": false,
+  "infinite": true,
+  "responsive": [
+    {
+      "breakpoint": 1024,
+      "settings": {
+        "slidesToShow": 3,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 768,
+      "settings": {
+        "slidesToShow": 2,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 600,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    }
+  ]
+} index.js:1:4306
+generateSlickConfig called with: 
+Object { slidesToShow: 3, autoplay: true, autoplaySpeed: 3000, showArrows: false, showDots: true, responsive: '{\n  "mobile": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 600\n  },\n  "tablet": {\n    "slidesToShow": 2,\n    "slidesToScroll": 1,\n    "minWidth": 768\n  },\n  "desktop": {\n    "slidesToShow": 3,\n    "slidesToScroll": 1,\n    "minWidth": 1024\n  }\n}', responsiveType: "object", responsiveKeys: (3) […] }
+index.js:1:3275
+finalResponsive: {
+  "mobile": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 600
+  },
+  "tablet": {
+    "slidesToShow": 2,
+    "slidesToScroll": 1,
+    "minWidth": 768
+  },
+  "desktop": {
+    "slidesToShow": 3,
+    "slidesToScroll": 1,
+    "minWidth": 1024
+  }
+} index.js:1:3654
+Final Slick Config: {
+  "slidesToShow": 3,
+  "slidesToScroll": 1,
+  "fade": false,
+  "dots": true,
+  "autoplay": true,
+  "autoplaySpeed": 3000,
+  "arrows": false,
+  "infinite": true,
+  "responsive": [
+    {
+      "breakpoint": 1024,
+      "settings": {
+        "slidesToShow": 3,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 768,
+      "settings": {
+        "slidesToShow": 2,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 600,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    }
+  ]
+} index.js:1:4306
+generateSlickConfig called with: 
+Object { slidesToShow: 3, autoplay: true, autoplaySpeed: 3000, showArrows: false, showDots: true, responsive: '{\n  "mobile": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 600\n  },\n  "tablet": {\n    "slidesToShow": 2,\n    "slidesToScroll": 1,\n    "minWidth": 768\n  },\n  "desktop": {\n    "slidesToShow": 3,\n    "slidesToScroll": 1,\n    "minWidth": 1024\n  }\n}', responsiveType: "object", responsiveKeys: (3) […] }
+index.js:1:3275
+finalResponsive: {
+  "mobile": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 600
+  },
+  "tablet": {
+    "slidesToShow": 2,
+    "slidesToScroll": 1,
+    "minWidth": 768
+  },
+  "desktop": {
+    "slidesToShow": 3,
+    "slidesToScroll": 1,
+    "minWidth": 1024
+  }
+} index.js:1:3654
+Final Slick Config: {
+  "slidesToShow": 3,
+  "slidesToScroll": 1,
+  "fade": false,
+  "dots": true,
+  "autoplay": true,
+  "autoplaySpeed": 3000,
+  "arrows": false,
+  "infinite": true,
+  "responsive": [
+    {
+      "breakpoint": 1024,
+      "settings": {
+        "slidesToShow": 3,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 768,
+      "settings": {
+        "slidesToShow": 2,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 600,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    }
+  ]
+} index.js:1:4306
+generateSlickConfig called with: 
+Object { slidesToShow: 3, autoplay: true, autoplaySpeed: 3000, showArrows: false, showDots: true, responsive: '{\n  "mobile": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 600\n  },\n  "tablet": {\n    "slidesToShow": 2,\n    "slidesToScroll": 1,\n    "minWidth": 768\n  },\n  "desktop": {\n    "slidesToShow": 3,\n    "slidesToScroll": 1,\n    "minWidth": 1024\n  }\n}', responsiveType: "object", responsiveKeys: (3) […] }
+index.js:1:3275
+finalResponsive: {
+  "mobile": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 600
+  },
+  "tablet": {
+    "slidesToShow": 2,
+    "slidesToScroll": 1,
+    "minWidth": 768
+  },
+  "desktop": {
+    "slidesToShow": 3,
+    "slidesToScroll": 1,
+    "minWidth": 1024
+  }
+} index.js:1:3654
+Final Slick Config: {
+  "slidesToShow": 3,
+  "slidesToScroll": 1,
+  "fade": false,
+  "dots": true,
+  "autoplay": true,
+  "autoplaySpeed": 3000,
+  "arrows": false,
+  "infinite": true,
+  "responsive": [
+    {
+      "breakpoint": 1024,
+      "settings": {
+        "slidesToShow": 3,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 768,
+      "settings": {
+        "slidesToShow": 2,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 600,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    }
+  ]
+} index.js:1:4306
+generateSlickConfig called with: 
+Object { slidesToShow: 3, autoplay: true, autoplaySpeed: 3000, showArrows: false, showDots: true, responsive: '{\n  "mobile": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 600\n  },\n  "tablet": {\n    "slidesToShow": 2,\n    "slidesToScroll": 1,\n    "minWidth": 768\n  },\n  "desktop": {\n    "slidesToShow": 3,\n    "slidesToScroll": 1,\n    "minWidth": 1024\n  }\n}', responsiveType: "object", responsiveKeys: (3) […] }
+index.js:1:3275
+finalResponsive: {
+  "mobile": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 600
+  },
+  "tablet": {
+    "slidesToShow": 2,
+    "slidesToScroll": 1,
+    "minWidth": 768
+  },
+  "desktop": {
+    "slidesToShow": 3,
+    "slidesToScroll": 1,
+    "minWidth": 1024
+  }
+} index.js:1:3654
+Final Slick Config: {
+  "slidesToShow": 3,
+  "slidesToScroll": 1,
+  "fade": false,
+  "dots": true,
+  "autoplay": true,
+  "autoplaySpeed": 3000,
+  "arrows": false,
+  "infinite": true,
+  "responsive": [
+    {
+      "breakpoint": 1024,
+      "settings": {
+        "slidesToShow": 3,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 768,
+      "settings": {
+        "slidesToShow": 2,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 600,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    }
+  ]
+} index.js:1:4306
+36px default size for wp.components.RangeControl is deprecated since version 6.8 and will be removed in version 7.1. Note: Set the `__next40pxDefaultSize` prop to true to start opting into the new default size, which will become the default in a future version. deprecated.min.js:2:582
+Bottom margin styles for wp.components.RangeControl is deprecated since version 6.7 and will be removed in version 7.0. Note: Set the `__nextHasNoMarginBottom` prop to true to start opting into the new styles, which will become the default in a future version. deprecated.min.js:2:582
+Bottom margin styles for wp.components.ToggleControl is deprecated since version 6.7 and will be removed in version 7.0. Note: Set the `__nextHasNoMarginBottom` prop to true to start opting into the new styles, which will become the default in a future version. deprecated.min.js:2:582
+36px default size for wp.components.SelectControl is deprecated since version 6.8 and will be removed in version 7.1. Note: Set the `__next40pxDefaultSize` prop to true to start opting into the new default size, which will become the default in a future version. deprecated.min.js:2:582
+Bottom margin styles for wp.components.SelectControl is deprecated since version 6.7 and will be removed in version 7.0. Note: Set the `__nextHasNoMarginBottom` prop to true to start opting into the new styles, which will become the default in a future version. deprecated.min.js:2:582
+generateSlickConfig called with: 
+Object { slidesToShow: 3, autoplay: true, autoplaySpeed: 3000, showArrows: false, showDots: true, responsive: '{\n  "mobile": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 600\n  },\n  "tablet": {\n    "slidesToShow": 2,\n    "slidesToScroll": 1,\n    "minWidth": 768\n  },\n  "desktop": {\n    "slidesToShow": 3,\n    "slidesToScroll": 1,\n    "minWidth": 1024\n  }\n}', responsiveType: "object", responsiveKeys: (3) […] }
+index.js:1:3275
+finalResponsive: {
+  "mobile": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 600
+  },
+  "tablet": {
+    "slidesToShow": 2,
+    "slidesToScroll": 1,
+    "minWidth": 768
+  },
+  "desktop": {
+    "slidesToShow": 3,
+    "slidesToScroll": 1,
+    "minWidth": 1024
+  }
+} index.js:1:3654
+Final Slick Config: {
+  "slidesToShow": 3,
+  "slidesToScroll": 1,
+  "fade": false,
+  "dots": true,
+  "autoplay": true,
+  "autoplaySpeed": 3000,
+  "arrows": false,
+  "infinite": true,
+  "responsive": [
+    {
+      "breakpoint": 1024,
+      "settings": {
+        "slidesToShow": 3,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 768,
+      "settings": {
+        "slidesToShow": 2,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 600,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    }
+  ]
+} index.js:1:4306
+generateSlickConfig called with: 
+Object { slidesToShow: 3, autoplay: true, autoplaySpeed: 3000, showArrows: false, showDots: true, responsive: '{\n  "mobile": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 600\n  },\n  "tablet": {\n    "slidesToShow": 2,\n    "slidesToScroll": 1,\n    "minWidth": 768\n  },\n  "desktop": {\n    "slidesToShow": 3,\n    "slidesToScroll": 1,\n    "minWidth": 1024\n  }\n}', responsiveType: "object", responsiveKeys: (3) […] }
+index.js:1:3275
+finalResponsive: {
+  "mobile": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 600
+  },
+  "tablet": {
+    "slidesToShow": 2,
+    "slidesToScroll": 1,
+    "minWidth": 768
+  },
+  "desktop": {
+    "slidesToShow": 3,
+    "slidesToScroll": 1,
+    "minWidth": 1024
+  }
+} index.js:1:3654
+Final Slick Config: {
+  "slidesToShow": 3,
+  "slidesToScroll": 1,
+  "fade": false,
+  "dots": true,
+  "autoplay": true,
+  "autoplaySpeed": 3000,
+  "arrows": false,
+  "infinite": true,
+  "responsive": [
+    {
+      "breakpoint": 1024,
+      "settings": {
+        "slidesToShow": 3,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 768,
+      "settings": {
+        "slidesToShow": 2,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 600,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    }
+  ]
+} index.js:1:4306
+generateSlickConfig called with: 
+Object { slidesToShow: 3, autoplay: true, autoplaySpeed: 3000, showArrows: false, showDots: true, responsive: '{\n  "mobile": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 600\n  },\n  "tablet": {\n    "slidesToShow": 2,\n    "slidesToScroll": 1,\n    "minWidth": 768\n  },\n  "desktop": {\n    "slidesToShow": 3,\n    "slidesToScroll": 1,\n    "minWidth": 1024\n  }\n}', responsiveType: "object", responsiveKeys: (3) […] }
+index.js:1:3275
+finalResponsive: {
+  "mobile": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 600
+  },
+  "tablet": {
+    "slidesToShow": 2,
+    "slidesToScroll": 1,
+    "minWidth": 768
+  },
+  "desktop": {
+    "slidesToShow": 3,
+    "slidesToScroll": 1,
+    "minWidth": 1024
+  }
+} index.js:1:3654
+Final Slick Config: {
+  "slidesToShow": 3,
+  "slidesToScroll": 1,
+  "fade": false,
+  "dots": true,
+  "autoplay": true,
+  "autoplaySpeed": 3000,
+  "arrows": false,
+  "infinite": true,
+  "responsive": [
+    {
+      "breakpoint": 1024,
+      "settings": {
+        "slidesToShow": 3,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 768,
+      "settings": {
+        "slidesToShow": 2,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 600,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    }
+  ]
+} index.js:1:4306
+generateSlickConfig called with: 
+Object { slidesToShow: 3, autoplay: true, autoplaySpeed: 3000, showArrows: false, showDots: true, responsive: '{\n  "mobile": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 600\n  },\n  "tablet": {\n    "slidesToShow": 2,\n    "slidesToScroll": 1,\n    "minWidth": 768\n  },\n  "desktop": {\n    "slidesToShow": 3,\n    "slidesToScroll": 1,\n    "minWidth": 1024\n  }\n}', responsiveType: "object", responsiveKeys: (3) […] }
+index.js:1:3275
+finalResponsive: {
+  "mobile": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 600
+  },
+  "tablet": {
+    "slidesToShow": 2,
+    "slidesToScroll": 1,
+    "minWidth": 768
+  },
+  "desktop": {
+    "slidesToShow": 3,
+    "slidesToScroll": 1,
+    "minWidth": 1024
+  }
+} index.js:1:3654
+Final Slick Config: {
+  "slidesToShow": 3,
+  "slidesToScroll": 1,
+  "fade": false,
+  "dots": true,
+  "autoplay": true,
+  "autoplaySpeed": 3000,
+  "arrows": false,
+  "infinite": true,
+  "responsive": [
+    {
+      "breakpoint": 1024,
+      "settings": {
+        "slidesToShow": 3,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 768,
+      "settings": {
+        "slidesToShow": 2,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 600,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    }
+  ]
+} index.js:1:4306
+generateSlickConfig called with: 
+Object { slidesToShow: 3, autoplay: true, autoplaySpeed: 3000, showArrows: false, showDots: true, responsive: '{\n  "mobile": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 600\n  },\n  "tablet": {\n    "slidesToShow": 2,\n    "slidesToScroll": 1,\n    "minWidth": 768\n  },\n  "desktop": {\n    "slidesToShow": 3,\n    "slidesToScroll": 1,\n    "minWidth": 1024\n  }\n}', responsiveType: "object", responsiveKeys: (3) […] }
+index.js:1:3275
+finalResponsive: {
+  "mobile": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 600
+  },
+  "tablet": {
+    "slidesToShow": 2,
+    "slidesToScroll": 1,
+    "minWidth": 768
+  },
+  "desktop": {
+    "slidesToShow": 3,
+    "slidesToScroll": 1,
+    "minWidth": 1024
+  }
+} index.js:1:3654
+Final Slick Config: {
+  "slidesToShow": 3,
+  "slidesToScroll": 1,
+  "fade": false,
+  "dots": true,
+  "autoplay": true,
+  "autoplaySpeed": 3000,
+  "arrows": false,
+  "infinite": true,
+  "responsive": [
+    {
+      "breakpoint": 1024,
+      "settings": {
+        "slidesToShow": 3,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 768,
+      "settings": {
+        "slidesToShow": 2,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 600,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    }
+  ]
+} index.js:1:4306
+generateSlickConfig called with: 
+Object { slidesToShow: 3, autoplay: true, autoplaySpeed: 3000, showArrows: false, showDots: true, responsive: '{\n  "mobile": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 600\n  },\n  "tablet": {\n    "slidesToShow": 2,\n    "slidesToScroll": 1,\n    "minWidth": 768\n  },\n  "desktop": {\n    "slidesToShow": 3,\n    "slidesToScroll": 1,\n    "minWidth": 1024\n  }\n}', responsiveType: "object", responsiveKeys: (3) […] }
+index.js:1:3275
+finalResponsive: {
+  "mobile": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 600
+  },
+  "tablet": {
+    "slidesToShow": 2,
+    "slidesToScroll": 1,
+    "minWidth": 768
+  },
+  "desktop": {
+    "slidesToShow": 3,
+    "slidesToScroll": 1,
+    "minWidth": 1024
+  }
+} index.js:1:3654
+Final Slick Config: {
+  "slidesToShow": 3,
+  "slidesToScroll": 1,
+  "fade": false,
+  "dots": true,
+  "autoplay": true,
+  "autoplaySpeed": 3000,
+  "arrows": false,
+  "infinite": true,
+  "responsive": [
+    {
+      "breakpoint": 1024,
+      "settings": {
+        "slidesToShow": 3,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 768,
+      "settings": {
+        "slidesToShow": 2,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 600,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    }
+  ]
+} index.js:1:4306
+generateSlickConfig called with: 
+Object { slidesToShow: 3, autoplay: true, autoplaySpeed: 3000, showArrows: false, showDots: true, responsive: '{\n  "mobile": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 600\n  },\n  "tablet": {\n    "slidesToShow": 2,\n    "slidesToScroll": 1,\n    "minWidth": 768\n  },\n  "desktop": {\n    "slidesToShow": 3,\n    "slidesToScroll": 1,\n    "minWidth": 1024\n  }\n}', responsiveType: "object", responsiveKeys: (3) […] }
+index.js:1:3275
+finalResponsive: {
+  "mobile": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 600
+  },
+  "tablet": {
+    "slidesToShow": 2,
+    "slidesToScroll": 1,
+    "minWidth": 768
+  },
+  "desktop": {
+    "slidesToShow": 3,
+    "slidesToScroll": 1,
+    "minWidth": 1024
+  }
+} index.js:1:3654
+Final Slick Config: {
+  "slidesToShow": 3,
+  "slidesToScroll": 1,
+  "fade": false,
+  "dots": true,
+  "autoplay": true,
+  "autoplaySpeed": 3000,
+  "arrows": false,
+  "infinite": true,
+  "responsive": [
+    {
+      "breakpoint": 1024,
+      "settings": {
+        "slidesToShow": 3,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 768,
+      "settings": {
+        "slidesToShow": 2,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 600,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    }
+  ]
+} index.js:1:4306
+generateSlickConfig called with: 
+Object { slidesToShow: 3, autoplay: true, autoplaySpeed: 3000, showArrows: false, showDots: true, responsive: '{\n  "mobile": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 600\n  },\n  "tablet": {\n    "slidesToShow": 2,\n    "slidesToScroll": 1,\n    "minWidth": 768\n  },\n  "desktop": {\n    "slidesToShow": 3,\n    "slidesToScroll": 1,\n    "minWidth": 1024\n  }\n}', responsiveType: "object", responsiveKeys: (3) […] }
+index.js:1:3275
+finalResponsive: {
+  "mobile": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 600
+  },
+  "tablet": {
+    "slidesToShow": 2,
+    "slidesToScroll": 1,
+    "minWidth": 768
+  },
+  "desktop": {
+    "slidesToShow": 3,
+    "slidesToScroll": 1,
+    "minWidth": 1024
+  }
+} index.js:1:3654
+Final Slick Config: {
+  "slidesToShow": 3,
+  "slidesToScroll": 1,
+  "fade": false,
+  "dots": true,
+  "autoplay": true,
+  "autoplaySpeed": 3000,
+  "arrows": false,
+  "infinite": true,
+  "responsive": [
+    {
+      "breakpoint": 1024,
+      "settings": {
+        "slidesToShow": 3,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 768,
+      "settings": {
+        "slidesToShow": 2,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 600,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    }
+  ]
+} index.js:1:4306
+generateSlickConfig called with: 
+Object { slidesToShow: 3, autoplay: true, autoplaySpeed: 3000, showArrows: false, showDots: true, responsive: '{\n  "mobile": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 600\n  },\n  "tablet": {\n    "slidesToShow": 2,\n    "slidesToScroll": 1,\n    "minWidth": 768\n  },\n  "desktop": {\n    "slidesToShow": 3,\n    "slidesToScroll": 1,\n    "minWidth": 1024\n  }\n}', responsiveType: "object", responsiveKeys: (3) […] }
+index.js:1:3275
+finalResponsive: {
+  "mobile": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 600
+  },
+  "tablet": {
+    "slidesToShow": 2,
+    "slidesToScroll": 1,
+    "minWidth": 768
+  },
+  "desktop": {
+    "slidesToShow": 3,
+    "slidesToScroll": 1,
+    "minWidth": 1024
+  }
+} index.js:1:3654
+Final Slick Config: {
+  "slidesToShow": 3,
+  "slidesToScroll": 1,
+  "fade": false,
+  "dots": true,
+  "autoplay": true,
+  "autoplaySpeed": 3000,
+  "arrows": false,
+  "infinite": true,
+  "responsive": [
+    {
+      "breakpoint": 1024,
+      "settings": {
+        "slidesToShow": 3,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 768,
+      "settings": {
+        "slidesToShow": 2,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 600,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    }
+  ]
+} index.js:1:4306
+generateSlickConfig called with: 
+Object { slidesToShow: 3, autoplay: true, autoplaySpeed: 3000, showArrows: false, showDots: true, responsive: '{\n  "mobile": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 600\n  },\n  "tablet": {\n    "slidesToShow": 2,\n    "slidesToScroll": 1,\n    "minWidth": 768\n  },\n  "desktop": {\n    "slidesToShow": 3,\n    "slidesToScroll": 1,\n    "minWidth": 1024\n  }\n}', responsiveType: "object", responsiveKeys: (3) […] }
+index.js:1:3275
+finalResponsive: {
+  "mobile": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 600
+  },
+  "tablet": {
+    "slidesToShow": 2,
+    "slidesToScroll": 1,
+    "minWidth": 768
+  },
+  "desktop": {
+    "slidesToShow": 3,
+    "slidesToScroll": 1,
+    "minWidth": 1024
+  }
+} index.js:1:3654
+Final Slick Config: {
+  "slidesToShow": 3,
+  "slidesToScroll": 1,
+  "fade": false,
+  "dots": true,
+  "autoplay": true,
+  "autoplaySpeed": 3000,
+  "arrows": false,
+  "infinite": true,
+  "responsive": [
+    {
+      "breakpoint": 1024,
+      "settings": {
+        "slidesToShow": 3,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 768,
+      "settings": {
+        "slidesToShow": 2,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 600,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    }
+  ]
+} index.js:1:4306
+generateSlickConfig called with: 
+Object { slidesToShow: 3, autoplay: true, autoplaySpeed: 3000, showArrows: false, showDots: true, responsive: '{\n  "mobile": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 600\n  },\n  "tablet": {\n    "slidesToShow": 2,\n    "slidesToScroll": 1,\n    "minWidth": 768\n  },\n  "desktop": {\n    "slidesToShow": 3,\n    "slidesToScroll": 1,\n    "minWidth": 1024\n  }\n}', responsiveType: "object", responsiveKeys: (3) […] }
+index.js:1:3275
+finalResponsive: {
+  "mobile": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 600
+  },
+  "tablet": {
+    "slidesToShow": 2,
+    "slidesToScroll": 1,
+    "minWidth": 768
+  },
+  "desktop": {
+    "slidesToShow": 3,
+    "slidesToScroll": 1,
+    "minWidth": 1024
+  }
+} index.js:1:3654
+Final Slick Config: {
+  "slidesToShow": 3,
+  "slidesToScroll": 1,
+  "fade": false,
+  "dots": true,
+  "autoplay": true,
+  "autoplaySpeed": 3000,
+  "arrows": false,
+  "infinite": true,
+  "responsive": [
+    {
+      "breakpoint": 1024,
+      "settings": {
+        "slidesToShow": 3,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 768,
+      "settings": {
+        "slidesToShow": 2,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 600,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    }
+  ]
+} index.js:1:4306
+generateSlickConfig called with: 
+Object { slidesToShow: 3, autoplay: true, autoplaySpeed: 3000, showArrows: false, showDots: true, responsive: '{\n  "mobile": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 600\n  },\n  "tablet": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 768\n  },\n  "desktop": {\n    "slidesToShow": 3,\n    "slidesToScroll": 1,\n    "minWidth": 1024\n  }\n}', responsiveType: "object", responsiveKeys: (3) […] }
+index.js:1:3275
+finalResponsive: {
+  "mobile": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 600
+  },
+  "tablet": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 768
+  },
+  "desktop": {
+    "slidesToShow": 3,
+    "slidesToScroll": 1,
+    "minWidth": 1024
+  }
+} index.js:1:3654
+Final Slick Config: {
+  "slidesToShow": 3,
+  "slidesToScroll": 1,
+  "fade": false,
+  "dots": true,
+  "autoplay": true,
+  "autoplaySpeed": 3000,
+  "arrows": false,
+  "infinite": true,
+  "responsive": [
+    {
+      "breakpoint": 1024,
+      "settings": {
+        "slidesToShow": 3,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 768,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 600,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    }
+  ]
+} index.js:1:4306
+generateSlickConfig called with: 
+Object { slidesToShow: 3, autoplay: true, autoplaySpeed: 3000, showArrows: false, showDots: true, responsive: '{\n  "mobile": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 600\n  },\n  "tablet": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 768\n  },\n  "desktop": {\n    "slidesToShow": 3,\n    "slidesToScroll": 1,\n    "minWidth": 1024\n  }\n}', responsiveType: "object", responsiveKeys: (3) […] }
+index.js:1:3275
+finalResponsive: {
+  "mobile": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 600
+  },
+  "tablet": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 768
+  },
+  "desktop": {
+    "slidesToShow": 3,
+    "slidesToScroll": 1,
+    "minWidth": 1024
+  }
+} index.js:1:3654
+Final Slick Config: {
+  "slidesToShow": 3,
+  "slidesToScroll": 1,
+  "fade": false,
+  "dots": true,
+  "autoplay": true,
+  "autoplaySpeed": 3000,
+  "arrows": false,
+  "infinite": true,
+  "responsive": [
+    {
+      "breakpoint": 1024,
+      "settings": {
+        "slidesToShow": 3,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 768,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 600,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    }
+  ]
+} index.js:1:4306
+generateSlickConfig called with: 
+Object { slidesToShow: 3, autoplay: true, autoplaySpeed: 3000, showArrows: false, showDots: true, responsive: '{\n  "mobile": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 600\n  },\n  "tablet": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 768\n  },\n  "desktop": {\n    "slidesToShow": 3,\n    "slidesToScroll": 1,\n    "minWidth": 1024\n  }\n}', responsiveType: "object", responsiveKeys: (3) […] }
+index.js:1:3275
+finalResponsive: {
+  "mobile": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 600
+  },
+  "tablet": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 768
+  },
+  "desktop": {
+    "slidesToShow": 3,
+    "slidesToScroll": 1,
+    "minWidth": 1024
+  }
+} index.js:1:3654
+Final Slick Config: {
+  "slidesToShow": 3,
+  "slidesToScroll": 1,
+  "fade": false,
+  "dots": true,
+  "autoplay": true,
+  "autoplaySpeed": 3000,
+  "arrows": false,
+  "infinite": true,
+  "responsive": [
+    {
+      "breakpoint": 1024,
+      "settings": {
+        "slidesToShow": 3,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 768,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 600,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    }
+  ]
+} index.js:1:4306
+generateSlickConfig called with: 
+Object { slidesToShow: 3, autoplay: true, autoplaySpeed: 3000, showArrows: false, showDots: true, responsive: '{\n  "mobile": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 600\n  },\n  "tablet": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 768\n  },\n  "desktop": {\n    "slidesToShow": 3,\n    "slidesToScroll": 1,\n    "minWidth": 1024\n  }\n}', responsiveType: "object", responsiveKeys: (3) […] }
+index.js:1:3275
+finalResponsive: {
+  "mobile": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 600
+  },
+  "tablet": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 768
+  },
+  "desktop": {
+    "slidesToShow": 3,
+    "slidesToScroll": 1,
+    "minWidth": 1024
+  }
+} index.js:1:3654
+Final Slick Config: {
+  "slidesToShow": 3,
+  "slidesToScroll": 1,
+  "fade": false,
+  "dots": true,
+  "autoplay": true,
+  "autoplaySpeed": 3000,
+  "arrows": false,
+  "infinite": true,
+  "responsive": [
+    {
+      "breakpoint": 1024,
+      "settings": {
+        "slidesToShow": 3,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 768,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 600,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    }
+  ]
+} index.js:1:4306
+generateSlickConfig called with: 
+Object { slidesToShow: 3, autoplay: true, autoplaySpeed: 3000, showArrows: false, showDots: true, responsive: '{\n  "mobile": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 600\n  },\n  "tablet": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 768\n  },\n  "desktop": {\n    "slidesToShow": 3,\n    "slidesToScroll": 1,\n    "minWidth": 1024\n  }\n}', responsiveType: "object", responsiveKeys: (3) […] }
+index.js:1:3275
+finalResponsive: {
+  "mobile": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 600
+  },
+  "tablet": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 768
+  },
+  "desktop": {
+    "slidesToShow": 3,
+    "slidesToScroll": 1,
+    "minWidth": 1024
+  }
+} index.js:1:3654
+Final Slick Config: {
+  "slidesToShow": 3,
+  "slidesToScroll": 1,
+  "fade": false,
+  "dots": true,
+  "autoplay": true,
+  "autoplaySpeed": 3000,
+  "arrows": false,
+  "infinite": true,
+  "responsive": [
+    {
+      "breakpoint": 1024,
+      "settings": {
+        "slidesToShow": 3,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 768,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 600,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    }
+  ]
+} index.js:1:4306
+generateSlickConfig called with: 
+Object { slidesToShow: 3, autoplay: true, autoplaySpeed: 3000, showArrows: false, showDots: true, responsive: '{\n  "mobile": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 600\n  },\n  "tablet": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 768\n  },\n  "desktop": {\n    "slidesToShow": 3,\n    "slidesToScroll": 1,\n    "minWidth": 1024\n  }\n}', responsiveType: "object", responsiveKeys: (3) […] }
+index.js:1:3275
+finalResponsive: {
+  "mobile": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 600
+  },
+  "tablet": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 768
+  },
+  "desktop": {
+    "slidesToShow": 3,
+    "slidesToScroll": 1,
+    "minWidth": 1024
+  }
+} index.js:1:3654
+Final Slick Config: {
+  "slidesToShow": 3,
+  "slidesToScroll": 1,
+  "fade": false,
+  "dots": true,
+  "autoplay": true,
+  "autoplaySpeed": 3000,
+  "arrows": false,
+  "infinite": true,
+  "responsive": [
+    {
+      "breakpoint": 1024,
+      "settings": {
+        "slidesToShow": 3,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 768,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 600,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    }
+  ]
+} index.js:1:4306
+generateSlickConfig called with: 
+Object { slidesToShow: 3, autoplay: true, autoplaySpeed: 3000, showArrows: false, showDots: true, responsive: '{\n  "mobile": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 600\n  },\n  "tablet": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 768\n  },\n  "desktop": {\n    "slidesToShow": 3,\n    "slidesToScroll": 1,\n    "minWidth": 1024\n  }\n}', responsiveType: "object", responsiveKeys: (3) […] }
+index.js:1:3275
+finalResponsive: {
+  "mobile": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 600
+  },
+  "tablet": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 768
+  },
+  "desktop": {
+    "slidesToShow": 3,
+    "slidesToScroll": 1,
+    "minWidth": 1024
+  }
+} index.js:1:3654
+Final Slick Config: {
+  "slidesToShow": 3,
+  "slidesToScroll": 1,
+  "fade": false,
+  "dots": true,
+  "autoplay": true,
+  "autoplaySpeed": 3000,
+  "arrows": false,
+  "infinite": true,
+  "responsive": [
+    {
+      "breakpoint": 1024,
+      "settings": {
+        "slidesToShow": 3,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 768,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 600,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    }
+  ]
+} index.js:1:4306
+generateSlickConfig called with: 
+Object { slidesToShow: 3, autoplay: true, autoplaySpeed: 3000, showArrows: false, showDots: true, responsive: '{\n  "mobile": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 600\n  },\n  "tablet": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 768\n  },\n  "desktop": {\n    "slidesToShow": 3,\n    "slidesToScroll": 1,\n    "minWidth": 1024\n  }\n}', responsiveType: "object", responsiveKeys: (3) […] }
+index.js:1:3275
+finalResponsive: {
+  "mobile": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 600
+  },
+  "tablet": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 768
+  },
+  "desktop": {
+    "slidesToShow": 3,
+    "slidesToScroll": 1,
+    "minWidth": 1024
+  }
+} index.js:1:3654
+Final Slick Config: {
+  "slidesToShow": 3,
+  "slidesToScroll": 1,
+  "fade": false,
+  "dots": true,
+  "autoplay": true,
+  "autoplaySpeed": 3000,
+  "arrows": false,
+  "infinite": true,
+  "responsive": [
+    {
+      "breakpoint": 1024,
+      "settings": {
+        "slidesToShow": 3,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 768,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 600,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    }
+  ]
+} index.js:1:4306
+generateSlickConfig called with: 
+Object { slidesToShow: 1, autoplay: true, autoplaySpeed: 3000, showArrows: false, showDots: true, responsive: '{\n  "mobile": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 600\n  },\n  "tablet": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 768\n  },\n  "desktop": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 1024\n  }\n}', responsiveType: "object", responsiveKeys: (3) […] }
+index.js:1:3275
+finalResponsive: {
+  "mobile": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 600
+  },
+  "tablet": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 768
+  },
+  "desktop": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 1024
+  }
+} index.js:1:3654
+Final Slick Config: {
+  "slidesToShow": 1,
+  "slidesToScroll": 1,
+  "fade": false,
+  "dots": true,
+  "autoplay": true,
+  "autoplaySpeed": 3000,
+  "arrows": false,
+  "infinite": true,
+  "responsive": [
+    {
+      "breakpoint": 1024,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 768,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 600,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    }
+  ]
+} index.js:1:4306
+generateSlickConfig called with: 
+Object { slidesToShow: 1, autoplay: true, autoplaySpeed: 3000, showArrows: false, showDots: true, responsive: '{\n  "mobile": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 600\n  },\n  "tablet": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 768\n  },\n  "desktop": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 1024\n  }\n}', responsiveType: "object", responsiveKeys: (3) […] }
+index.js:1:3275
+finalResponsive: {
+  "mobile": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 600
+  },
+  "tablet": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 768
+  },
+  "desktop": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 1024
+  }
+} index.js:1:3654
+Final Slick Config: {
+  "slidesToShow": 1,
+  "slidesToScroll": 1,
+  "fade": false,
+  "dots": true,
+  "autoplay": true,
+  "autoplaySpeed": 3000,
+  "arrows": false,
+  "infinite": true,
+  "responsive": [
+    {
+      "breakpoint": 1024,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 768,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 600,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    }
+  ]
+} index.js:1:4306
+generateSlickConfig called with: 
+Object { slidesToShow: 1, autoplay: true, autoplaySpeed: 3000, showArrows: false, showDots: true, responsive: '{\n  "mobile": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 600\n  },\n  "tablet": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 768\n  },\n  "desktop": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 1024\n  }\n}', responsiveType: "object", responsiveKeys: (3) […] }
+index.js:1:3275
+finalResponsive: {
+  "mobile": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 600
+  },
+  "tablet": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 768
+  },
+  "desktop": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 1024
+  }
+} index.js:1:3654
+Final Slick Config: {
+  "slidesToShow": 1,
+  "slidesToScroll": 1,
+  "fade": false,
+  "dots": true,
+  "autoplay": true,
+  "autoplaySpeed": 3000,
+  "arrows": false,
+  "infinite": true,
+  "responsive": [
+    {
+      "breakpoint": 1024,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 768,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 600,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    }
+  ]
+} index.js:1:4306
+generateSlickConfig called with: 
+Object { slidesToShow: 1, autoplay: true, autoplaySpeed: 3000, showArrows: false, showDots: true, responsive: '{\n  "mobile": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 600\n  },\n  "tablet": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 768\n  },\n  "desktop": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 1024\n  }\n}', responsiveType: "object", responsiveKeys: (3) […] }
+index.js:1:3275
+finalResponsive: {
+  "mobile": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 600
+  },
+  "tablet": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 768
+  },
+  "desktop": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 1024
+  }
+} index.js:1:3654
+Final Slick Config: {
+  "slidesToShow": 1,
+  "slidesToScroll": 1,
+  "fade": false,
+  "dots": true,
+  "autoplay": true,
+  "autoplaySpeed": 3000,
+  "arrows": false,
+  "infinite": true,
+  "responsive": [
+    {
+      "breakpoint": 1024,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 768,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 600,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    }
+  ]
+} index.js:1:4306
+generateSlickConfig called with: 
+Object { slidesToShow: 1, autoplay: true, autoplaySpeed: 3000, showArrows: false, showDots: true, responsive: '{\n  "mobile": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 600\n  },\n  "tablet": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 768\n  },\n  "desktop": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 1024\n  }\n}', responsiveType: "object", responsiveKeys: (3) […] }
+index.js:1:3275
+finalResponsive: {
+  "mobile": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 600
+  },
+  "tablet": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 768
+  },
+  "desktop": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 1024
+  }
+} index.js:1:3654
+Final Slick Config: {
+  "slidesToShow": 1,
+  "slidesToScroll": 1,
+  "fade": false,
+  "dots": true,
+  "autoplay": true,
+  "autoplaySpeed": 3000,
+  "arrows": false,
+  "infinite": true,
+  "responsive": [
+    {
+      "breakpoint": 1024,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 768,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 600,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    }
+  ]
+} index.js:1:4306
+generateSlickConfig called with: 
+Object { slidesToShow: 1, autoplay: true, autoplaySpeed: 3000, showArrows: false, showDots: true, responsive: '{\n  "mobile": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 600\n  },\n  "tablet": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 768\n  },\n  "desktop": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 1024\n  }\n}', responsiveType: "object", responsiveKeys: (3) […] }
+index.js:1:3275
+finalResponsive: {
+  "mobile": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 600
+  },
+  "tablet": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 768
+  },
+  "desktop": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 1024
+  }
+} index.js:1:3654
+Final Slick Config: {
+  "slidesToShow": 1,
+  "slidesToScroll": 1,
+  "fade": false,
+  "dots": true,
+  "autoplay": true,
+  "autoplaySpeed": 3000,
+  "arrows": false,
+  "infinite": true,
+  "responsive": [
+    {
+      "breakpoint": 1024,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 768,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 600,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    }
+  ]
+} index.js:1:4306
+generateSlickConfig called with: 
+Object { slidesToShow: 1, autoplay: true, autoplaySpeed: 3000, showArrows: false, showDots: true, responsive: '{\n  "mobile": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 600\n  },\n  "tablet": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 768\n  },\n  "desktop": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 1024\n  }\n}', responsiveType: "object", responsiveKeys: (3) […] }
+index.js:1:3275
+finalResponsive: {
+  "mobile": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 600
+  },
+  "tablet": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 768
+  },
+  "desktop": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 1024
+  }
+} index.js:1:3654
+Final Slick Config: {
+  "slidesToShow": 1,
+  "slidesToScroll": 1,
+  "fade": false,
+  "dots": true,
+  "autoplay": true,
+  "autoplaySpeed": 3000,
+  "arrows": false,
+  "infinite": true,
+  "responsive": [
+    {
+      "breakpoint": 1024,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 768,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 600,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    }
+  ]
+} index.js:1:4306
+generateSlickConfig called with: 
+Object { slidesToShow: 1, autoplay: true, autoplaySpeed: 3000, showArrows: false, showDots: true, responsive: '{\n  "mobile": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 600\n  },\n  "tablet": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 768\n  },\n  "desktop": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 1024\n  }\n}', responsiveType: "object", responsiveKeys: (3) […] }
+index.js:1:3275
+finalResponsive: {
+  "mobile": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 600
+  },
+  "tablet": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 768
+  },
+  "desktop": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 1024
+  }
+} index.js:1:3654
+Final Slick Config: {
+  "slidesToShow": 1,
+  "slidesToScroll": 1,
+  "fade": false,
+  "dots": true,
+  "autoplay": true,
+  "autoplaySpeed": 3000,
+  "arrows": false,
+  "infinite": true,
+  "responsive": [
+    {
+      "breakpoint": 1024,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 768,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 600,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    }
+  ]
+} index.js:1:4306
+generateSlickConfig called with: 
+Object { slidesToShow: 1, autoplay: true, autoplaySpeed: 3000, showArrows: false, showDots: true, responsive: '{\n  "mobile": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 600\n  },\n  "tablet": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 768\n  },\n  "desktop": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 1024\n  }\n}', responsiveType: "object", responsiveKeys: (3) […] }
+index.js:1:3275
+finalResponsive: {
+  "mobile": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 600
+  },
+  "tablet": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 768
+  },
+  "desktop": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 1024
+  }
+} index.js:1:3654
+Final Slick Config: {
+  "slidesToShow": 1,
+  "slidesToScroll": 1,
+  "fade": false,
+  "dots": true,
+  "autoplay": true,
+  "autoplaySpeed": 3000,
+  "arrows": false,
+  "infinite": true,
+  "responsive": [
+    {
+      "breakpoint": 1024,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 768,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 600,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    }
+  ]
+} index.js:1:4306
+generateSlickConfig called with: 
+Object { slidesToShow: 1, autoplay: true, autoplaySpeed: 3000, showArrows: false, showDots: true, responsive: '{\n  "mobile": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 600\n  },\n  "tablet": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 768\n  },\n  "desktop": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 1024\n  }\n}', responsiveType: "object", responsiveKeys: (3) […] }
+index.js:1:3275
+finalResponsive: {
+  "mobile": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 600
+  },
+  "tablet": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 768
+  },
+  "desktop": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 1024
+  }
+} index.js:1:3654
+Final Slick Config: {
+  "slidesToShow": 1,
+  "slidesToScroll": 1,
+  "fade": false,
+  "dots": true,
+  "autoplay": true,
+  "autoplaySpeed": 3000,
+  "arrows": false,
+  "infinite": true,
+  "responsive": [
+    {
+      "breakpoint": 1024,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 768,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 600,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    }
+  ]
+} index.js:1:4306
+generateSlickConfig called with: 
+Object { slidesToShow: 1, autoplay: true, autoplaySpeed: 3000, showArrows: false, showDots: true, responsive: '{\n  "mobile": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 600\n  },\n  "tablet": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 768\n  },\n  "desktop": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 1024\n  }\n}', responsiveType: "object", responsiveKeys: (3) […] }
+index.js:1:3275
+finalResponsive: {
+  "mobile": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 600
+  },
+  "tablet": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 768
+  },
+  "desktop": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 1024
+  }
+} index.js:1:3654
+Final Slick Config: {
+  "slidesToShow": 1,
+  "slidesToScroll": 1,
+  "fade": false,
+  "dots": true,
+  "autoplay": true,
+  "autoplaySpeed": 3000,
+  "arrows": false,
+  "infinite": true,
+  "responsive": [
+    {
+      "breakpoint": 1024,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 768,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 600,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    }
+  ]
+} index.js:1:4306
+generateSlickConfig called with: 
+Object { slidesToShow: 1, autoplay: true, autoplaySpeed: 3000, showArrows: false, showDots: true, responsive: '{\n  "mobile": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 600\n  },\n  "tablet": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 768\n  },\n  "desktop": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 1024\n  }\n}', responsiveType: "object", responsiveKeys: (3) […] }
+index.js:1:3275
+finalResponsive: {
+  "mobile": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 600
+  },
+  "tablet": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 768
+  },
+  "desktop": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 1024
+  }
+} index.js:1:3654
+Final Slick Config: {
+  "slidesToShow": 1,
+  "slidesToScroll": 1,
+  "fade": false,
+  "dots": true,
+  "autoplay": true,
+  "autoplaySpeed": 3000,
+  "arrows": false,
+  "infinite": true,
+  "responsive": [
+    {
+      "breakpoint": 1024,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 768,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 600,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    }
+  ]
+} index.js:1:4306
+generateSlickConfig called with: 
+Object { slidesToShow: 1, autoplay: true, autoplaySpeed: 3000, showArrows: false, showDots: true, responsive: '{\n  "mobile": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 600\n  },\n  "tablet": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 768\n  },\n  "desktop": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 1024\n  }\n}', responsiveType: "object", responsiveKeys: (3) […] }
+index.js:1:3275
+finalResponsive: {
+  "mobile": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 600
+  },
+  "tablet": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 768
+  },
+  "desktop": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 1024
+  }
+} index.js:1:3654
+Final Slick Config: {
+  "slidesToShow": 1,
+  "slidesToScroll": 1,
+  "fade": false,
+  "dots": true,
+  "autoplay": true,
+  "autoplaySpeed": 3000,
+  "arrows": false,
+  "infinite": true,
+  "responsive": [
+    {
+      "breakpoint": 1024,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 768,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 600,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    }
+  ]
+} index.js:1:4306
+generateSlickConfig called with: 
+Object { slidesToShow: 1, autoplay: true, autoplaySpeed: 3000, showArrows: false, showDots: true, responsive: '{\n  "mobile": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 600\n  },\n  "tablet": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 768\n  },\n  "desktop": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 1024\n  }\n}', responsiveType: "object", responsiveKeys: (3) […] }
+index.js:1:3275
+finalResponsive: {
+  "mobile": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 600
+  },
+  "tablet": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 768
+  },
+  "desktop": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 1024
+  }
+} index.js:1:3654
+Final Slick Config: {
+  "slidesToShow": 1,
+  "slidesToScroll": 1,
+  "fade": false,
+  "dots": true,
+  "autoplay": true,
+  "autoplaySpeed": 3000,
+  "arrows": false,
+  "infinite": true,
+  "responsive": [
+    {
+      "breakpoint": 1024,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 768,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 600,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    }
+  ]
+} index.js:1:4306
+generateSlickConfig called with: 
+Object { slidesToShow: 1, autoplay: true, autoplaySpeed: 3000, showArrows: false, showDots: true, responsive: '{\n  "mobile": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 600\n  },\n  "tablet": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 768\n  },\n  "desktop": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 1024\n  }\n}', responsiveType: "object", responsiveKeys: (3) […] }
+index.js:1:3275
+finalResponsive: {
+  "mobile": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 600
+  },
+  "tablet": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 768
+  },
+  "desktop": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 1024
+  }
+} index.js:1:3654
+Final Slick Config: {
+  "slidesToShow": 1,
+  "slidesToScroll": 1,
+  "fade": false,
+  "dots": true,
+  "autoplay": true,
+  "autoplaySpeed": 3000,
+  "arrows": false,
+  "infinite": true,
+  "responsive": [
+    {
+      "breakpoint": 1024,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 768,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 600,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    }
+  ]
+} index.js:1:4306
+generateSlickConfig called with: 
+Object { slidesToShow: 1, autoplay: true, autoplaySpeed: 3000, showArrows: false, showDots: true, responsive: '{\n  "mobile": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 600\n  },\n  "tablet": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 768\n  },\n  "desktop": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 1024\n  }\n}', responsiveType: "object", responsiveKeys: (3) […] }
+index.js:1:3275
+finalResponsive: {
+  "mobile": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 600
+  },
+  "tablet": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 768
+  },
+  "desktop": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 1024
+  }
+} index.js:1:3654
+Final Slick Config: {
+  "slidesToShow": 1,
+  "slidesToScroll": 1,
+  "fade": false,
+  "dots": true,
+  "autoplay": true,
+  "autoplaySpeed": 3000,
+  "arrows": false,
+  "infinite": true,
+  "responsive": [
+    {
+      "breakpoint": 1024,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 768,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 600,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    }
+  ]
+} index.js:1:4306
+generateSlickConfig called with: 
+Object { slidesToShow: 1, autoplay: true, autoplaySpeed: 3000, showArrows: false, showDots: true, responsive: '{\n  "mobile": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 600\n  },\n  "tablet": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 768\n  },\n  "desktop": {\n    "slidesToShow": 1,\n    "slidesToScroll": 1,\n    "minWidth": 1024\n  }\n}', responsiveType: "object", responsiveKeys: (3) […] }
+index.js:1:3275
+finalResponsive: {
+  "mobile": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 600
+  },
+  "tablet": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 768
+  },
+  "desktop": {
+    "slidesToShow": 1,
+    "slidesToScroll": 1,
+    "minWidth": 1024
+  }
+} index.js:1:3654
+Final Slick Config: {
+  "slidesToShow": 1,
+  "slidesToScroll": 1,
+  "fade": false,
+  "dots": true,
+  "autoplay": true,
+  "autoplaySpeed": 3000,
+  "arrows": false,
+  "infinite": true,
+  "responsive": [
+    {
+      "breakpoint": 1024,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 768,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    },
+    {
+      "breakpoint": 600,
+      "settings": {
+        "slidesToShow": 1,
+        "slidesToScroll": 1
+      }
+    }
+  ]
+} index.js:1:4306

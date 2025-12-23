@@ -1,0 +1,27 @@
+{
+  "apiVersion": 2,
+  "name": "bootstrap-blocks/bs-row",
+  "title": "Bootstrap Row",
+  "category": "layout",
+  "icon": "columns",
+  "description": "A Bootstrap row block for layout.",
+  "supports": {
+    "html": false,
+    "className": true
+  },
+  "attributes": {
+    "containerClassName": { "type": "string", "default": "" },
+    "rowAlignment": { "type": "object", "default": { "default": "", "sm": "", "md": "", "lg": "", "xl": "", "xxl": "" } },
+    "containerWidth": { "type": "string", "default": "full-width" },
+    "containerWidthCustom": { "type": "number", "default": 1200 },
+    "rowAnimationEnabled": { "type": "boolean", "default": false },
+    "animationName": { "type": "string", "default": "" },
+    "animationDuration": { "type": "number", "default": 1000 },
+    "animationDelay": { "type": "number", "default": 0 },
+    "childAnimationEnabled": { "type": "boolean", "default": false },
+    "childAnimationInitialDelay": { "type": "number", "default": 0 },
+    "childAnimationInterval": { "type": "number", "default": 0 }
+  },
+  "editorScript": "file:./index.js",
+  "style": "file:./style.css"
+} 

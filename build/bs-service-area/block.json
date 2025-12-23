@@ -1,0 +1,87 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "bootstrap-blocks/bs-service-area",
+  "version": "1.0.0",
+  "title": "BS Service Area",
+  "category": "bootstrap-blocks",
+  "icon": "location-alt",
+  "description": "Display a service area map with a list of service locations.",
+  "keywords": [
+    "service",
+    "area",
+    "map",
+    "location",
+    "bootstrap"
+  ],
+  "supports": {
+    "html": false,
+    "align": [
+      "wide",
+      "full"
+    ]
+  },
+  "textdomain": "bootstrap-blocks",
+  "editorScript": "file:../../build/bs-service-area/index.js",
+  "editorStyle": "file:../../build/style-bs-service-area.css",
+  "style": "file:../../build/style-bs-service-area.css",
+  "attributes": {
+    "mapEmbedUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "serviceAreas": {
+      "type": "array",
+      "default": [
+        {
+          "cityName": "Boise, ID",
+          "url": ""
+        },
+        {
+          "cityName": "Cascade, ID",
+          "url": ""
+        },
+        {
+          "cityName": "Donnelly, ID",
+          "url": ""
+        },
+        {
+          "cityName": "Eagle, ID",
+          "url": ""
+        }
+      ]
+    },
+    "titleColor": {
+      "type": "string",
+      "default": "#06AFE2"
+    },
+    "titleBackground": {
+      "type": "string",
+      "default": "rgba(0, 97, 166, 0.03)"
+    },
+    "itemColor": {
+      "type": "string",
+      "default": "#000000"
+    },
+    "itemBackground": {
+      "type": "string",
+      "default": "#ffffff"
+    },
+    "itemHoverColor": {
+      "type": "string",
+      "default": "#ffffff"
+    },
+    "itemHoverBackground": {
+      "type": "string",
+      "default": "#06AFE2"
+    },
+    "mapPosition": {
+      "type": "string",
+      "default": "left"
+    },
+    "mapListRatio": {
+      "type": "string",
+      "default": "8-4"
+    }
+  }
+}

@@ -1,0 +1,62 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "bootstrap-blocks/bs-nap",
+	"version": "1.0.0",
+	"title": "BS NAP (Name, Address, Phone)",
+	"category": "bootstrap-blocks",
+	"icon": "location-alt",
+	"description": "Display contact information with map - Name, Address, Phone with dynamic items",
+	"keywords": ["contact", "map", "address", "phone", "location"],
+	"textdomain": "bootstrap-blocks",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./style.css",
+	"style": "file:./style.css",
+	"attributes": {
+		"locationTitle": {
+			"type": "string",
+			"default": "Boise | ID"
+		},
+		"mapEmbedUrl": {
+			"type": "string",
+			"default": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.9663095343008!2d-74.00425878459418!3d40.74844097932681!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c259a9b3117469%3A0xd134e199a405a163!2sEmpire%20State%20Building!5e0!3m2!1sen!2sus!4v1234567890123!5m2!1sen!2sus"
+		},
+		"mapPosition": {
+			"type": "string",
+			"default": "right"
+		},
+		"items": {
+			"type": "array",
+			"default": [
+				{
+					"id": "location",
+					"iconUrl": "",
+					"title": "Location",
+					"content": "123 Main St, Boise, ID 83702"
+				},
+				{
+					"id": "phone",
+					"iconUrl": "",
+					"title": "Phone",
+					"content": "Phone: (208) 295 9919<br>Fax: (208) 295 9920"
+				},
+				{
+					"id": "office-hours",
+					"iconUrl": "",
+					"title": "Office Hours",
+					"content": "Monday - Friday | 8:00AM - 5:00PM CST<br>Saturday | By Appointment Only"
+				},
+				{
+					"id": "loading-hours",
+					"iconUrl": "",
+					"title": "Loading Hours",
+					"content": "Monday - Friday | 8:00AM - 4:30PM CST<br>Saturday | Not Available"
+				}
+			]
+		}
+	},
+	"supports": {
+		"html": false,
+		"align": ["wide", "full"]
+	}
+}
