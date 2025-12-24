@@ -53,7 +53,8 @@ __webpack_require__.r(__webpack_exports__);
       iconSize,
       imageHeightOpen,
       imageWidth,
-      imageHeightClosed
+      imageHeightClosed,
+      titleFontSize
     } = attributes;
     const [iconColorPopoverOpen, setIconColorPopoverOpen] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useState)(false);
     const [iconBgColorPopoverOpen, setIconBgColorPopoverOpen] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useState)(false);
@@ -560,6 +561,32 @@ __webpack_require__.r(__webpack_exports__);
                 fontSize: "13px",
                 fontWeight: "600"
               },
+              children: "Title Settings"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.RangeControl, {
+              label: "Title Font Size (Optional)",
+              value: titleFontSize ? parseInt(titleFontSize) || 0 : undefined,
+              onChange: value => setAttributes({
+                titleFontSize: value ? `${value}px` : ""
+              }),
+              min: 10,
+              max: 50,
+              step: 1,
+              allowReset: true
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+            style: {
+              marginBottom: "16px",
+              marginTop: "24px",
+              paddingTop: "16px",
+              borderTop: "1px solid #ddd"
+            },
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("h3", {
+              style: {
+                marginTop: 0,
+                marginBottom: "12px",
+                fontSize: "13px",
+                fontWeight: "600"
+              },
               children: "Image Settings"
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.RangeControl, {
               label: "Image Width (Optional)",
@@ -705,6 +732,9 @@ __webpack_require__.r(__webpack_exports__);
                 },
                 children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
                   className: "bs-accordion-title",
+                  style: {
+                    fontSize: titleFontSize || undefined
+                  },
                   children: [showNumbering && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("span", {
                     className: "bs-accordion-number",
                     children: [index + 1, "."]
@@ -713,7 +743,10 @@ __webpack_require__.r(__webpack_exports__);
                     value: item.title,
                     onChange: value => updateItemTitle(index, value),
                     placeholder: "Enter accordion title...",
-                    allowedFormats: ["core/bold", "core/italic"]
+                    allowedFormats: ["core/bold", "core/italic"],
+                    style: {
+                      fontSize: titleFontSize || undefined
+                    }
                   })]
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
                   className: "bs-accordion-icon",
@@ -871,7 +904,8 @@ const generateAccordionHTML = attributes => {
     iconSize = "",
     imageHeightOpen = "",
     imageWidth = "",
-    imageHeightClosed = ""
+    imageHeightClosed = "",
+    titleFontSize = ""
   } = attributes;
 
   // Use the unique block ID for styling
@@ -936,6 +970,7 @@ const generateAccordionHTML = attributes => {
                     ${imageHeightOpen ? `--bs-accordion-image-height-open: ${imageHeightOpen};` : ""}
                     ${imageWidth ? `--bs-accordion-image-width: ${imageWidth};` : ""}
                     ${imageHeightClosed ? `--bs-accordion-image-height-closed: ${imageHeightClosed};` : ""}
+                    ${titleFontSize ? `--bs-accordion-title-font-size: ${titleFontSize};` : ""}
                 }
 				
 				#${uniqueId} .bs-accordion-item {
@@ -946,6 +981,11 @@ const generateAccordionHTML = attributes => {
 				#${uniqueId} .bs-accordion-header {
 					background-color: ${backgroundColor};
 					color: ${textColor};
+				}
+				
+				#${uniqueId} .bs-accordion-title,
+				#${uniqueId} .bs-accordion-title-text {
+					${titleFontSize ? `font-size: var(--bs-accordion-title-font-size);` : ""}
 				}
 				
 				#${uniqueId} .bs-accordion-item.open {

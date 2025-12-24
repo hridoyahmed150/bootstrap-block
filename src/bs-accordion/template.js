@@ -22,6 +22,7 @@ export const generateAccordionHTML = (attributes) => {
         imageHeightOpen = "",
         imageWidth = "",
         imageHeightClosed = "",
+        titleFontSize = "",
     } = attributes;
 
     // Use the unique block ID for styling
@@ -135,6 +136,11 @@ export const generateAccordionHTML = (attributes) => {
                             ? `--bs-accordion-image-height-closed: ${imageHeightClosed};`
                             : ""
                     }
+                    ${
+                        titleFontSize
+                            ? `--bs-accordion-title-font-size: ${titleFontSize};`
+                            : ""
+                    }
                 }
 				
 				#${uniqueId} .bs-accordion-item {
@@ -145,6 +151,11 @@ export const generateAccordionHTML = (attributes) => {
 				#${uniqueId} .bs-accordion-header {
 					background-color: ${backgroundColor};
 					color: ${textColor};
+				}
+				
+				#${uniqueId} .bs-accordion-title,
+				#${uniqueId} .bs-accordion-title-text {
+					${titleFontSize ? `font-size: var(--bs-accordion-title-font-size);` : ""}
 				}
 				
 				#${uniqueId} .bs-accordion-item.open {

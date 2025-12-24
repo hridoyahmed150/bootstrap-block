@@ -45,6 +45,7 @@ registerBlockType("bootstrap-blocks/bs-accordion", {
             imageHeightOpen,
             imageWidth,
             imageHeightClosed,
+            titleFontSize,
         } = attributes;
 
         const [iconColorPopoverOpen, setIconColorPopoverOpen] = useState(false);
@@ -637,6 +638,45 @@ registerBlockType("bootstrap-blocks/bs-accordion", {
                                     fontWeight: "600",
                                 }}
                             >
+                                Title Settings
+                            </h3>
+                            <RangeControl
+                                label="Title Font Size (Optional)"
+                                value={
+                                    titleFontSize
+                                        ? parseInt(titleFontSize) || 0
+                                        : undefined
+                                }
+                                onChange={(value) =>
+                                    setAttributes({
+                                        titleFontSize: value
+                                            ? `${value}px`
+                                            : "",
+                                    })
+                                }
+                                min={10}
+                                max={50}
+                                step={1}
+                                allowReset={true}
+                            />
+                        </div>
+
+                        <div
+                            style={{
+                                marginBottom: "16px",
+                                marginTop: "24px",
+                                paddingTop: "16px",
+                                borderTop: "1px solid #ddd",
+                            }}
+                        >
+                            <h3
+                                style={{
+                                    marginTop: 0,
+                                    marginBottom: "12px",
+                                    fontSize: "13px",
+                                    fontWeight: "600",
+                                }}
+                            >
                                 Image Settings
                             </h3>
                             <RangeControl
@@ -852,7 +892,13 @@ registerBlockType("bootstrap-blocks/bs-accordion", {
                                                 : textColor,
                                         }}
                                     >
-                                        <div className="bs-accordion-title">
+                                        <div
+                                            className="bs-accordion-title"
+                                            style={{
+                                                fontSize:
+                                                    titleFontSize || undefined,
+                                            }}
+                                        >
                                             {showNumbering && (
                                                 <span className="bs-accordion-number">
                                                     {index + 1}.
@@ -872,6 +918,11 @@ registerBlockType("bootstrap-blocks/bs-accordion", {
                                                     "core/bold",
                                                     "core/italic",
                                                 ]}
+                                                style={{
+                                                    fontSize:
+                                                        titleFontSize ||
+                                                        undefined,
+                                                }}
                                             />
                                         </div>
                                         <div

@@ -107,6 +107,10 @@
         "imageHeightClosed": {
             "type": "string",
             "default": ""
+        },
+        "titleFontSize": {
+            "type": "string",
+            "default": ""
         }
     },
     "supports": {
