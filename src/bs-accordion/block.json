@@ -20,21 +20,18 @@
 					"id": "item-1",
 					"title": "Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit, Sed Do Eiusmod?",
 					"content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-					"imageUrl": "",
 					"isOpen": true
 				},
 				{
 					"id": "item-2", 
 					"title": "Excepteur Sint Occaecat Cupidatat Non Proident, Sunt In Culpa Qui Officia Deserunt?",
 					"content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-					"imageUrl": "",
 					"isOpen": false
 				},
 				{
 					"id": "item-3",
 					"title": "Ut Enim Ad Minim Veniam, Quis Nostrud Exercitation Ullamco Laboris?",
 					"content": "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-					"imageUrl": "",
 					"isOpen": false
 				}
 			]
@@ -74,10 +71,6 @@
 		"blockId": {
 			"type": "string",
 			"default": ""
-		},
-		"iconBackgroundColor": {
-			"type": "string",
-			"default": "#000000"
 		}
 	},
 	"supports": {

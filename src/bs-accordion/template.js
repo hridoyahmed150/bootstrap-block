@@ -12,8 +12,7 @@ export const generateAccordionHTML = (attributes) => {
 		activeBackgroundColor = '#34B0E3',
 		activeTextColor = '#ffffff',
 		itemSpacing = 8,
-		blockId = 'bs-accordion-default',
-		iconBackgroundColor = '#000000'
+		blockId = 'bs-accordion-default'
 	} = attributes;
 
 	// Use the unique block ID for styling
@@ -24,43 +23,34 @@ export const generateAccordionHTML = (attributes) => {
 		return items.map((item, index) => {
 			const itemId = `${uniqueId}-item-${index}`;
 			const isOpen = item.isOpen ? 'open' : '';
-			const imageUrl = item.imageUrl || '';
 			
 			return `
-				<div class="bs-accordion-item ${isOpen}" data-index="${index}" style="display: flex; gap: 20px; align-items: flex-start;">
-					${imageUrl ? `
-						<div class="bs-accordion-image" style="flex-shrink: 0; width: 200px; height: ${item.isOpen ? '300px' : '120px'}; transition: height 0.3s ease; overflow: hidden; border-radius: 8px;">
-							<img src="${imageUrl}" alt="Accordion" style="width: 100%; height: 100%; object-fit: cover;" />
+				<div class="bs-accordion-item ${isOpen}" data-index="${index}">
+					<button 
+						class="bs-accordion-header" 
+						type="button"
+						aria-expanded="${item.isOpen}"
+						aria-controls="${itemId}-body"
+						data-index="${index}"
+					>
+						<div class="bs-accordion-title">
+							${showNumbering ? `<span class="bs-accordion-number">${index + 1}.</span>` : ''}
+							<span class="bs-accordion-title-text">${item.title}</span>
 						</div>
-					` : ''}
-					<div style="flex: 1; display: flex; flex-direction: column;">
-						<button 
-							class="bs-accordion-header" 
-							type="button"
-							aria-expanded="${item.isOpen}"
-							aria-controls="${itemId}-body"
-							data-index="${index}"
-							style="display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; cursor: pointer; border: none; width: 100%;"
-						>
-							<div class="bs-accordion-title">
-								${showNumbering ? `<span class="bs-accordion-number">${index + 1}.</span>` : ''}
-								<span class="bs-accordion-title-text">${item.title}</span>
-							</div>
-							<div class="bs-accordion-icon" style="background-color: ${iconBackgroundColor}; color: #ffffff; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 4px; font-size: 20px; font-weight: bold; flex-shrink: 0;">
-								${iconStyle === 'plus-minus' ? 
-									(item.isOpen ? '−' : '+') : 
-									(item.isOpen ? '⌄' : '⌃')
-								}
-							</div>
-						</button>
-						
-						<div 
-							class="bs-accordion-body ${isOpen}" 
-							id="${itemId}-body"
-						>
-							<div class="bs-accordion-content">
-								${item.content}
-							</div>
+						<div class="bs-accordion-icon">
+							${iconStyle === 'plus-minus' ? 
+								(item.isOpen ? '−' : '+') : 
+								(item.isOpen ? '⌄' : '⌃')
+							}
+						</div>
+					</button>
+					
+					<div 
+						class="bs-accordion-body ${isOpen}" 
+						id="${itemId}-body"
+					>
+						<div class="bs-accordion-content">
+							${item.content}
 						</div>
 					</div>
 				</div>
@@ -135,16 +125,13 @@ export const generateAccordionHTML = (attributes) => {
 							const height = getAccordionHeight(body);
 							body.style.maxHeight = height + 'px';
 						});
-						// Set initial image heights
-						updateIcons();
 					}
 					
-					// Function to update icons and image heights based on open/closed state
+					// Function to update icons based on open/closed state
 					function updateIcons() {
 						accordion.querySelectorAll('.bs-accordion-item').forEach((item, index) => {
 							const header = item.querySelector('.bs-accordion-header');
 							const icon = header.querySelector('.bs-accordion-icon');
-							const image = item.querySelector('.bs-accordion-image');
 							const isOpen = item.classList.contains('open');
 							
 							if (icon) {
@@ -153,11 +140,6 @@ export const generateAccordionHTML = (attributes) => {
 								} else {
 									icon.textContent = isOpen ? '⌄' : '⌃';
 								}
-							}
-							
-							// Update image height
-							if (image) {
-								image.style.height = isOpen ? '300px' : '120px';
 							}
 						});
 					}
@@ -183,7 +165,7 @@ export const generateAccordionHTML = (attributes) => {
 										otherItem.classList.remove('open');
 										otherHeader.setAttribute('aria-expanded', 'false');
 										otherBody.style.maxHeight = '0';
-										// Update icons and image heights for closed items
+										// Update icons for closed items
 										setTimeout(updateIcons, 50);
 									}
 								});
@@ -201,7 +183,7 @@ export const generateAccordionHTML = (attributes) => {
 								requestAnimationFrame(() => {
 									body.style.maxHeight = '0';
 									item.classList.remove('open');
-									// Update icons and image heights after class change
+									// Update icons after class change
 									setTimeout(updateIcons, 50);
 								});
 							} else {
@@ -219,7 +201,7 @@ export const generateAccordionHTML = (attributes) => {
 								// Animate to calculated height
 								requestAnimationFrame(() => {
 									body.style.maxHeight = height + 'px';
-									// Update icons and image heights after class change
+									// Update icons after class change
 									setTimeout(updateIcons, 50);
 									
 									// Set to none after animation for dynamic content
