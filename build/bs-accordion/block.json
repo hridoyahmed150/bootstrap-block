@@ -1,0 +1,139 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "bootstrap-blocks/bs-accordion",
+  "version": "1.0.0",
+  "title": "BS Accordion",
+  "category": "bootstrap-blocks",
+  "icon": "editor-ul",
+  "description": "A customizable accordion/FAQ block with multiple items, styling options, and interactive behavior.",
+  "keywords": [
+    "accordion",
+    "faq",
+    "collapse",
+    "bootstrap"
+  ],
+  "textdomain": "bootstrap-blocks",
+  "editorScript": "file:../../build/bs-accordion/index.js",
+  "editorStyle": "file:../../build/style-bs-accordion.css",
+  "style": "file:../../build/style-bs-accordion.css",
+  "attributes": {
+    "items": {
+      "type": "array",
+      "default": [
+        {
+          "id": "item-1",
+          "title": "Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit, Sed Do Eiusmod?",
+          "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+          "imageUrl": null,
+          "isOpen": true
+        },
+        {
+          "id": "item-2",
+          "title": "Excepteur Sint Occaecat Cupidatat Non Proident, Sunt In Culpa Qui Officia Deserunt?",
+          "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+          "imageUrl": null,
+          "isOpen": false
+        },
+        {
+          "id": "item-3",
+          "title": "Ut Enim Ad Minim Veniam, Quis Nostrud Exercitation Ullamco Laboris?",
+          "content": "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+          "imageUrl": null,
+          "isOpen": false
+        }
+      ]
+    },
+    "allowMultipleOpen": {
+      "type": "boolean",
+      "default": true
+    },
+    "showNumbering": {
+      "type": "boolean",
+      "default": true
+    },
+    "iconStyle": {
+      "type": "string",
+      "default": "plus-minus"
+    },
+    "backgroundColor": {
+      "type": "string",
+      "default": "#EAF9FF"
+    },
+    "textColor": {
+      "type": "string",
+      "default": "#333333"
+    },
+    "activeBackgroundColor": {
+      "type": "string",
+      "default": "#34B0E3"
+    },
+    "activeTextColor": {
+      "type": "string",
+      "default": "#ffffff"
+    },
+    "itemSpacing": {
+      "type": "number",
+      "default": 8
+    },
+    "blockId": {
+      "type": "string",
+      "default": ""
+    },
+    "itemPaddingTop": {
+      "type": "number",
+      "default": null
+    },
+    "itemPaddingBottom": {
+      "type": "number",
+      "default": null
+    },
+    "itemPaddingLeft": {
+      "type": "number",
+      "default": null
+    },
+    "itemPaddingRight": {
+      "type": "number",
+      "default": null
+    },
+    "iconBackgroundColor": {
+      "type": "string",
+      "default": null
+    },
+    "iconColor": {
+      "type": "string",
+      "default": null
+    },
+    "iconWidth": {
+      "type": "number",
+      "default": null
+    },
+    "iconHeight": {
+      "type": "number",
+      "default": null
+    },
+    "imageWidth": {
+      "type": "number",
+      "default": null
+    },
+    "imageHeightClosed": {
+      "type": "number",
+      "default": null
+    },
+    "imageHeightOpen": {
+      "type": "number",
+      "default": null
+    }
+  },
+  "supports": {
+    "html": false,
+    "align": [
+      "wide",
+      "full"
+    ],
+    "spacing": {
+      "margin": true,
+      "padding": true
+    }
+  }
+}

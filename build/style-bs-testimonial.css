@@ -1,0 +1,187 @@
+/*!**********************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[2].use[2]!./src/bs-testimonial/style.css ***!
+  \**********************************************************************************************************************************************************************************/
+/* BS Testimonial Block Styles */
+
+/* Review Card Styling */
+.bsb-review {
+    padding: 20px;
+}
+
+
+/* Rating Star Styling */
+.rating-star {
+    background-image: url(images/rating-5star.f8d3aba5.png);
+    background-size: auto;
+    height: 30px;
+    background-repeat: no-repeat;
+    background-position: left center;
+}
+
+/* Customer Thumb Styling */
+.customer-thumb {
+    align-items: center;
+    border-radius: 50px;
+    color: #fff;
+    display: flex;
+    font-size: 22px;
+    font-weight: 700;
+    height: 40px;
+    justify-content: center;
+    min-width: 40px;
+    flex-basis: 40px;
+}
+
+/* Read More Functionality */
+.testimonial-read-more {
+    color: #007cba !important;
+    cursor: pointer;
+    text-decoration: underline;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.testimonial-read-more:hover {
+    color: #005a87 !important;
+    text-decoration: none;
+}
+
+.testimonial-text-short,
+.testimonial-text-full {
+    display: inline;
+}
+
+.testimonial-text-full {
+    display: none;
+}
+
+/* Smooth transition for text expansion */
+.bsb-review .p {
+    transition: all 0.3s ease;
+}
+
+/* Scoped Slick Slider Styles - Only for our testimonial slider */
+.bsb-reviews .slick-track {
+    display: flex !important;
+    padding: 0 0 25px;
+}
+
+.bsb-reviews .slick-slide {
+    height: inherit !important;
+    -webkit-user-select: initial !important;
+       -moz-user-select: initial !important;
+            user-select: initial !important;
+}
+
+.bsb-reviews .slick-dots li:only-child {
+    display: none;
+}
+
+/* Arrow positioning */
+.bsb-reviews .slick-next {
+    right: -40px !important;
+}
+
+.bsb-reviews .slick-prev {
+    left: -40px !important;
+}
+
+.bsb-reviews .slick-prev:before,
+.bsb-reviews .slick-next:before {
+    display: block;
+}
+
+/* Arrow styling */
+.bsb-reviews .slick-arrow {
+    width: 29px !important;
+    height: 32px !important;
+    background-repeat: no-repeat !important;
+    background-size: auto !important;
+    background-position: center !important;
+    transition: .4s;
+    z-index: 1;
+}
+
+/* Arrow images - Light theme (default) */
+.bsb-reviews .slick-prev {
+    background-image: url(images/arrow-left.832ed050.png) !important;
+    background-size: contain !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+}
+
+.bsb-reviews .slick-prev:before {
+    display: none !important;
+}
+
+.bsb-reviews .slick-next {
+    background-image: url(images/arrow-right.8c85b21a.png) !important;
+    background-size: contain !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+}
+
+.bsb-reviews .slick-next:before {
+    display: none !important;
+}
+
+/* Arrow images - Dark theme */
+.bsb-theme-dark .slick-prev {
+    background-image: url(images/arrow-left.832ed050.png) !important;
+}
+
+.bsb-theme-dark .slick-next {
+    background-image: url(images/arrow-right.8c85b21a.png) !important;
+}
+
+/* Dots navigation */
+.bsb-reviews .slick-dots {
+    left: 0;
+}
+
+.bsb-reviews .slick-dots li button:before {
+    display: none;
+}
+
+.bsb-reviews .slick-dots li {
+    width: 17px;
+    height: 17px;
+    transition: .3s;
+    margin: 0 7px;
+}
+
+.bsb-reviews .slick-dots li button {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border-radius: 50px;
+    background-color: #D0D7E0;
+}
+
+.bsb-reviews .slick-dots li.slick-active button {
+    background-color: #007cba;
+}
+
+/* Responsive Adjustments */
+@media screen and (max-width: 991px) {
+    .bsb-reviews .slick-arrow {
+        display: none !important;
+        width: 40px !important;
+        height: 80px !important;
+        background-size: 18px !important;
+    }
+}
+
+@media screen and (max-width: 575px) {
+    .bsb-reviews .slick-arrow {
+        width: 40px !important;
+        height: 80px !important;
+        background-size: 18px !important;
+    }
+
+    .bsb-reviews .slick-prev {
+        background-position: calc(100% - 15px) center !important;
+    }
+}
+
+/*# sourceMappingURL=style-bs-testimonial.css.map*/
