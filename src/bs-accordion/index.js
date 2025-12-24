@@ -4,6 +4,8 @@ import {
     InspectorControls,
     RichText,
     BlockControls,
+    MediaUpload,
+    MediaUploadCheck,
 } from "@wordpress/block-editor";
 import { generateAccordionHTML } from "./template";
 import {
@@ -39,6 +41,9 @@ registerBlockType("bootstrap-blocks/bs-accordion", {
             iconBackgroundWidth,
             iconBackgroundHeight,
             iconSize,
+            imageHeightOpen,
+            imageWidth,
+            imageHeightClosed,
         } = attributes;
 
         const [iconColorPopoverOpen, setIconColorPopoverOpen] = useState(false);
@@ -84,6 +89,39 @@ registerBlockType("bootstrap-blocks/bs-accordion", {
         const updateItemContent = (index, content) => {
             const newItems = [...items];
             newItems[index].content = content;
+            setAttributes({ items: newItems });
+        };
+
+        // Update item image
+        const updateItemImage = (index, imageUrl) => {
+            const newItems = [...items];
+            if (!newItems[index].imageUrl) {
+                newItems[index].imageUrl = "";
+            }
+            if (!newItems[index].imageHeightClosed) {
+                newItems[index].imageHeightClosed = "";
+            }
+            if (!newItems[index].imageHeightOpen) {
+                newItems[index].imageHeightOpen = "";
+            }
+            newItems[index].imageUrl = imageUrl || "";
+            setAttributes({ items: newItems });
+        };
+
+        // Update item image height
+        const updateItemImageHeight = (index, type, value) => {
+            const newItems = [...items];
+            newItems[index][`imageHeight${type}`] = value ? `${value}px` : "";
+            setAttributes({ items: newItems });
+        };
+
+        // Update item image width
+        const updateItemImageWidth = (index, value) => {
+            const newItems = [...items];
+            if (!newItems[index].imageWidth) {
+                newItems[index].imageWidth = "";
+            }
+            newItems[index].imageWidth = value ? `${value}px` : "";
             setAttributes({ items: newItems });
         };
 
@@ -580,6 +618,193 @@ registerBlockType("bootstrap-blocks/bs-accordion", {
                                 allowReset={true}
                             />
                         </div>
+
+                        <div
+                            style={{
+                                marginBottom: "16px",
+                                marginTop: "24px",
+                                paddingTop: "16px",
+                                borderTop: "1px solid #ddd",
+                            }}
+                        >
+                            <h3
+                                style={{
+                                    marginTop: 0,
+                                    marginBottom: "12px",
+                                    fontSize: "13px",
+                                    fontWeight: "600",
+                                }}
+                            >
+                                Image Settings
+                            </h3>
+                            <RangeControl
+                                label="Image Width (Optional)"
+                                value={
+                                    imageWidth
+                                        ? parseInt(imageWidth) || 0
+                                        : undefined
+                                }
+                                onChange={(value) =>
+                                    setAttributes({
+                                        imageWidth: value ? `${value}px` : "",
+                                    })
+                                }
+                                min={0}
+                                max={500}
+                                step={1}
+                                allowReset={true}
+                            />
+                            <RangeControl
+                                label="Image Height - Closed State (Optional)"
+                                value={
+                                    imageHeightClosed
+                                        ? parseInt(imageHeightClosed) || 0
+                                        : undefined
+                                }
+                                onChange={(value) =>
+                                    setAttributes({
+                                        imageHeightClosed: value
+                                            ? `${value}px`
+                                            : "",
+                                    })
+                                }
+                                min={0}
+                                max={500}
+                                step={1}
+                                allowReset={true}
+                            />
+                            <RangeControl
+                                label="Image Height - Open State (Optional)"
+                                value={
+                                    imageHeightOpen
+                                        ? parseInt(imageHeightOpen) || 0
+                                        : undefined
+                                }
+                                onChange={(value) =>
+                                    setAttributes({
+                                        imageHeightOpen: value
+                                            ? `${value}px`
+                                            : "",
+                                    })
+                                }
+                                min={0}
+                                max={500}
+                                step={1}
+                                allowReset={true}
+                            />
+                        </div>
+                    </PanelBody>
+                    <PanelBody title="Item Images" initialOpen={false}>
+                        {items.map((item, index) => (
+                            <div
+                                key={item.id}
+                                style={{
+                                    marginBottom: "20px",
+                                    padding: "15px",
+                                    border: "1px solid #ddd",
+                                    borderRadius: "4px",
+                                }}
+                            >
+                                <h4
+                                    style={{
+                                        marginTop: 0,
+                                        marginBottom: "10px",
+                                    }}
+                                >
+                                    Item {index + 1}
+                                </h4>
+                                <div style={{ marginBottom: "10px" }}>
+                                    <label
+                                        style={{
+                                            display: "block",
+                                            marginBottom: "5px",
+                                            fontWeight: "600",
+                                            fontSize: "12px",
+                                        }}
+                                    >
+                                        Image (Optional)
+                                    </label>
+                                    <MediaUploadCheck>
+                                        <MediaUpload
+                                            onSelect={(media) =>
+                                                updateItemImage(
+                                                    index,
+                                                    media.url
+                                                )
+                                            }
+                                            allowedTypes={["image"]}
+                                            value={item.imageUrl}
+                                            render={({ open }) => (
+                                                <div>
+                                                    {item.imageUrl ? (
+                                                        <div
+                                                            style={{
+                                                                display: "flex",
+                                                                alignItems:
+                                                                    "center",
+                                                                gap: "8px",
+                                                                marginBottom:
+                                                                    "8px",
+                                                            }}
+                                                        >
+                                                            <img
+                                                                src={
+                                                                    item.imageUrl
+                                                                }
+                                                                alt="Item"
+                                                                style={{
+                                                                    maxWidth:
+                                                                        "60px",
+                                                                    height: "auto",
+                                                                    objectFit:
+                                                                        "contain",
+                                                                }}
+                                                            />
+                                                            <div>
+                                                                <Button
+                                                                    onClick={
+                                                                        open
+                                                                    }
+                                                                    variant="secondary"
+                                                                    size="small"
+                                                                >
+                                                                    Change
+                                                                </Button>
+                                                                <Button
+                                                                    onClick={() =>
+                                                                        updateItemImage(
+                                                                            index,
+                                                                            ""
+                                                                        )
+                                                                    }
+                                                                    variant="link"
+                                                                    isDestructive
+                                                                    size="small"
+                                                                    style={{
+                                                                        marginLeft:
+                                                                            "4px",
+                                                                    }}
+                                                                >
+                                                                    Remove
+                                                                </Button>
+                                                            </div>
+                                                        </div>
+                                                    ) : (
+                                                        <Button
+                                                            onClick={open}
+                                                            variant="secondary"
+                                                            size="small"
+                                                        >
+                                                            Select Image
+                                                        </Button>
+                                                    )}
+                                                </div>
+                                            )}
+                                        />
+                                    </MediaUploadCheck>
+                                </div>
+                            </div>
+                        ))}
                     </PanelBody>
                 </InspectorControls>
 
@@ -596,114 +821,143 @@ registerBlockType("bootstrap-blocks/bs-accordion", {
                                     padding: itemPadding || undefined,
                                 }}
                             >
-                                <div
-                                    className="bs-accordion-header"
-                                    onClick={() => toggleItem(index)}
-                                    style={{
-                                        backgroundColor: item.isOpen
-                                            ? activeBackgroundColor
-                                            : backgroundColor,
-                                        color: item.isOpen
-                                            ? activeTextColor
-                                            : textColor,
-                                    }}
-                                >
-                                    <div className="bs-accordion-title">
-                                        {showNumbering && (
-                                            <span className="bs-accordion-number">
-                                                {index + 1}.
-                                            </span>
-                                        )}
-                                        <RichText
-                                            tagName="span"
-                                            value={item.title}
-                                            onChange={(value) =>
-                                                updateItemTitle(index, value)
-                                            }
-                                            placeholder="Enter accordion title..."
-                                            allowedFormats={[
-                                                "core/bold",
-                                                "core/italic",
-                                            ]}
-                                        />
-                                    </div>
-                                    <div
-                                        className="bs-accordion-icon"
-                                        style={{
-                                            backgroundColor:
-                                                iconBackgroundColor ||
-                                                undefined,
-                                            width:
-                                                iconBackgroundWidth ||
-                                                undefined,
-                                            height:
-                                                iconBackgroundHeight ||
-                                                undefined,
-                                        }}
-                                    >
-                                        <span
-                                            className={`bs-accordion-icon-inner ${
-                                                iconStyle === "plus-minus"
-                                                    ? "bs-icon-plus-minus"
-                                                    : "bs-icon-chevron"
-                                            }`}
+                                {item.imageUrl && (
+                                    <div className="bs-accordion-image-wrapper">
+                                        <img
+                                            src={item.imageUrl}
+                                            alt=""
+                                            className="bs-accordion-image"
                                             style={{
-                                                color: iconColor || undefined,
-                                                fontSize:
-                                                    iconStyle ===
-                                                        "plus-minus" && iconSize
-                                                        ? iconSize
-                                                        : undefined,
+                                                height: item.isOpen
+                                                    ? imageHeightOpen || "auto"
+                                                    : imageHeightClosed ||
+                                                      "auto",
+                                                width: imageWidth || "auto",
                                             }}
-                                        >
-                                            {iconStyle === "plus-minus" ? (
-                                                item.isOpen ? (
-                                                    "−"
-                                                ) : (
-                                                    "+"
-                                                )
-                                            ) : (
-                                                <svg
-                                                    width={iconSize || "24"}
-                                                    height={iconSize || "24"}
-                                                    viewBox="0 0 24 24"
-                                                    fill="none"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                >
-                                                    <path
-                                                        d="M6.5 11.6L12 16l5.5-4.4-.9-1.2L12 14l-4.5-3.6-1 1.2z"
-                                                        fill="currentColor"
-                                                    />
-                                                </svg>
-                                            )}
-                                        </span>
-                                    </div>
-                                </div>
-
-                                {item.isOpen && (
-                                    <div
-                                        className="bs-accordion-body"
-                                        style={{
-                                            backgroundColor: backgroundColor,
-                                            color: textColor,
-                                        }}
-                                    >
-                                        <RichText
-                                            tagName="div"
-                                            value={item.content}
-                                            onChange={(value) =>
-                                                updateItemContent(index, value)
-                                            }
-                                            placeholder="Enter accordion content..."
-                                            allowedFormats={[
-                                                "core/bold",
-                                                "core/italic",
-                                                "core/link",
-                                                "core/strikethrough",
-                                            ]}
                                         />
                                     </div>
                                 )}
+                                <div className="bs-accordion-content-wrapper">
+                                    <div
+                                        className="bs-accordion-header"
+                                        onClick={() => toggleItem(index)}
+                                        style={{
+                                            backgroundColor: item.isOpen
+                                                ? activeBackgroundColor
+                                                : backgroundColor,
+                                            color: item.isOpen
+                                                ? activeTextColor
+                                                : textColor,
+                                        }}
+                                    >
+                                        <div className="bs-accordion-title">
+                                            {showNumbering && (
+                                                <span className="bs-accordion-number">
+                                                    {index + 1}.
+                                                </span>
+                                            )}
+                                            <RichText
+                                                tagName="span"
+                                                value={item.title}
+                                                onChange={(value) =>
+                                                    updateItemTitle(
+                                                        index,
+                                                        value
+                                                    )
+                                                }
+                                                placeholder="Enter accordion title..."
+                                                allowedFormats={[
+                                                    "core/bold",
+                                                    "core/italic",
+                                                ]}
+                                            />
+                                        </div>
+                                        <div
+                                            className="bs-accordion-icon"
+                                            style={{
+                                                backgroundColor:
+                                                    iconBackgroundColor ||
+                                                    undefined,
+                                                width:
+                                                    iconBackgroundWidth ||
+                                                    undefined,
+                                                height:
+                                                    iconBackgroundHeight ||
+                                                    undefined,
+                                            }}
+                                        >
+                                            <span
+                                                className={`bs-accordion-icon-inner ${
+                                                    iconStyle === "plus-minus"
+                                                        ? "bs-icon-plus-minus"
+                                                        : "bs-icon-chevron"
+                                                }`}
+                                                style={{
+                                                    color:
+                                                        iconColor || undefined,
+                                                    fontSize:
+                                                        iconStyle ===
+                                                            "plus-minus" &&
+                                                        iconSize
+                                                            ? iconSize
+                                                            : undefined,
+                                                }}
+                                            >
+                                                {iconStyle === "plus-minus" ? (
+                                                    item.isOpen ? (
+                                                        "−"
+                                                    ) : (
+                                                        "+"
+                                                    )
+                                                ) : (
+                                                    <svg
+                                                        width={iconSize || "24"}
+                                                        height={
+                                                            iconSize || "24"
+                                                        }
+                                                        viewBox="0 0 24 24"
+                                                        fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                    >
+                                                        <path
+                                                            d="M6.5 11.6L12 16l5.5-4.4-.9-1.2L12 14l-4.5-3.6-1 1.2z"
+                                                            fill="currentColor"
+                                                        />
+                                                    </svg>
+                                                )}
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    {item.isOpen && (
+                                        <div
+                                            className="bs-accordion-body"
+                                            style={{
+                                                backgroundColor:
+                                                    backgroundColor,
+                                                color: textColor,
+                                            }}
+                                        >
+                                            <RichText
+                                                tagName="div"
+                                                value={item.content}
+                                                onChange={(value) =>
+                                                    updateItemContent(
+                                                        index,
+                                                        value
+                                                    )
+                                                }
+                                                placeholder="Enter accordion content..."
+                                                allowedFormats={[
+                                                    "core/bold",
+                                                    "core/italic",
+                                                    "core/link",
+                                                    "core/strikethrough",
+                                                ]}
+                                            />
+                                        </div>
+                                    )}
+                                </div>
 
                                 <div className="bs-accordion-controls">
                                     <Button

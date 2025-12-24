@@ -100,6 +100,18 @@
     "iconSize": {
       "type": "string",
       "default": ""
+    },
+    "imageHeightOpen": {
+      "type": "string",
+      "default": ""
+    },
+    "imageWidth": {
+      "type": "string",
+      "default": ""
+    },
+    "imageHeightClosed": {
+      "type": "string",
+      "default": ""
     }
   },
   "supports": {

@@ -19,6 +19,9 @@ export const generateAccordionHTML = (attributes) => {
         iconBackgroundWidth = "",
         iconBackgroundHeight = "",
         iconSize = "",
+        imageHeightOpen = "",
+        imageWidth = "",
+        imageHeightClosed = "",
     } = attributes;
 
     // Use the unique block ID for styling
@@ -33,6 +36,14 @@ export const generateAccordionHTML = (attributes) => {
 
                 return `
 				<div class="bs-accordion-item ${isOpen}" data-index="${index}">
+					${
+                        item.imageUrl
+                            ? `<div class="bs-accordion-image-wrapper">
+						<img src="${item.imageUrl}" alt="" class="bs-accordion-image" data-item-index="${index}" />
+					</div>`
+                            : ""
+                    }
+					<div class="bs-accordion-content-wrapper">
 					<button 
 						class="bs-accordion-header" 
 						type="button"
@@ -75,6 +86,7 @@ export const generateAccordionHTML = (attributes) => {
 							${item.content}
 						</div>
 					</div>
+					</div>
 				</div>
 			`;
             })
@@ -108,6 +120,21 @@ export const generateAccordionHTML = (attributes) => {
                             : ""
                     }
                     ${iconSize ? `--bs-accordion-icon-size: ${iconSize};` : ""}
+                    ${
+                        imageHeightOpen
+                            ? `--bs-accordion-image-height-open: ${imageHeightOpen};`
+                            : ""
+                    }
+                    ${
+                        imageWidth
+                            ? `--bs-accordion-image-width: ${imageWidth};`
+                            : ""
+                    }
+                    ${
+                        imageHeightClosed
+                            ? `--bs-accordion-image-height-closed: ${imageHeightClosed};`
+                            : ""
+                    }
                 }
 				
 				#${uniqueId} .bs-accordion-item {
@@ -167,6 +194,27 @@ export const generateAccordionHTML = (attributes) => {
 				}`
                         : ""
                 }
+				${
+                    imageHeightOpen || imageWidth || imageHeightClosed
+                        ? `
+				#${uniqueId} .bs-accordion-image,
+				#${uniqueId} .bs-accordion-image picture,
+				#${uniqueId} .bs-accordion-image img {
+					${imageWidth ? `width: var(--bs-accordion-image-width);` : ""}
+					transition: height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+				}
+				#${uniqueId} .bs-accordion-item.open .bs-accordion-image,
+				#${uniqueId} .bs-accordion-item.open .bs-accordion-image picture,
+				#${uniqueId} .bs-accordion-item.open .bs-accordion-image img {
+					${imageHeightOpen ? `height: var(--bs-accordion-image-height-open);` : ""}
+				}
+				#${uniqueId} .bs-accordion-item:not(.open) .bs-accordion-image,
+				#${uniqueId} .bs-accordion-item:not(.open) .bs-accordion-image picture,
+				#${uniqueId} .bs-accordion-item:not(.open) .bs-accordion-image img {
+					${imageHeightClosed ? `height: var(--bs-accordion-image-height-closed);` : ""}
+				}`
+                        : ""
+                }
 			</style>
 		`;
     };
@@ -221,6 +269,38 @@ export const generateAccordionHTML = (attributes) => {
 						});
 					}
 					
+					// Function to update image heights
+					function updateImageHeights() {
+						accordion.querySelectorAll('.bs-accordion-item').forEach((itemEl) => {
+							const imageWrapper = itemEl.querySelector('.bs-accordion-image');
+							if (imageWrapper) {
+								const isOpen = itemEl.classList.contains('open');
+								const heightOpen = '${imageHeightOpen || ""}';
+								const heightClosed = '${imageHeightClosed || ""}';
+								const width = '${imageWidth || ""}';
+								
+								// Handle picture element or img element
+								const picture = imageWrapper.querySelector('picture');
+								const img = picture ? picture.querySelector('img') : imageWrapper.querySelector('img') || imageWrapper;
+								
+								const elementsToUpdate = [imageWrapper];
+								if (picture) elementsToUpdate.push(picture);
+								if (img) elementsToUpdate.push(img);
+								
+								elementsToUpdate.forEach((el) => {
+									if (isOpen && heightOpen) {
+										el.style.height = heightOpen;
+									} else if (!isOpen && heightClosed) {
+										el.style.height = heightClosed;
+									}
+									if (width) {
+										el.style.width = width;
+									}
+								});
+							}
+						});
+					}
+					
 					headers.forEach(header => {
 						header.addEventListener('click', function() {
 							const index = parseInt(this.dataset.index);
@@ -243,7 +323,10 @@ export const generateAccordionHTML = (attributes) => {
 										otherHeader.setAttribute('aria-expanded', 'false');
 										otherBody.style.maxHeight = '0';
 										// Update icons for closed items
-										setTimeout(updateIcons, 50);
+										setTimeout(() => {
+											updateIcons();
+											updateImageHeights();
+										}, 50);
 									}
 								});
 							}
@@ -261,7 +344,10 @@ export const generateAccordionHTML = (attributes) => {
 									body.style.maxHeight = '0';
 									item.classList.remove('open');
 									// Update icons after class change
-									setTimeout(updateIcons, 50);
+									setTimeout(() => {
+										updateIcons();
+										updateImageHeights();
+									}, 50);
 								});
 							} else {
 								// Opening: first set maxHeight to 0, add class, then animate
@@ -279,7 +365,10 @@ export const generateAccordionHTML = (attributes) => {
 								requestAnimationFrame(() => {
 									body.style.maxHeight = height + 'px';
 									// Update icons after class change
-									setTimeout(updateIcons, 50);
+									setTimeout(() => {
+										updateIcons();
+										updateImageHeights();
+									}, 50);
 									
 									// Set to none after animation for dynamic content
 									setTimeout(() => {
@@ -296,6 +385,7 @@ export const generateAccordionHTML = (attributes) => {
 					setTimeout(() => {
 						setInitialHeights();
 						updateIcons();
+						updateImageHeights();
 					}, 100);
 					
 					// Also set heights on window resize
