@@ -57,6 +57,7 @@ __webpack_require__.r(__webpack_exports__);
     } = attributes;
     const [iconColorPopoverOpen, setIconColorPopoverOpen] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useState)(false);
     const [iconBgColorPopoverOpen, setIconBgColorPopoverOpen] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useState)(false);
+    const [htmlMode, setHtmlMode] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useState)({});
 
     // Generate unique block ID if not exists
     if (!blockId) {
@@ -740,19 +741,44 @@ __webpack_require__.r(__webpack_exports__);
                     })
                   })
                 })]
-              }), item.isOpen && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+              }), item.isOpen && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
                 className: "bs-accordion-body",
                 style: {
                   backgroundColor: backgroundColor,
                   color: textColor
                 },
-                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText, {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+                  style: {
+                    marginBottom: "10px"
+                  },
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Button, {
+                    onClick: () => setHtmlMode({
+                      ...htmlMode,
+                      [index]: !htmlMode[index]
+                    }),
+                    variant: "secondary",
+                    size: "small",
+                    style: {
+                      marginBottom: "10px"
+                    },
+                    children: htmlMode[index] ? "Visual Editor" : "HTML Editor"
+                  })
+                }), htmlMode[index] ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextareaControl, {
+                  value: item.content || "",
+                  onChange: value => updateItemContent(index, value),
+                  placeholder: "Enter HTML code here...",
+                  rows: 8,
+                  style: {
+                    fontFamily: "monospace",
+                    fontSize: "12px"
+                  }
+                }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText, {
                   tagName: "div",
                   value: item.content,
                   onChange: value => updateItemContent(index, value),
                   placeholder: "Enter accordion content...",
                   allowedFormats: ["core/bold", "core/italic", "core/link", "core/strikethrough"]
-                })
+                })]
               })]
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
               className: "bs-accordion-controls",
@@ -967,19 +993,6 @@ const generateAccordionHTML = attributes => {
 				#${uniqueId} .bs-accordion-item:not(.open) .bs-accordion-image picture,
 				#${uniqueId} .bs-accordion-item:not(.open) .bs-accordion-image img {
 					${imageHeightClosed ? `height: var(--bs-accordion-image-height-closed);` : ""}
-				}
-				@media (max-width: 768px) {
-					#${uniqueId} .bs-accordion-image-wrapper {
-						width: 100% !important;
-						max-width: 100% !important;
-						margin-right: 0 !important;
-					}
-					#${uniqueId} .bs-accordion-image,
-					#${uniqueId} .bs-accordion-image picture,
-					#${uniqueId} .bs-accordion-image img {
-						width: 100% !important;
-						max-width: 100% !important;
-					}
 				}` : ""}
 			</style>
 		`;

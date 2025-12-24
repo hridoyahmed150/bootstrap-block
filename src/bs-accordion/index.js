@@ -11,6 +11,7 @@ import { generateAccordionHTML } from "./template";
 import {
     PanelBody,
     TextControl,
+    TextareaControl,
     ToggleControl,
     SelectControl,
     RangeControl,
@@ -49,6 +50,7 @@ registerBlockType("bootstrap-blocks/bs-accordion", {
         const [iconColorPopoverOpen, setIconColorPopoverOpen] = useState(false);
         const [iconBgColorPopoverOpen, setIconBgColorPopoverOpen] =
             useState(false);
+        const [htmlMode, setHtmlMode] = useState({});
 
         // Generate unique block ID if not exists
         if (!blockId) {
@@ -938,23 +940,65 @@ registerBlockType("bootstrap-blocks/bs-accordion", {
                                                 color: textColor,
                                             }}
                                         >
-                                            <RichText
-                                                tagName="div"
-                                                value={item.content}
-                                                onChange={(value) =>
-                                                    updateItemContent(
-                                                        index,
-                                                        value
-                                                    )
-                                                }
-                                                placeholder="Enter accordion content..."
-                                                allowedFormats={[
-                                                    "core/bold",
-                                                    "core/italic",
-                                                    "core/link",
-                                                    "core/strikethrough",
-                                                ]}
-                                            />
+                                            <div
+                                                style={{ marginBottom: "10px" }}
+                                            >
+                                                <Button
+                                                    onClick={() =>
+                                                        setHtmlMode({
+                                                            ...htmlMode,
+                                                            [index]:
+                                                                !htmlMode[
+                                                                    index
+                                                                ],
+                                                        })
+                                                    }
+                                                    variant="secondary"
+                                                    size="small"
+                                                    style={{
+                                                        marginBottom: "10px",
+                                                    }}
+                                                >
+                                                    {htmlMode[index]
+                                                        ? "Visual Editor"
+                                                        : "HTML Editor"}
+                                                </Button>
+                                            </div>
+                                            {htmlMode[index] ? (
+                                                <TextareaControl
+                                                    value={item.content || ""}
+                                                    onChange={(value) =>
+                                                        updateItemContent(
+                                                            index,
+                                                            value
+                                                        )
+                                                    }
+                                                    placeholder="Enter HTML code here..."
+                                                    rows={8}
+                                                    style={{
+                                                        fontFamily: "monospace",
+                                                        fontSize: "12px",
+                                                    }}
+                                                />
+                                            ) : (
+                                                <RichText
+                                                    tagName="div"
+                                                    value={item.content}
+                                                    onChange={(value) =>
+                                                        updateItemContent(
+                                                            index,
+                                                            value
+                                                        )
+                                                    }
+                                                    placeholder="Enter accordion content..."
+                                                    allowedFormats={[
+                                                        "core/bold",
+                                                        "core/italic",
+                                                        "core/link",
+                                                        "core/strikethrough",
+                                                    ]}
+                                                />
+                                            )}
                                         </div>
                                     )}
                                 </div>
