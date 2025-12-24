@@ -1,0 +1,123 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "bootstrap-blocks/bs-feature-cards",
+  "version": "1.0.0",
+  "title": "BS Feature Cards",
+  "category": "bootstrap-blocks",
+  "icon": "grid-view",
+  "description": "A customizable feature/service cards block with icons, titles, and descriptions.",
+  "keywords": [
+    "feature",
+    "service",
+    "cards",
+    "icon",
+    "bootstrap"
+  ],
+  "textdomain": "bootstrap-blocks",
+  "editorScript": "file:../../build/bs-feature-cards/index.js",
+  "editorStyle": "file:../../build/style-bs-feature-cards.css",
+  "style": "file:../../build/style-bs-feature-cards.css",
+  "attributes": {
+    "items": {
+      "type": "array",
+      "default": [
+        {
+          "id": "item-1",
+          "title": "Professional Landscape Construction",
+          "description": "We specialize in creating outdoor living spaces using top-quality materials and expert craftsmanship.",
+          "iconUrl": ""
+        },
+        {
+          "id": "item-2",
+          "title": "End-To-End Project Management",
+          "description": "From site preparation to final cleanup, we handle every step of your project to ensure a smooth process and on-time completion.",
+          "iconUrl": ""
+        },
+        {
+          "id": "item-3",
+          "title": "High-Quality Materials & Techniques",
+          "description": "Our team uses proven methods and premium products to build outdoor spaces that withstand weather and stay beautiful for years.",
+          "iconUrl": ""
+        },
+        {
+          "id": "item-4",
+          "title": "Customer-First Approach",
+          "description": "We prioritize clear communication, transparency, and your satisfaction—so you get the outdoor space you envisioned, stress-free.",
+          "iconUrl": ""
+        }
+      ]
+    },
+    "columns": {
+      "type": "number",
+      "default": 3
+    },
+    "cardSpacing": {
+      "type": "number",
+      "default": 20
+    },
+    "cardPadding": {
+      "type": "string",
+      "default": ""
+    },
+    "cardBorderRadius": {
+      "type": "string",
+      "default": ""
+    },
+    "iconSize": {
+      "type": "string",
+      "default": ""
+    },
+    "iconBorderRadius": {
+      "type": "string",
+      "default": ""
+    },
+    "iconPosition": {
+      "type": "string",
+      "default": "top"
+    },
+    "iconBackgroundColor": {
+      "type": "string",
+      "default": "#4CAF50"
+    },
+    "cardBackgroundColor": {
+      "type": "string",
+      "default": "#ffffff"
+    },
+    "textColor": {
+      "type": "string",
+      "default": "#333333"
+    },
+    "cardHoverBackgroundColor": {
+      "type": "string",
+      "default": ""
+    },
+    "cardHoverTextColor": {
+      "type": "string",
+      "default": ""
+    },
+    "iconHoverBackgroundColor": {
+      "type": "string",
+      "default": ""
+    },
+    "iconHoverColor": {
+      "type": "string",
+      "default": ""
+    },
+    "blockId": {
+      "type": "string",
+      "default": ""
+    }
+  },
+  "supports": {
+    "html": false,
+    "align": [
+      "wide",
+      "full"
+    ],
+    "spacing": {
+      "margin": true,
+      "padding": true
+    }
+  }
+}

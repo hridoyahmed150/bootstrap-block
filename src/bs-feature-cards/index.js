@@ -1,0 +1,1199 @@
+import { registerBlockType } from "@wordpress/blocks";
+import {
+    useBlockProps,
+    InspectorControls,
+    RichText,
+    MediaUpload,
+    MediaUploadCheck,
+} from "@wordpress/block-editor";
+import { generateFeatureCardsHTML } from "./template";
+import {
+    PanelBody,
+    TextControl,
+    RangeControl,
+    Button,
+    ColorPicker,
+    Popover,
+    SelectControl,
+    __experimentalRepeaterControl as RepeaterControl,
+} from "@wordpress/components";
+import { useState } from "@wordpress/element";
+import "./style.css";
+
+registerBlockType("bootstrap-blocks/bs-feature-cards", {
+    edit: ({ attributes, setAttributes, clientId }) => {
+        const {
+            items,
+            columns,
+            cardSpacing,
+            cardPadding,
+            cardBorderRadius,
+            iconSize,
+            iconBorderRadius,
+            iconPosition,
+            iconBackgroundColor,
+            cardBackgroundColor,
+            textColor,
+            cardHoverBackgroundColor,
+            cardHoverTextColor,
+            iconHoverBackgroundColor,
+            iconHoverColor,
+            blockId,
+        } = attributes;
+
+        const [iconColorPopoverOpen, setIconColorPopoverOpen] = useState(false);
+        const [cardBgColorPopoverOpen, setCardBgColorPopoverOpen] =
+            useState(false);
+        const [textColorPopoverOpen, setTextColorPopoverOpen] = useState(false);
+        const [cardHoverBgColorPopoverOpen, setCardHoverBgColorPopoverOpen] =
+            useState(false);
+        const [
+            cardHoverTextColorPopoverOpen,
+            setCardHoverTextColorPopoverOpen,
+        ] = useState(false);
+        const [iconHoverBgColorPopoverOpen, setIconHoverBgColorPopoverOpen] =
+            useState(false);
+        const [iconHoverColorPopoverOpen, setIconHoverColorPopoverOpen] =
+            useState(false);
+
+        // Generate unique block ID if not exists
+        if (!blockId) {
+            setAttributes({ blockId: `bs-feature-cards-${clientId}` });
+        }
+
+        // Helper function to convert hex to CSS filter for SVG color change
+        const hexToFilter = (hex) => {
+            if (!hex) return "";
+            // Remove # if present
+            hex = hex.replace("#", "");
+            // Convert hex to RGB
+            const r = parseInt(hex.substr(0, 2), 16);
+            const g = parseInt(hex.substr(2, 2), 16);
+            const b = parseInt(hex.substr(4, 2), 16);
+            // Calculate filter values for color change
+            // Using a more accurate method for color conversion
+            const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+            const hue = Math.round(
+                (Math.atan2(g - b, r - (g + b) / 2) * 180) / Math.PI
+            );
+            return `brightness(0) saturate(100%) invert(${
+                brightness > 128 ? "1" : "0"
+            }) sepia(100%) saturate(10000%) hue-rotate(${hue}deg)`;
+        };
+
+        const blockProps = useBlockProps({
+            className: "bs-feature-cards-container",
+        });
+
+        // Add new item
+        const addItem = () => {
+            const newItem = {
+                id: `item-${Date.now()}`,
+                title: "New Feature",
+                description: "Add your description here...",
+                iconUrl: "",
+            };
+            setAttributes({
+                items: [...items, newItem],
+            });
+        };
+
+        // Remove item
+        const removeItem = (index) => {
+            const newItems = items.filter((_, i) => i !== index);
+            setAttributes({ items: newItems });
+        };
+
+        // Update item
+        const updateItem = (index, field, value) => {
+            const newItems = [...items];
+            newItems[index] = { ...newItems[index], [field]: value };
+            setAttributes({ items: newItems });
+        };
+
+        // Update item image
+        const updateItemImage = (index, imageUrl) => {
+            updateItem(index, "iconUrl", imageUrl || "");
+        };
+
+        return (
+            <>
+                <InspectorControls>
+                    <PanelBody title="Layout Settings" initialOpen={true}>
+                        <SelectControl
+                            label="Columns"
+                            value={columns}
+                            options={[
+                                { label: "1 Column", value: 1 },
+                                { label: "2 Columns", value: 2 },
+                                { label: "3 Columns", value: 3 },
+                                { label: "4 Columns", value: 4 },
+                            ]}
+                            onChange={(value) =>
+                                setAttributes({ columns: parseInt(value) })
+                            }
+                        />
+                        <RangeControl
+                            label="Card Spacing"
+                            value={cardSpacing}
+                            onChange={(value) =>
+                                setAttributes({ cardSpacing: value })
+                            }
+                            min={0}
+                            max={100}
+                            step={1}
+                        />
+                        <TextControl
+                            label="Card Padding (Optional)"
+                            value={cardPadding || ""}
+                            onChange={(value) =>
+                                setAttributes({ cardPadding: value })
+                            }
+                            placeholder="e.g., 20px 30px"
+                        />
+                        <RangeControl
+                            label="Card Border Radius (Optional)"
+                            value={
+                                cardBorderRadius
+                                    ? parseInt(cardBorderRadius) || 0
+                                    : undefined
+                            }
+                            onChange={(value) =>
+                                setAttributes({
+                                    cardBorderRadius: value ? `${value}px` : "",
+                                })
+                            }
+                            min={0}
+                            max={50}
+                            step={1}
+                            allowReset={true}
+                        />
+                        <SelectControl
+                            label="Icon Position"
+                            value={iconPosition}
+                            options={[
+                                { label: "Top", value: "top" },
+                                { label: "Left", value: "left" },
+                            ]}
+                            onChange={(value) =>
+                                setAttributes({ iconPosition: value })
+                            }
+                        />
+                        <RangeControl
+                            label="Icon Size (Optional)"
+                            value={
+                                iconSize ? parseInt(iconSize) || 0 : undefined
+                            }
+                            onChange={(value) =>
+                                setAttributes({
+                                    iconSize: value ? `${value}px` : "",
+                                })
+                            }
+                            min={20}
+                            max={100}
+                            step={1}
+                            allowReset={true}
+                        />
+                        <RangeControl
+                            label="Icon Border Radius (Optional)"
+                            value={
+                                iconBorderRadius
+                                    ? parseInt(iconBorderRadius) || 0
+                                    : undefined
+                            }
+                            onChange={(value) =>
+                                setAttributes({
+                                    iconBorderRadius: value ? `${value}px` : "",
+                                })
+                            }
+                            min={0}
+                            max={50}
+                            step={1}
+                            allowReset={true}
+                        />
+                    </PanelBody>
+                    <PanelBody title="Feature Cards" initialOpen={true}>
+                        <div style={{ marginBottom: "16px" }}>
+                            <h4
+                                style={{
+                                    marginTop: 0,
+                                    marginBottom: "10px",
+                                    fontSize: "12px",
+                                    fontWeight: "600",
+                                }}
+                            >
+                                Global Colors
+                            </h4>
+                            <div style={{ marginBottom: "10px" }}>
+                                <label
+                                    style={{
+                                        display: "block",
+                                        marginBottom: "5px",
+                                        fontSize: "12px",
+                                        fontWeight: "600",
+                                    }}
+                                >
+                                    Icon Background Color
+                                </label>
+                                <div style={{ position: "relative" }}>
+                                    <Button
+                                        onClick={() =>
+                                            setIconColorPopoverOpen(
+                                                !iconColorPopoverOpen
+                                            )
+                                        }
+                                        variant="secondary"
+                                        style={{
+                                            width: "100%",
+                                            height: "32px",
+                                            backgroundColor:
+                                                iconBackgroundColor ||
+                                                "transparent",
+                                            border: "1px solid #ddd",
+                                        }}
+                                    >
+                                        {iconBackgroundColor || "Select"}
+                                    </Button>
+                                    {iconColorPopoverOpen && (
+                                        <Popover
+                                            onClose={() =>
+                                                setIconColorPopoverOpen(false)
+                                            }
+                                        >
+                                            <ColorPicker
+                                                color={
+                                                    iconBackgroundColor ||
+                                                    undefined
+                                                }
+                                                onChangeComplete={(value) => {
+                                                    let colorValue = "";
+                                                    if (
+                                                        value.rgb &&
+                                                        value.rgb.a !==
+                                                            undefined &&
+                                                        value.rgb.a < 1
+                                                    ) {
+                                                        colorValue = `rgba(${value.rgb.r}, ${value.rgb.g}, ${value.rgb.b}, ${value.rgb.a})`;
+                                                    } else {
+                                                        colorValue =
+                                                            value.hex || "";
+                                                    }
+                                                    setAttributes({
+                                                        iconBackgroundColor:
+                                                            colorValue,
+                                                    });
+                                                }}
+                                            />
+                                        </Popover>
+                                    )}
+                                </div>
+                                {iconBackgroundColor && (
+                                    <Button
+                                        onClick={() =>
+                                            setAttributes({
+                                                iconBackgroundColor: "#4CAF50",
+                                            })
+                                        }
+                                        variant="link"
+                                        style={{
+                                            marginTop: "4px",
+                                            fontSize: "11px",
+                                        }}
+                                    >
+                                        Reset
+                                    </Button>
+                                )}
+                            </div>
+                            <div style={{ marginBottom: "10px" }}>
+                                <label
+                                    style={{
+                                        display: "block",
+                                        marginBottom: "5px",
+                                        fontSize: "12px",
+                                        fontWeight: "600",
+                                    }}
+                                >
+                                    Card Background Color
+                                </label>
+                                <div style={{ position: "relative" }}>
+                                    <Button
+                                        onClick={() =>
+                                            setCardBgColorPopoverOpen(
+                                                !cardBgColorPopoverOpen
+                                            )
+                                        }
+                                        variant="secondary"
+                                        style={{
+                                            width: "100%",
+                                            height: "32px",
+                                            backgroundColor:
+                                                cardBackgroundColor ||
+                                                "transparent",
+                                            border: "1px solid #ddd",
+                                        }}
+                                    >
+                                        {cardBackgroundColor || "Select"}
+                                    </Button>
+                                    {cardBgColorPopoverOpen && (
+                                        <Popover
+                                            onClose={() =>
+                                                setCardBgColorPopoverOpen(false)
+                                            }
+                                        >
+                                            <ColorPicker
+                                                color={
+                                                    cardBackgroundColor ||
+                                                    undefined
+                                                }
+                                                onChangeComplete={(value) => {
+                                                    let colorValue = "";
+                                                    if (
+                                                        value.rgb &&
+                                                        value.rgb.a !==
+                                                            undefined &&
+                                                        value.rgb.a < 1
+                                                    ) {
+                                                        colorValue = `rgba(${value.rgb.r}, ${value.rgb.g}, ${value.rgb.b}, ${value.rgb.a})`;
+                                                    } else {
+                                                        colorValue =
+                                                            value.hex || "";
+                                                    }
+                                                    setAttributes({
+                                                        cardBackgroundColor:
+                                                            colorValue,
+                                                    });
+                                                }}
+                                            />
+                                        </Popover>
+                                    )}
+                                </div>
+                                {cardBackgroundColor && (
+                                    <Button
+                                        onClick={() =>
+                                            setAttributes({
+                                                cardBackgroundColor: "#ffffff",
+                                            })
+                                        }
+                                        variant="link"
+                                        style={{
+                                            marginTop: "4px",
+                                            fontSize: "11px",
+                                        }}
+                                    >
+                                        Reset
+                                    </Button>
+                                )}
+                            </div>
+                            <div style={{ marginBottom: "10px" }}>
+                                <label
+                                    style={{
+                                        display: "block",
+                                        marginBottom: "5px",
+                                        fontSize: "12px",
+                                        fontWeight: "600",
+                                    }}
+                                >
+                                    Text Color
+                                </label>
+                                <div style={{ position: "relative" }}>
+                                    <Button
+                                        onClick={() =>
+                                            setTextColorPopoverOpen(
+                                                !textColorPopoverOpen
+                                            )
+                                        }
+                                        variant="secondary"
+                                        style={{
+                                            width: "100%",
+                                            height: "32px",
+                                            backgroundColor:
+                                                textColor || "transparent",
+                                            border: "1px solid #ddd",
+                                        }}
+                                    >
+                                        {textColor || "Select"}
+                                    </Button>
+                                    {textColorPopoverOpen && (
+                                        <Popover
+                                            onClose={() =>
+                                                setTextColorPopoverOpen(false)
+                                            }
+                                        >
+                                            <ColorPicker
+                                                color={textColor || undefined}
+                                                onChangeComplete={(value) => {
+                                                    let colorValue = "";
+                                                    if (
+                                                        value.rgb &&
+                                                        value.rgb.a !==
+                                                            undefined &&
+                                                        value.rgb.a < 1
+                                                    ) {
+                                                        colorValue = `rgba(${value.rgb.r}, ${value.rgb.g}, ${value.rgb.b}, ${value.rgb.a})`;
+                                                    } else {
+                                                        colorValue =
+                                                            value.hex || "";
+                                                    }
+                                                    setAttributes({
+                                                        textColor: colorValue,
+                                                    });
+                                                }}
+                                            />
+                                        </Popover>
+                                    )}
+                                </div>
+                                {textColor && (
+                                    <Button
+                                        onClick={() =>
+                                            setAttributes({
+                                                textColor: "#333333",
+                                            })
+                                        }
+                                        variant="link"
+                                        style={{
+                                            marginTop: "4px",
+                                            fontSize: "11px",
+                                        }}
+                                    >
+                                        Reset
+                                    </Button>
+                                )}
+                            </div>
+                            <div style={{ marginBottom: "10px" }}>
+                                <label
+                                    style={{
+                                        display: "block",
+                                        marginBottom: "5px",
+                                        fontSize: "12px",
+                                        fontWeight: "600",
+                                    }}
+                                >
+                                    Card Hover Background Color (Optional)
+                                </label>
+                                <div style={{ position: "relative" }}>
+                                    <Button
+                                        onClick={() =>
+                                            setCardHoverBgColorPopoverOpen(
+                                                !cardHoverBgColorPopoverOpen
+                                            )
+                                        }
+                                        variant="secondary"
+                                        style={{
+                                            width: "100%",
+                                            height: "32px",
+                                            backgroundColor:
+                                                cardHoverBackgroundColor ||
+                                                "transparent",
+                                            border: "1px solid #ddd",
+                                        }}
+                                    >
+                                        {cardHoverBackgroundColor || "Select"}
+                                    </Button>
+                                    {cardHoverBgColorPopoverOpen && (
+                                        <Popover
+                                            onClose={() =>
+                                                setCardHoverBgColorPopoverOpen(
+                                                    false
+                                                )
+                                            }
+                                        >
+                                            <ColorPicker
+                                                color={
+                                                    cardHoverBackgroundColor ||
+                                                    undefined
+                                                }
+                                                onChangeComplete={(value) => {
+                                                    let colorValue = "";
+                                                    if (
+                                                        value.rgb &&
+                                                        value.rgb.a !==
+                                                            undefined &&
+                                                        value.rgb.a < 1
+                                                    ) {
+                                                        colorValue = `rgba(${value.rgb.r}, ${value.rgb.g}, ${value.rgb.b}, ${value.rgb.a})`;
+                                                    } else {
+                                                        colorValue =
+                                                            value.hex || "";
+                                                    }
+                                                    setAttributes({
+                                                        cardHoverBackgroundColor:
+                                                            colorValue,
+                                                    });
+                                                }}
+                                            />
+                                        </Popover>
+                                    )}
+                                </div>
+                                {cardHoverBackgroundColor && (
+                                    <Button
+                                        onClick={() =>
+                                            setAttributes({
+                                                cardHoverBackgroundColor: "",
+                                            })
+                                        }
+                                        variant="link"
+                                        style={{
+                                            marginTop: "4px",
+                                            fontSize: "11px",
+                                        }}
+                                    >
+                                        Clear
+                                    </Button>
+                                )}
+                            </div>
+                            <div style={{ marginBottom: "10px" }}>
+                                <label
+                                    style={{
+                                        display: "block",
+                                        marginBottom: "5px",
+                                        fontSize: "12px",
+                                        fontWeight: "600",
+                                    }}
+                                >
+                                    Card Hover Text Color (Optional)
+                                </label>
+                                <div style={{ position: "relative" }}>
+                                    <Button
+                                        onClick={() =>
+                                            setCardHoverTextColorPopoverOpen(
+                                                !cardHoverTextColorPopoverOpen
+                                            )
+                                        }
+                                        variant="secondary"
+                                        style={{
+                                            width: "100%",
+                                            height: "32px",
+                                            backgroundColor:
+                                                cardHoverTextColor ||
+                                                "transparent",
+                                            border: "1px solid #ddd",
+                                        }}
+                                    >
+                                        {cardHoverTextColor || "Select"}
+                                    </Button>
+                                    {cardHoverTextColorPopoverOpen && (
+                                        <Popover
+                                            onClose={() =>
+                                                setCardHoverTextColorPopoverOpen(
+                                                    false
+                                                )
+                                            }
+                                        >
+                                            <ColorPicker
+                                                color={
+                                                    cardHoverTextColor ||
+                                                    undefined
+                                                }
+                                                onChangeComplete={(value) => {
+                                                    let colorValue = "";
+                                                    if (
+                                                        value.rgb &&
+                                                        value.rgb.a !==
+                                                            undefined &&
+                                                        value.rgb.a < 1
+                                                    ) {
+                                                        colorValue = `rgba(${value.rgb.r}, ${value.rgb.g}, ${value.rgb.b}, ${value.rgb.a})`;
+                                                    } else {
+                                                        colorValue =
+                                                            value.hex || "";
+                                                    }
+                                                    setAttributes({
+                                                        cardHoverTextColor:
+                                                            colorValue,
+                                                    });
+                                                }}
+                                            />
+                                        </Popover>
+                                    )}
+                                </div>
+                                {cardHoverTextColor && (
+                                    <Button
+                                        onClick={() =>
+                                            setAttributes({
+                                                cardHoverTextColor: "",
+                                            })
+                                        }
+                                        variant="link"
+                                        style={{
+                                            marginTop: "4px",
+                                            fontSize: "11px",
+                                        }}
+                                    >
+                                        Clear
+                                    </Button>
+                                )}
+                            </div>
+                            <div style={{ marginBottom: "10px" }}>
+                                <label
+                                    style={{
+                                        display: "block",
+                                        marginBottom: "5px",
+                                        fontSize: "12px",
+                                        fontWeight: "600",
+                                    }}
+                                >
+                                    Icon Hover Background Color (Optional)
+                                </label>
+                                <div style={{ position: "relative" }}>
+                                    <Button
+                                        onClick={() =>
+                                            setIconHoverBgColorPopoverOpen(
+                                                !iconHoverBgColorPopoverOpen
+                                            )
+                                        }
+                                        variant="secondary"
+                                        style={{
+                                            width: "100%",
+                                            height: "32px",
+                                            backgroundColor:
+                                                iconHoverBackgroundColor ||
+                                                "transparent",
+                                            border: "1px solid #ddd",
+                                        }}
+                                    >
+                                        {iconHoverBackgroundColor || "Select"}
+                                    </Button>
+                                    {iconHoverBgColorPopoverOpen && (
+                                        <Popover
+                                            onClose={() =>
+                                                setIconHoverBgColorPopoverOpen(
+                                                    false
+                                                )
+                                            }
+                                        >
+                                            <ColorPicker
+                                                color={
+                                                    iconHoverBackgroundColor ||
+                                                    undefined
+                                                }
+                                                onChangeComplete={(value) => {
+                                                    let colorValue = "";
+                                                    if (
+                                                        value.rgb &&
+                                                        value.rgb.a !==
+                                                            undefined &&
+                                                        value.rgb.a < 1
+                                                    ) {
+                                                        colorValue = `rgba(${value.rgb.r}, ${value.rgb.g}, ${value.rgb.b}, ${value.rgb.a})`;
+                                                    } else {
+                                                        colorValue =
+                                                            value.hex || "";
+                                                    }
+                                                    setAttributes({
+                                                        iconHoverBackgroundColor:
+                                                            colorValue,
+                                                    });
+                                                }}
+                                            />
+                                        </Popover>
+                                    )}
+                                </div>
+                                {iconHoverBackgroundColor && (
+                                    <Button
+                                        onClick={() =>
+                                            setAttributes({
+                                                iconHoverBackgroundColor: "",
+                                            })
+                                        }
+                                        variant="link"
+                                        style={{
+                                            marginTop: "4px",
+                                            fontSize: "11px",
+                                        }}
+                                    >
+                                        Clear
+                                    </Button>
+                                )}
+                            </div>
+                            <div style={{ marginBottom: "10px" }}>
+                                <label
+                                    style={{
+                                        display: "block",
+                                        marginBottom: "5px",
+                                        fontSize: "12px",
+                                        fontWeight: "600",
+                                    }}
+                                >
+                                    Icon Hover Color (Optional - For SVG)
+                                </label>
+                                <div style={{ position: "relative" }}>
+                                    <Button
+                                        onClick={() =>
+                                            setIconHoverColorPopoverOpen(
+                                                !iconHoverColorPopoverOpen
+                                            )
+                                        }
+                                        variant="secondary"
+                                        style={{
+                                            width: "100%",
+                                            height: "32px",
+                                            backgroundColor:
+                                                iconHoverColor || "transparent",
+                                            border: "1px solid #ddd",
+                                        }}
+                                    >
+                                        {iconHoverColor || "Select"}
+                                    </Button>
+                                    {iconHoverColorPopoverOpen && (
+                                        <Popover
+                                            onClose={() =>
+                                                setIconHoverColorPopoverOpen(
+                                                    false
+                                                )
+                                            }
+                                        >
+                                            <ColorPicker
+                                                color={
+                                                    iconHoverColor || undefined
+                                                }
+                                                onChangeComplete={(value) => {
+                                                    let colorValue = "";
+                                                    if (
+                                                        value.rgb &&
+                                                        value.rgb.a !==
+                                                            undefined &&
+                                                        value.rgb.a < 1
+                                                    ) {
+                                                        colorValue = `rgba(${value.rgb.r}, ${value.rgb.g}, ${value.rgb.b}, ${value.rgb.a})`;
+                                                    } else {
+                                                        colorValue =
+                                                            value.hex || "";
+                                                    }
+                                                    setAttributes({
+                                                        iconHoverColor:
+                                                            colorValue,
+                                                    });
+                                                }}
+                                            />
+                                        </Popover>
+                                    )}
+                                </div>
+                                {iconHoverColor && (
+                                    <Button
+                                        onClick={() =>
+                                            setAttributes({
+                                                iconHoverColor: "",
+                                            })
+                                        }
+                                        variant="link"
+                                        style={{
+                                            marginTop: "4px",
+                                            fontSize: "11px",
+                                        }}
+                                    >
+                                        Clear
+                                    </Button>
+                                )}
+                            </div>
+                        </div>
+                        <div
+                            style={{
+                                marginTop: "16px",
+                                paddingTop: "16px",
+                                borderTop: "1px solid #eee",
+                            }}
+                        >
+                            <h4
+                                style={{
+                                    marginTop: 0,
+                                    marginBottom: "10px",
+                                    fontSize: "12px",
+                                    fontWeight: "600",
+                                }}
+                            >
+                                Manage Cards
+                            </h4>
+                            {items.map((item, index) => (
+                                <div
+                                    key={item.id}
+                                    style={{
+                                        marginBottom: "20px",
+                                        padding: "15px",
+                                        border: "1px solid #ddd",
+                                        borderRadius: "4px",
+                                    }}
+                                >
+                                    <h4
+                                        style={{
+                                            marginTop: 0,
+                                            marginBottom: "10px",
+                                        }}
+                                    >
+                                        Card {index + 1}
+                                    </h4>
+                                    <div style={{ marginBottom: "10px" }}>
+                                        <label
+                                            style={{
+                                                display: "block",
+                                                marginBottom: "5px",
+                                                fontWeight: "600",
+                                                fontSize: "12px",
+                                            }}
+                                        >
+                                            Icon (Optional)
+                                        </label>
+                                        <MediaUploadCheck>
+                                            <MediaUpload
+                                                onSelect={(media) =>
+                                                    updateItemImage(
+                                                        index,
+                                                        media.url
+                                                    )
+                                                }
+                                                allowedTypes={["image"]}
+                                                value={item.iconUrl}
+                                                render={({ open }) => (
+                                                    <div>
+                                                        {item.iconUrl ? (
+                                                            <div
+                                                                style={{
+                                                                    display:
+                                                                        "flex",
+                                                                    alignItems:
+                                                                        "center",
+                                                                    gap: "8px",
+                                                                    marginBottom:
+                                                                        "8px",
+                                                                }}
+                                                            >
+                                                                <img
+                                                                    src={
+                                                                        item.iconUrl
+                                                                    }
+                                                                    alt="Icon"
+                                                                    style={{
+                                                                        maxWidth:
+                                                                            "60px",
+                                                                        height: "auto",
+                                                                        objectFit:
+                                                                            "contain",
+                                                                    }}
+                                                                />
+                                                                <div>
+                                                                    <Button
+                                                                        onClick={
+                                                                            open
+                                                                        }
+                                                                        variant="secondary"
+                                                                        size="small"
+                                                                    >
+                                                                        Change
+                                                                    </Button>
+                                                                    <Button
+                                                                        onClick={() =>
+                                                                            updateItemImage(
+                                                                                index,
+                                                                                ""
+                                                                            )
+                                                                        }
+                                                                        variant="link"
+                                                                        isDestructive
+                                                                        size="small"
+                                                                        style={{
+                                                                            marginLeft:
+                                                                                "4px",
+                                                                        }}
+                                                                    >
+                                                                        Remove
+                                                                    </Button>
+                                                                </div>
+                                                            </div>
+                                                        ) : (
+                                                            <Button
+                                                                onClick={open}
+                                                                variant="secondary"
+                                                                size="small"
+                                                            >
+                                                                Select Icon
+                                                            </Button>
+                                                        )}
+                                                    </div>
+                                                )}
+                                            />
+                                        </MediaUploadCheck>
+                                    </div>
+                                    <div
+                                        style={{
+                                            display: "flex",
+                                            gap: "8px",
+                                            marginTop: "10px",
+                                        }}
+                                    >
+                                        <Button
+                                            onClick={() => removeItem(index)}
+                                            variant="link"
+                                            isDestructive
+                                            size="small"
+                                        >
+                                            Remove
+                                        </Button>
+                                    </div>
+                                </div>
+                            ))}
+                            <Button
+                                onClick={addItem}
+                                variant="primary"
+                                style={{ marginTop: "10px" }}
+                            >
+                                Add Card
+                            </Button>
+                        </div>
+                    </PanelBody>
+                </InspectorControls>
+
+                <div {...blockProps}>
+                    <div className="bs-feature-cards-editor">
+                        <div
+                            className="bs-feature-cards-grid"
+                            style={{
+                                gridTemplateColumns: `repeat(${columns}, 1fr)`,
+                                gap: `${cardSpacing}px`,
+                            }}
+                        >
+                            {items.map((item, index) => (
+                                <div
+                                    key={item.id}
+                                    style={{ position: "relative" }}
+                                >
+                                    <div
+                                        style={{
+                                            position: "absolute",
+                                            top: "10px",
+                                            right: "10px",
+                                            zIndex: 10,
+                                            display: "flex",
+                                            gap: "4px",
+                                        }}
+                                    >
+                                        <Button
+                                            onClick={() => removeItem(index)}
+                                            variant="secondary"
+                                            isDestructive
+                                            size="small"
+                                            style={{
+                                                minWidth: "auto",
+                                                padding: "4px 8px",
+                                            }}
+                                        >
+                                            Remove
+                                        </Button>
+                                    </div>
+                                    <div
+                                        className={`bs-feature-card ${
+                                            iconPosition === "left"
+                                                ? "icon-left"
+                                                : "icon-top"
+                                        }`}
+                                        style={{
+                                            backgroundColor:
+                                                cardBackgroundColor ||
+                                                "#ffffff",
+                                            color: textColor || "#333333",
+                                            padding: cardPadding || undefined,
+                                            borderRadius:
+                                                cardBorderRadius || undefined,
+                                        }}
+                                        onMouseEnter={(e) => {
+                                            if (cardHoverBackgroundColor) {
+                                                e.currentTarget.style.backgroundColor =
+                                                    cardHoverBackgroundColor;
+                                            }
+                                            if (cardHoverTextColor) {
+                                                e.currentTarget.style.color =
+                                                    cardHoverTextColor;
+                                                const title =
+                                                    e.currentTarget.querySelector(
+                                                        ".bs-feature-card-title"
+                                                    );
+                                                const desc =
+                                                    e.currentTarget.querySelector(
+                                                        ".bs-feature-card-description"
+                                                    );
+                                                if (title)
+                                                    title.style.color =
+                                                        cardHoverTextColor;
+                                                if (desc)
+                                                    desc.style.color =
+                                                        cardHoverTextColor;
+                                            }
+                                        }}
+                                        onMouseLeave={(e) => {
+                                            e.currentTarget.style.backgroundColor =
+                                                cardBackgroundColor ||
+                                                "#ffffff";
+                                            e.currentTarget.style.color =
+                                                textColor || "#333333";
+                                            const title =
+                                                e.currentTarget.querySelector(
+                                                    ".bs-feature-card-title"
+                                                );
+                                            const desc =
+                                                e.currentTarget.querySelector(
+                                                    ".bs-feature-card-description"
+                                                );
+                                            if (title)
+                                                title.style.color =
+                                                    textColor || "#333333";
+                                            if (desc)
+                                                desc.style.color =
+                                                    textColor || "#333333";
+                                        }}
+                                    >
+                                        {item.iconUrl && (
+                                            <div
+                                                className="bs-feature-card-icon"
+                                                style={{
+                                                    backgroundColor:
+                                                        iconBackgroundColor ||
+                                                        "#4CAF50",
+                                                    borderRadius:
+                                                        iconBorderRadius ||
+                                                        undefined,
+                                                    width:
+                                                        iconSize || undefined,
+                                                    height:
+                                                        iconSize || undefined,
+                                                }}
+                                                onMouseEnter={(e) => {
+                                                    if (
+                                                        iconHoverBackgroundColor
+                                                    ) {
+                                                        e.currentTarget.style.backgroundColor =
+                                                            iconHoverBackgroundColor;
+                                                    }
+                                                    if (iconHoverColor) {
+                                                        const img =
+                                                            e.currentTarget.querySelector(
+                                                                "img"
+                                                            );
+                                                        const picture =
+                                                            e.currentTarget.querySelector(
+                                                                "picture"
+                                                            );
+                                                        if (img) {
+                                                            img.style.filter =
+                                                                hexToFilter(
+                                                                    iconHoverColor
+                                                                );
+                                                        }
+                                                        if (picture) {
+                                                            picture.style.filter =
+                                                                hexToFilter(
+                                                                    iconHoverColor
+                                                                );
+                                                        }
+                                                    }
+                                                }}
+                                                onMouseLeave={(e) => {
+                                                    e.currentTarget.style.backgroundColor =
+                                                        iconBackgroundColor ||
+                                                        "#4CAF50";
+                                                    const img =
+                                                        e.currentTarget.querySelector(
+                                                            "img"
+                                                        );
+                                                    const picture =
+                                                        e.currentTarget.querySelector(
+                                                            "picture"
+                                                        );
+                                                    if (img) {
+                                                        img.style.filter =
+                                                            "none";
+                                                    }
+                                                    if (picture) {
+                                                        picture.style.filter =
+                                                            "none";
+                                                    }
+                                                }}
+                                            >
+                                                <img
+                                                    src={item.iconUrl}
+                                                    alt=""
+                                                    style={{
+                                                        width: "100%",
+                                                        height: "100%",
+                                                        objectFit: "contain",
+                                                        padding: "12px",
+                                                    }}
+                                                />
+                                            </div>
+                                        )}
+                                        <div className="bs-feature-card-content">
+                                            <RichText
+                                                tagName="h3"
+                                                value={item.title}
+                                                onChange={(value) =>
+                                                    updateItem(
+                                                        index,
+                                                        "title",
+                                                        value
+                                                    )
+                                                }
+                                                placeholder="Enter title..."
+                                                allowedFormats={["core/bold"]}
+                                                style={{
+                                                    color:
+                                                        textColor || "#333333",
+                                                }}
+                                            />
+                                            <RichText
+                                                tagName="div"
+                                                value={item.description}
+                                                onChange={(value) =>
+                                                    updateItem(
+                                                        index,
+                                                        "description",
+                                                        value
+                                                    )
+                                                }
+                                                placeholder="Enter description..."
+                                                allowedFormats={[
+                                                    "core/bold",
+                                                    "core/italic",
+                                                    "core/link",
+                                                ]}
+                                                multiline="p"
+                                                style={{
+                                                    color:
+                                                        textColor || "#333333",
+                                                }}
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                            <div
+                                style={{
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                    minHeight: "200px",
+                                    border: "2px dashed #ddd",
+                                    borderRadius: "8px",
+                                    padding: "20px",
+                                }}
+                            >
+                                <Button
+                                    onClick={addItem}
+                                    variant="primary"
+                                    size="large"
+                                >
+                                    + Add Card
+                                </Button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </>
+        );
+    },
+    save: ({ attributes }) => {
+        return (
+            <div
+                dangerouslySetInnerHTML={{
+                    __html: generateFeatureCardsHTML(attributes),
+                }}
+            />
+        );
+    },
+});
