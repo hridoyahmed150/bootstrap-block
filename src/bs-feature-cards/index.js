@@ -10,6 +10,7 @@ import { generateFeatureCardsHTML } from "./template";
 import {
     PanelBody,
     TextControl,
+    TextareaControl,
     RangeControl,
     Button,
     ColorPicker,
@@ -37,7 +38,6 @@ registerBlockType("bootstrap-blocks/bs-feature-cards", {
             cardHoverBackgroundColor,
             cardHoverTextColor,
             iconHoverBackgroundColor,
-            iconHoverColor,
             blockId,
         } = attributes;
 
@@ -55,6 +55,12 @@ registerBlockType("bootstrap-blocks/bs-feature-cards", {
             useState(false);
         const [iconHoverColorPopoverOpen, setIconHoverColorPopoverOpen] =
             useState(false);
+        // Per-card icon hover color popovers
+        const [cardIconHoverColorPopovers, setCardIconHoverColorPopovers] =
+            useState({});
+        // HTML mode for title and description
+        const [titleHtmlMode, setTitleHtmlMode] = useState({});
+        const [descriptionHtmlMode, setDescriptionHtmlMode] = useState({});
 
         // Generate unique block ID if not exists
         if (!blockId) {
@@ -62,23 +68,73 @@ registerBlockType("bootstrap-blocks/bs-feature-cards", {
         }
 
         // Helper function to convert hex to CSS filter for SVG color change
+        // Uses a more accurate algorithm for color conversion
         const hexToFilter = (hex) => {
             if (!hex) return "";
             // Remove # if present
             hex = hex.replace("#", "");
-            // Convert hex to RGB
+            // Convert hex to RGB (0-255)
             const r = parseInt(hex.substr(0, 2), 16);
             const g = parseInt(hex.substr(2, 2), 16);
             const b = parseInt(hex.substr(4, 2), 16);
-            // Calculate filter values for color change
-            // Using a more accurate method for color conversion
-            const brightness = (r * 299 + g * 587 + b * 114) / 1000;
-            const hue = Math.round(
-                (Math.atan2(g - b, r - (g + b) / 2) * 180) / Math.PI
-            );
-            return `brightness(0) saturate(100%) invert(${
-                brightness > 128 ? "1" : "0"
-            }) sepia(100%) saturate(10000%) hue-rotate(${hue}deg)`;
+
+            // Normalize RGB to 0-1
+            const rNorm = r / 255;
+            const gNorm = g / 255;
+            const bNorm = b / 255;
+
+            // Calculate HSL for more accurate color conversion
+            const max = Math.max(rNorm, gNorm, bNorm);
+            const min = Math.min(rNorm, gNorm, bNorm);
+            const delta = max - min;
+
+            let h = 0;
+            if (delta !== 0) {
+                if (max === rNorm) {
+                    h = ((gNorm - bNorm) / delta) % 6;
+                } else if (max === gNorm) {
+                    h = (bNorm - rNorm) / delta + 2;
+                } else {
+                    h = (rNorm - gNorm) / delta + 4;
+                }
+            }
+            h = h * 60;
+            if (h < 0) h += 360;
+
+            const s = max === 0 ? 0 : delta / max;
+            const l = (max + min) / 2;
+
+            // Improved filter calculation for better color accuracy
+            // The formula: brightness(0) saturate(100%) invert(1) sepia(100%) saturate(X%) hue-rotate(Ydeg) brightness(Z%)
+
+            // Calculate values
+            const sepia = 100;
+            // Saturation: significantly reduced to prevent color flickering
+            // Much lower saturation values to prevent multiple colors showing
+            const saturateValue =
+                s > 0.1
+                    ? Math.min(Math.round(s * 5000), 5000)
+                    : Math.round(s * 2000);
+            const hueRotate = Math.round(h);
+
+            // Brightness: more accurate calculation based on lightness
+            // Light colors need less brightness, dark colors need more
+            let brightnessValue;
+            if (l < 0.2) {
+                // Very dark colors
+                brightnessValue = Math.round(l * 250 + 40);
+            } else if (l < 0.5) {
+                // Medium dark colors
+                brightnessValue = Math.round(l * 180 + 60);
+            } else if (l < 0.8) {
+                // Medium light colors
+                brightnessValue = Math.round(l * 100 + 90);
+            } else {
+                // Very light colors
+                brightnessValue = Math.round(l * 70 + 110);
+            }
+
+            return `brightness(0) saturate(100%) invert(1) sepia(${sepia}%) saturate(${saturateValue}%) hue-rotate(${hueRotate}deg) brightness(${brightnessValue}%)`;
         };
 
         const blockProps = useBlockProps({
@@ -92,6 +148,7 @@ registerBlockType("bootstrap-blocks/bs-feature-cards", {
                 title: "New Feature",
                 description: "Add your description here...",
                 iconUrl: "",
+                iconHoverColor: "",
             };
             setAttributes({
                 items: [...items, newItem],
@@ -705,86 +762,6 @@ registerBlockType("bootstrap-blocks/bs-feature-cards", {
                                     </Button>
                                 )}
                             </div>
-                            <div style={{ marginBottom: "10px" }}>
-                                <label
-                                    style={{
-                                        display: "block",
-                                        marginBottom: "5px",
-                                        fontSize: "12px",
-                                        fontWeight: "600",
-                                    }}
-                                >
-                                    Icon Hover Color (Optional - For SVG)
-                                </label>
-                                <div style={{ position: "relative" }}>
-                                    <Button
-                                        onClick={() =>
-                                            setIconHoverColorPopoverOpen(
-                                                !iconHoverColorPopoverOpen
-                                            )
-                                        }
-                                        variant="secondary"
-                                        style={{
-                                            width: "100%",
-                                            height: "32px",
-                                            backgroundColor:
-                                                iconHoverColor || "transparent",
-                                            border: "1px solid #ddd",
-                                        }}
-                                    >
-                                        {iconHoverColor || "Select"}
-                                    </Button>
-                                    {iconHoverColorPopoverOpen && (
-                                        <Popover
-                                            onClose={() =>
-                                                setIconHoverColorPopoverOpen(
-                                                    false
-                                                )
-                                            }
-                                        >
-                                            <ColorPicker
-                                                color={
-                                                    iconHoverColor || undefined
-                                                }
-                                                onChangeComplete={(value) => {
-                                                    let colorValue = "";
-                                                    if (
-                                                        value.rgb &&
-                                                        value.rgb.a !==
-                                                            undefined &&
-                                                        value.rgb.a < 1
-                                                    ) {
-                                                        colorValue = `rgba(${value.rgb.r}, ${value.rgb.g}, ${value.rgb.b}, ${value.rgb.a})`;
-                                                    } else {
-                                                        colorValue =
-                                                            value.hex || "";
-                                                    }
-                                                    setAttributes({
-                                                        iconHoverColor:
-                                                            colorValue,
-                                                    });
-                                                }}
-                                            />
-                                        </Popover>
-                                    )}
-                                </div>
-                                {iconHoverColor && (
-                                    <Button
-                                        onClick={() =>
-                                            setAttributes({
-                                                iconHoverColor: "",
-                                            })
-                                        }
-                                        variant="link"
-                                        style={{
-                                            marginTop: "4px",
-                                            fontSize: "11px",
-                                        }}
-                                    >
-                                        Clear
-                                    </Button>
-                                )}
-                            </div>
                         </div>
                         <div
                             style={{
@@ -912,6 +889,119 @@ registerBlockType("bootstrap-blocks/bs-feature-cards", {
                                             />
                                         </MediaUploadCheck>
                                     </div>
+                                    {item.iconUrl && (
+                                        <div
+                                            style={{
+                                                marginBottom: "10px",
+                                                marginTop: "10px",
+                                            }}
+                                        >
+                                            <label
+                                                style={{
+                                                    display: "block",
+                                                    marginBottom: "5px",
+                                                    fontWeight: "600",
+                                                    fontSize: "12px",
+                                                }}
+                                            >
+                                                Icon Hover Color (Optional - For
+                                                SVG)
+                                            </label>
+                                            <div
+                                                style={{ position: "relative" }}
+                                            >
+                                                <Button
+                                                    onClick={() =>
+                                                        setCardIconHoverColorPopovers(
+                                                            {
+                                                                ...cardIconHoverColorPopovers,
+                                                                [index]:
+                                                                    !cardIconHoverColorPopovers[
+                                                                        index
+                                                                    ],
+                                                            }
+                                                        )
+                                                    }
+                                                    variant="secondary"
+                                                    style={{
+                                                        width: "100%",
+                                                        height: "32px",
+                                                        backgroundColor:
+                                                            item.iconHoverColor ||
+                                                            "transparent",
+                                                        border: "1px solid #ddd",
+                                                    }}
+                                                >
+                                                    {item.iconHoverColor ||
+                                                        "Select"}
+                                                </Button>
+                                                {cardIconHoverColorPopovers[
+                                                    index
+                                                ] && (
+                                                    <Popover
+                                                        onClose={() =>
+                                                            setCardIconHoverColorPopovers(
+                                                                {
+                                                                    ...cardIconHoverColorPopovers,
+                                                                    [index]: false,
+                                                                }
+                                                            )
+                                                        }
+                                                    >
+                                                        <ColorPicker
+                                                            color={
+                                                                item.iconHoverColor ||
+                                                                undefined
+                                                            }
+                                                            onChangeComplete={(
+                                                                value
+                                                            ) => {
+                                                                let colorValue =
+                                                                    "";
+                                                                if (
+                                                                    value.rgb &&
+                                                                    value.rgb
+                                                                        .a !==
+                                                                        undefined &&
+                                                                    value.rgb
+                                                                        .a < 1
+                                                                ) {
+                                                                    colorValue = `rgba(${value.rgb.r}, ${value.rgb.g}, ${value.rgb.b}, ${value.rgb.a})`;
+                                                                } else {
+                                                                    colorValue =
+                                                                        value.hex ||
+                                                                        "";
+                                                                }
+                                                                updateItem(
+                                                                    index,
+                                                                    "iconHoverColor",
+                                                                    colorValue
+                                                                );
+                                                            }}
+                                                        />
+                                                    </Popover>
+                                                )}
+                                            </div>
+                                            {item.iconHoverColor && (
+                                                <Button
+                                                    onClick={() =>
+                                                        updateItem(
+                                                            index,
+                                                            "iconHoverColor",
+                                                            ""
+                                                        )
+                                                    }
+                                                    variant="link"
+                                                    style={{
+                                                        marginTop: "4px",
+                                                        fontSize: "11px",
+                                                    }}
+                                                >
+                                                    Clear
+                                                </Button>
+                                            )}
+                                        </div>
+                                    )}
                                     <div
                                         style={{
                                             display: "flex",
@@ -1061,7 +1151,8 @@ registerBlockType("bootstrap-blocks/bs-feature-cards", {
                                                         e.currentTarget.style.backgroundColor =
                                                             iconHoverBackgroundColor;
                                                     }
-                                                    if (iconHoverColor) {
+                                                    // Use per-card icon hover color
+                                                    if (item.iconHoverColor) {
                                                         const img =
                                                             e.currentTarget.querySelector(
                                                                 "img"
@@ -1070,16 +1161,36 @@ registerBlockType("bootstrap-blocks/bs-feature-cards", {
                                                             e.currentTarget.querySelector(
                                                                 "picture"
                                                             );
+                                                        const pictureImg =
+                                                            e.currentTarget.querySelector(
+                                                                "picture img"
+                                                            );
+                                                        const svg =
+                                                            e.currentTarget.querySelector(
+                                                                "svg"
+                                                            );
                                                         if (img) {
                                                             img.style.filter =
                                                                 hexToFilter(
-                                                                    iconHoverColor
+                                                                    item.iconHoverColor
                                                                 );
                                                         }
                                                         if (picture) {
                                                             picture.style.filter =
                                                                 hexToFilter(
-                                                                    iconHoverColor
+                                                                    item.iconHoverColor
+                                                                );
+                                                        }
+                                                        if (pictureImg) {
+                                                            pictureImg.style.filter =
+                                                                hexToFilter(
+                                                                    item.iconHoverColor
+                                                                );
+                                                        }
+                                                        if (svg) {
+                                                            svg.style.filter =
+                                                                hexToFilter(
+                                                                    item.iconHoverColor
                                                                 );
                                                         }
                                                     }
@@ -1096,12 +1207,28 @@ registerBlockType("bootstrap-blocks/bs-feature-cards", {
                                                         e.currentTarget.querySelector(
                                                             "picture"
                                                         );
+                                                    const pictureImg =
+                                                        e.currentTarget.querySelector(
+                                                            "picture img"
+                                                        );
+                                                    const svg =
+                                                        e.currentTarget.querySelector(
+                                                            "svg"
+                                                        );
                                                     if (img) {
                                                         img.style.filter =
                                                             "none";
                                                     }
                                                     if (picture) {
                                                         picture.style.filter =
+                                                            "none";
+                                                    }
+                                                    if (pictureImg) {
+                                                        pictureImg.style.filter =
+                                                            "none";
+                                                    }
+                                                    if (svg) {
+                                                        svg.style.filter =
                                                             "none";
                                                     }
                                                 }}
@@ -1119,45 +1246,155 @@ registerBlockType("bootstrap-blocks/bs-feature-cards", {
                                             </div>
                                         )}
                                         <div className="bs-feature-card-content">
-                                            <RichText
-                                                tagName="h3"
-                                                value={item.title}
-                                                onChange={(value) =>
-                                                    updateItem(
-                                                        index,
-                                                        "title",
-                                                        value
-                                                    )
-                                                }
-                                                placeholder="Enter title..."
-                                                allowedFormats={["core/bold"]}
-                                                style={{
-                                                    color:
-                                                        textColor || "#333333",
-                                                }}
-                                            />
-                                            <RichText
-                                                tagName="div"
-                                                value={item.description}
-                                                onChange={(value) =>
-                                                    updateItem(
-                                                        index,
-                                                        "description",
-                                                        value
-                                                    )
-                                                }
-                                                placeholder="Enter description..."
-                                                allowedFormats={[
-                                                    "core/bold",
-                                                    "core/italic",
-                                                    "core/link",
-                                                ]}
-                                                multiline="p"
-                                                style={{
-                                                    color:
-                                                        textColor || "#333333",
-                                                }}
-                                            />
+                                            <div
+                                                style={{ marginBottom: "8px" }}
+                                            >
+                                                <Button
+                                                    onClick={() =>
+                                                        setTitleHtmlMode({
+                                                            ...titleHtmlMode,
+                                                            [index]:
+                                                                !titleHtmlMode[
+                                                                    index
+                                                                ],
+                                                        })
+                                                    }
+                                                    variant="secondary"
+                                                    size="small"
+                                                    style={{
+                                                        marginBottom: "8px",
+                                                    }}
+                                                >
+                                                    {titleHtmlMode[index]
+                                                        ? "Visual Editor"
+                                                        : "HTML Editor"}
+                                                </Button>
+                                            </div>
+                                            {titleHtmlMode[index] ? (
+                                                <TextareaControl
+                                                    value={item.title || ""}
+                                                    onChange={(value) =>
+                                                        updateItem(
+                                                            index,
+                                                            "title",
+                                                            value
+                                                        )
+                                                    }
+                                                    placeholder="Enter title HTML here..."
+                                                    rows={3}
+                                                    style={{
+                                                        fontFamily: "monospace",
+                                                        fontSize: "12px",
+                                                        marginBottom: "12px",
+                                                    }}
+                                                />
+                                            ) : (
+                                                <RichText
+                                                    tagName="h3"
+                                                    className="bs-feature-card-title"
+                                                    value={item.title}
+                                                    onChange={(value) =>
+                                                        updateItem(
+                                                            index,
+                                                            "title",
+                                                            value
+                                                        )
+                                                    }
+                                                    placeholder="Enter title..."
+                                                    allowedFormats={[
+                                                        "core/bold",
+                                                    ]}
+                                                    style={{
+                                                        color:
+                                                            textColor ||
+                                                            "#333333",
+                                                        marginBottom: "12px",
+                                                    }}
+                                                />
+                                            )}
+                                            <div
+                                                style={{ marginBottom: "8px" }}
+                                            >
+                                                <Button
+                                                    onClick={() =>
+                                                        setDescriptionHtmlMode({
+                                                            ...descriptionHtmlMode,
+                                                            [index]:
+                                                                !descriptionHtmlMode[
+                                                                    index
+                                                                ],
+                                                        })
+                                                    }
+                                                    variant="secondary"
+                                                    size="small"
+                                                    style={{
+                                                        marginBottom: "8px",
+                                                    }}
+                                                >
+                                                    {descriptionHtmlMode[index]
+                                                        ? "Visual Editor"
+                                                        : "HTML Editor"}
+                                                </Button>
+                                            </div>
+                                            {descriptionHtmlMode[index] ? (
+                                                <TextareaControl
+                                                    value={
+                                                        item.description || ""
+                                                    }
+                                                    onChange={(value) =>
+                                                        updateItem(
+                                                            index,
+                                                            "description",
+                                                            value
+                                                        )
+                                                    }
+                                                    placeholder="Enter description HTML here..."
+                                                    rows={6}
+                                                    style={{
+                                                        fontFamily: "monospace",
+                                                        fontSize: "12px",
+                                                        minHeight: "40px",
+                                                        cursor: "text",
+                                                        marginTop: "12px",
+                                                        padding: "8px 0",
+                                                        width: "100%",
+                                                        display: "block",
+                                                    }}
+                                                />
+                                            ) : (
+                                                <RichText
+                                                    tagName="div"
+                                                    className="bs-feature-card-description"
+                                                    value={
+                                                        item.description || ""
+                                                    }
+                                                    onChange={(value) =>
+                                                        updateItem(
+                                                            index,
+                                                            "description",
+                                                            value
+                                                        )
+                                                    }
+                                                    placeholder="Enter description (plain text or HTML)..."
+                                                    allowedFormats={[
+                                                        "core/bold",
+                                                        "core/italic",
+                                                        "core/link",
+                                                    ]}
+                                                    multiline="p"
+                                                    style={{
+                                                        color:
+                                                            textColor ||
+                                                            "#333333",
+                                                        minHeight: "40px",
+                                                        cursor: "text",
+                                                        marginTop: "12px",
+                                                        padding: "8px 0",
+                                                        width: "100%",
+                                                        display: "block",
+                                                    }}
+                                                />
+                                            )}
                                         </div>
                                     </div>
                                 </div>

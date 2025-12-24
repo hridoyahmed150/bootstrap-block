@@ -26,25 +26,29 @@
           "id": "item-1",
           "title": "Professional Landscape Construction",
           "description": "We specialize in creating outdoor living spaces using top-quality materials and expert craftsmanship.",
-          "iconUrl": ""
+          "iconUrl": "",
+          "iconHoverColor": ""
         },
         {
           "id": "item-2",
           "title": "End-To-End Project Management",
           "description": "From site preparation to final cleanup, we handle every step of your project to ensure a smooth process and on-time completion.",
-          "iconUrl": ""
+          "iconUrl": "",
+          "iconHoverColor": ""
         },
         {
           "id": "item-3",
           "title": "High-Quality Materials & Techniques",
           "description": "Our team uses proven methods and premium products to build outdoor spaces that withstand weather and stay beautiful for years.",
-          "iconUrl": ""
+          "iconUrl": "",
+          "iconHoverColor": ""
         },
         {
           "id": "item-4",
           "title": "Customer-First Approach",
           "description": "We prioritize clear communication, transparency, and your satisfaction—so you get the outdoor space you envisioned, stress-free.",
-          "iconUrl": ""
+          "iconUrl": "",
+          "iconHoverColor": ""
         }
       ]
     },
@@ -97,10 +101,6 @@
       "default": ""
     },
     "iconHoverBackgroundColor": {
-      "type": "string",
-      "default": ""
-    },
-    "iconHoverColor": {
       "type": "string",
       "default": ""
     },

@@ -71,8 +71,9 @@
     max-width: 100% !important;
     max-height: 100% !important;
     object-fit: contain !important;
-    padding: 12px;
+    padding: 8px !important;
     display: block !important;
+    box-sizing: border-box !important;
     transition: filter 0.3s ease;
 }
 
@@ -104,7 +105,18 @@
     font-size: 16px;
     line-height: 1.6;
     margin: 0;
+    margin-top: 12px;
     transition: color 0.3s ease;
+    min-height: 40px;
+    display: block;
+    width: 100%;
+    cursor: text;
+}
+
+.bs-feature-cards-editor .bs-feature-card-description.is-selected,
+.bs-feature-cards-editor .bs-feature-card-description:focus {
+    outline: 1px solid #0073aa;
+    outline-offset: 2px;
 }
 
 .bs-feature-cards-editor .bs-feature-card-content {
@@ -186,9 +198,12 @@
     max-width: 100% !important;
     max-height: 100% !important;
     object-fit: contain !important;
-    padding: 12px;
+    padding: 8px !important;
     display: block !important;
-    transition: filter 0.3s ease;
+    box-sizing: border-box !important;
+    transition: filter 0.3s ease !important;
+    -webkit-transition: filter 0.3s ease !important;
+    will-change: filter;
 }
 
 .bs-feature-cards .bs-feature-card-icon picture {
@@ -197,10 +212,20 @@
     display: flex !important;
     align-items: center;
     justify-content: center;
+    transition: filter 0.3s ease !important;
+    -webkit-transition: filter 0.3s ease !important;
+    will-change: filter;
 }
 
 .bs-feature-cards .bs-feature-card-icon picture source {
     display: none;
+}
+
+/* SVG icon transition */
+.bs-feature-cards .bs-feature-card-icon svg {
+    transition: filter 0.3s ease !important;
+    -webkit-transition: filter 0.3s ease !important;
+    will-change: filter;
 }
 
 .bs-feature-cards .bs-feature-card-content {
@@ -220,6 +245,37 @@
     line-height: 1.6;
     margin: 0;
     transition: color 0.3s ease;
+    min-height: 40px;
+}
+
+/* Editor styles for description - ensure it's always visible */
+.bs-feature-cards-editor .bs-feature-card-description {
+    min-height: 40px !important;
+    cursor: text !important;
+    display: block !important;
+    width: 100% !important;
+    margin-top: 12px !important;
+    padding: 8px 0 !important;
+    border: 1px dashed transparent !important;
+}
+
+.bs-feature-cards-editor .bs-feature-card-description:hover {
+    border-color: #ddd !important;
+}
+
+.bs-feature-cards-editor .bs-feature-card-description.is-selected,
+.bs-feature-cards-editor .bs-feature-card-description:focus {
+    border-color: #0073aa !important;
+    outline: none !important;
+}
+
+/* Placeholder for empty description */
+.bs-feature-cards-editor
+    .bs-feature-card-description[data-placeholder]:empty::before {
+    content: attr(data-placeholder);
+    color: #999;
+    pointer-events: none;
+    display: block;
 }
 
 .bs-feature-cards .bs-feature-card-content {
@@ -240,13 +296,16 @@
     .bs-feature-cards-editor .bs-feature-cards-grid {
         grid-template-columns: 1fr !important;
     }
+    .bs-feature-cards {
+        margin-top: 24px;
+    }
 
-    .bs-feature-cards .bs-feature-card.icon-left,
+    /* .bs-feature-cards .bs-feature-card.icon-left,
     .bs-feature-cards-editor .bs-feature-card.icon-left {
         flex-direction: column;
         align-items: center;
         text-align: center;
-    }
+    } */
 
     .bs-feature-cards .bs-feature-card.icon-left .bs-feature-card-icon,
     .bs-feature-cards-editor .bs-feature-card.icon-left .bs-feature-card-icon {

@@ -49,7 +49,6 @@ __webpack_require__.r(__webpack_exports__);
       cardHoverBackgroundColor,
       cardHoverTextColor,
       iconHoverBackgroundColor,
-      iconHoverColor,
       blockId
     } = attributes;
     const [iconColorPopoverOpen, setIconColorPopoverOpen] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useState)(false);
@@ -59,6 +58,11 @@ __webpack_require__.r(__webpack_exports__);
     const [cardHoverTextColorPopoverOpen, setCardHoverTextColorPopoverOpen] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useState)(false);
     const [iconHoverBgColorPopoverOpen, setIconHoverBgColorPopoverOpen] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useState)(false);
     const [iconHoverColorPopoverOpen, setIconHoverColorPopoverOpen] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useState)(false);
+    // Per-card icon hover color popovers
+    const [cardIconHoverColorPopovers, setCardIconHoverColorPopovers] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useState)({});
+    // HTML mode for title and description
+    const [titleHtmlMode, setTitleHtmlMode] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useState)({});
+    const [descriptionHtmlMode, setDescriptionHtmlMode] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useState)({});
 
     // Generate unique block ID if not exists
     if (!blockId) {
@@ -68,19 +72,67 @@ __webpack_require__.r(__webpack_exports__);
     }
 
     // Helper function to convert hex to CSS filter for SVG color change
+    // Uses a more accurate algorithm for color conversion
     const hexToFilter = hex => {
       if (!hex) return "";
       // Remove # if present
       hex = hex.replace("#", "");
-      // Convert hex to RGB
+      // Convert hex to RGB (0-255)
       const r = parseInt(hex.substr(0, 2), 16);
       const g = parseInt(hex.substr(2, 2), 16);
       const b = parseInt(hex.substr(4, 2), 16);
-      // Calculate filter values for color change
-      // Using a more accurate method for color conversion
-      const brightness = (r * 299 + g * 587 + b * 114) / 1000;
-      const hue = Math.round(Math.atan2(g - b, r - (g + b) / 2) * 180 / Math.PI);
-      return `brightness(0) saturate(100%) invert(${brightness > 128 ? "1" : "0"}) sepia(100%) saturate(10000%) hue-rotate(${hue}deg)`;
+
+      // Normalize RGB to 0-1
+      const rNorm = r / 255;
+      const gNorm = g / 255;
+      const bNorm = b / 255;
+
+      // Calculate HSL for more accurate color conversion
+      const max = Math.max(rNorm, gNorm, bNorm);
+      const min = Math.min(rNorm, gNorm, bNorm);
+      const delta = max - min;
+      let h = 0;
+      if (delta !== 0) {
+        if (max === rNorm) {
+          h = (gNorm - bNorm) / delta % 6;
+        } else if (max === gNorm) {
+          h = (bNorm - rNorm) / delta + 2;
+        } else {
+          h = (rNorm - gNorm) / delta + 4;
+        }
+      }
+      h = h * 60;
+      if (h < 0) h += 360;
+      const s = max === 0 ? 0 : delta / max;
+      const l = (max + min) / 2;
+
+      // Improved filter calculation for better color accuracy
+      // The formula: brightness(0) saturate(100%) invert(1) sepia(100%) saturate(X%) hue-rotate(Ydeg) brightness(Z%)
+
+      // Calculate values
+      const sepia = 100;
+      // Saturation: significantly reduced to prevent color flickering
+      // Much lower saturation values to prevent multiple colors showing
+      const saturateValue = s > 0.1 ? Math.min(Math.round(s * 5000), 5000) : Math.round(s * 2000);
+      const hueRotate = Math.round(h);
+
+      // Brightness: more accurate calculation based on lightness
+      // Light colors need less brightness, dark colors need more
+      let brightnessValue;
+      if (l < 0.2) {
+        // Very dark colors
+        brightnessValue = Math.round(l * 250 + 40);
+      } else if (l < 0.5) {
+        // Medium dark colors
+        brightnessValue = Math.round(l * 180 + 60);
+      } else if (l < 0.8) {
+        // Medium light colors
+        brightnessValue = Math.round(l * 100 + 90);
+      } else {
+        // Very light colors
+        brightnessValue = Math.round(l * 70 + 110);
+      }
+      return `brightness(0) saturate(100%) invert(1) sepia(${sepia}%) saturate(${saturateValue}%) hue-rotate(${hueRotate}deg) brightness(${brightnessValue}%)`;
     };
     const blockProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps)({
       className: "bs-feature-cards-container"
@@ -92,7 +144,8 @@ __webpack_require__.r(__webpack_exports__);
         id: `item-${Date.now()}`,
         title: "New Feature",
         description: "Add your description here...",
-        iconUrl: ""
+        iconUrl: "",
+        iconHoverColor: ""
       };
       setAttributes({
         items: [...items, newItem]
@@ -546,60 +599,6 @@ __webpack_require__.r(__webpack_exports__);
                 },
                 children: "Clear"
               })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-              style: {
-                marginBottom: "10px"
-              },
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("label", {
-                style: {
-                  display: "block",
-                  marginBottom: "5px",
-                  fontSize: "12px",
-                  fontWeight: "600"
-                },
-                children: "Icon Hover Color (Optional - For SVG)"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-                style: {
-                  position: "relative"
-                },
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Button, {
-                  onClick: () => setIconHoverColorPopoverOpen(!iconHoverColorPopoverOpen),
-                  variant: "secondary",
-                  style: {
-                    width: "100%",
-                    height: "32px",
-                    backgroundColor: iconHoverColor || "transparent",
-                    border: "1px solid #ddd"
-                  },
-                  children: iconHoverColor || "Select"
-                }), iconHoverColorPopoverOpen && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Popover, {
-                  onClose: () => setIconHoverColorPopoverOpen(false),
-                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ColorPicker, {
-                    color: iconHoverColor || undefined,
-                    onChangeComplete: value => {
-                      let colorValue = "";
-                      if (value.rgb && value.rgb.a !== undefined && value.rgb.a < 1) {
-                        colorValue = `rgba(${value.rgb.r}, ${value.rgb.g}, ${value.rgb.b}, ${value.rgb.a})`;
-                      } else {
-                        colorValue = value.hex || "";
-                      }
-                      setAttributes({
-                        iconHoverColor: colorValue
-                      });
-                    }
-                  })
-                })]
-              }), iconHoverColor && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Button, {
-                onClick: () => setAttributes({
-                  iconHoverColor: ""
-                }),
-                variant: "link",
-                style: {
-                  marginTop: "4px",
-                  fontSize: "11px"
-                },
-                children: "Clear"
-              })]
             })]
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
             style: {
@@ -688,6 +687,63 @@ __webpack_require__.r(__webpack_exports__);
                       })
                     })
                   })
+                })]
+              }), item.iconUrl && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+                style: {
+                  marginBottom: "10px",
+                  marginTop: "10px"
+                },
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("label", {
+                  style: {
+                    display: "block",
+                    marginBottom: "5px",
+                    fontWeight: "600",
+                    fontSize: "12px"
+                  },
+                  children: "Icon Hover Color (Optional - For SVG)"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+                  style: {
+                    position: "relative"
+                  },
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Button, {
+                    onClick: () => setCardIconHoverColorPopovers({
+                      ...cardIconHoverColorPopovers,
+                      [index]: !cardIconHoverColorPopovers[index]
+                    }),
+                    variant: "secondary",
+                    style: {
+                      width: "100%",
+                      height: "32px",
+                      backgroundColor: item.iconHoverColor || "transparent",
+                      border: "1px solid #ddd"
+                    },
+                    children: item.iconHoverColor || "Select"
+                  }), cardIconHoverColorPopovers[index] && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Popover, {
+                    onClose: () => setCardIconHoverColorPopovers({
+                      ...cardIconHoverColorPopovers,
+                      [index]: false
+                    }),
+                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ColorPicker, {
+                      color: item.iconHoverColor || undefined,
+                      onChangeComplete: value => {
+                        let colorValue = "";
+                        if (value.rgb && value.rgb.a !== undefined && value.rgb.a < 1) {
+                          colorValue = `rgba(${value.rgb.r}, ${value.rgb.g}, ${value.rgb.b}, ${value.rgb.a})`;
+                        } else {
+                          colorValue = value.hex || "";
+                        }
+                        updateItem(index, "iconHoverColor", colorValue);
+                      }
+                    })
+                  })]
+                }), item.iconHoverColor && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Button, {
+                  onClick: () => updateItem(index, "iconHoverColor", ""),
+                  variant: "link",
+                  style: {
+                    marginTop: "4px",
+                    fontSize: "11px"
+                  },
+                  children: "Clear"
                 })]
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
                 style: {
@@ -787,14 +843,23 @@ __webpack_require__.r(__webpack_exports__);
                     if (iconHoverBackgroundColor) {
                       e.currentTarget.style.backgroundColor = iconHoverBackgroundColor;
                     }
-                    if (iconHoverColor) {
+                    // Use per-card icon hover color
+                    if (item.iconHoverColor) {
                       const img = e.currentTarget.querySelector("img");
                       const picture = e.currentTarget.querySelector("picture");
+                      const pictureImg = e.currentTarget.querySelector("picture img");
+                      const svg = e.currentTarget.querySelector("svg");
                       if (img) {
-                        img.style.filter = hexToFilter(iconHoverColor);
+                        img.style.filter = hexToFilter(item.iconHoverColor);
                       }
                       if (picture) {
-                        picture.style.filter = hexToFilter(iconHoverColor);
+                        picture.style.filter = hexToFilter(item.iconHoverColor);
+                      }
+                      if (pictureImg) {
+                        pictureImg.style.filter = hexToFilter(item.iconHoverColor);
+                      }
+                      if (svg) {
+                        svg.style.filter = hexToFilter(item.iconHoverColor);
                       }
                     }
                   },
@@ -802,11 +867,19 @@ __webpack_require__.r(__webpack_exports__);
                     e.currentTarget.style.backgroundColor = iconBackgroundColor || "#4CAF50";
                     const img = e.currentTarget.querySelector("img");
                     const picture = e.currentTarget.querySelector("picture");
+                    const pictureImg = e.currentTarget.querySelector("picture img");
+                    const svg = e.currentTarget.querySelector("svg");
                     if (img) {
                       img.style.filter = "none";
                     }
                     if (picture) {
                       picture.style.filter = "none";
+                    }
+                    if (pictureImg) {
+                      pictureImg.style.filter = "none";
+                    }
+                    if (svg) {
+                      svg.style.filter = "none";
                     }
                   },
                   children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("img", {
@@ -821,24 +894,90 @@ __webpack_require__.r(__webpack_exports__);
                   })
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
                   className: "bs-feature-card-content",
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText, {
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+                    style: {
+                      marginBottom: "8px"
+                    },
+                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Button, {
+                      onClick: () => setTitleHtmlMode({
+                        ...titleHtmlMode,
+                        [index]: !titleHtmlMode[index]
+                      }),
+                      variant: "secondary",
+                      size: "small",
+                      style: {
+                        marginBottom: "8px"
+                      },
+                      children: titleHtmlMode[index] ? "Visual Editor" : "HTML Editor"
+                    })
+                  }), titleHtmlMode[index] ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextareaControl, {
+                    value: item.title || "",
+                    onChange: value => updateItem(index, "title", value),
+                    placeholder: "Enter title HTML here...",
+                    rows: 3,
+                    style: {
+                      fontFamily: "monospace",
+                      fontSize: "12px",
+                      marginBottom: "12px"
+                    }
+                  }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText, {
                     tagName: "h3",
+                    className: "bs-feature-card-title",
                     value: item.title,
                     onChange: value => updateItem(index, "title", value),
                     placeholder: "Enter title...",
                     allowedFormats: ["core/bold"],
                     style: {
-                      color: textColor || "#333333"
+                      color: textColor || "#333333",
+                      marginBottom: "12px"
                     }
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText, {
-                    tagName: "div",
-                    value: item.description,
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+                    style: {
+                      marginBottom: "8px"
+                    },
+                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Button, {
+                      onClick: () => setDescriptionHtmlMode({
+                        ...descriptionHtmlMode,
+                        [index]: !descriptionHtmlMode[index]
+                      }),
+                      variant: "secondary",
+                      size: "small",
+                      style: {
+                        marginBottom: "8px"
+                      },
+                      children: descriptionHtmlMode[index] ? "Visual Editor" : "HTML Editor"
+                    })
+                  }), descriptionHtmlMode[index] ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextareaControl, {
+                    value: item.description || "",
                     onChange: value => updateItem(index, "description", value),
-                    placeholder: "Enter description...",
+                    placeholder: "Enter description HTML here...",
+                    rows: 6,
+                    style: {
+                      fontFamily: "monospace",
+                      fontSize: "12px",
+                      minHeight: "40px",
+                      cursor: "text",
+                      marginTop: "12px",
+                      padding: "8px 0",
+                      width: "100%",
+                      display: "block"
+                    }
+                  }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText, {
+                    tagName: "div",
+                    className: "bs-feature-card-description",
+                    value: item.description || "",
+                    onChange: value => updateItem(index, "description", value),
+                    placeholder: "Enter description (plain text or HTML)...",
                     allowedFormats: ["core/bold", "core/italic", "core/link"],
                     multiline: "p",
                     style: {
-                      color: textColor || "#333333"
+                      color: textColor || "#333333",
+                      minHeight: "40px",
+                      cursor: "text",
+                      marginTop: "12px",
+                      padding: "8px 0",
+                      width: "100%",
+                      display: "block"
                     }
                   })]
                 })]
@@ -905,19 +1044,67 @@ __webpack_require__.r(__webpack_exports__);
  */
 
 // Helper function to convert hex to CSS filter for SVG color change
+// Uses a more accurate algorithm for color conversion
 const hexToFilter = hex => {
   if (!hex) return "";
   // Remove # if present
   hex = hex.replace("#", "");
-  // Convert hex to RGB
+  // Convert hex to RGB (0-255)
   const r = parseInt(hex.substr(0, 2), 16);
   const g = parseInt(hex.substr(2, 2), 16);
   const b = parseInt(hex.substr(4, 2), 16);
-  // Calculate filter values for color change
-  // Using a more accurate method for color conversion
-  const brightness = (r * 299 + g * 587 + b * 114) / 1000;
-  const hue = Math.round(Math.atan2(g - b, r - (g + b) / 2) * 180 / Math.PI);
-  return `brightness(0) saturate(100%) invert(${brightness > 128 ? "1" : "0"}) sepia(100%) saturate(10000%) hue-rotate(${hue}deg)`;
+
+  // Normalize RGB to 0-1
+  const rNorm = r / 255;
+  const gNorm = g / 255;
+  const bNorm = b / 255;
+
+  // Calculate HSL for more accurate color conversion
+  const max = Math.max(rNorm, gNorm, bNorm);
+  const min = Math.min(rNorm, gNorm, bNorm);
+  const delta = max - min;
+  let h = 0;
+  if (delta !== 0) {
+    if (max === rNorm) {
+      h = (gNorm - bNorm) / delta % 6;
+    } else if (max === gNorm) {
+      h = (bNorm - rNorm) / delta + 2;
+    } else {
+      h = (rNorm - gNorm) / delta + 4;
+    }
+  }
+  h = h * 60;
+  if (h < 0) h += 360;
+  const s = max === 0 ? 0 : delta / max;
+  const l = (max + min) / 2;
+
+  // Improved filter calculation for better color accuracy
+  // The formula: brightness(0) saturate(100%) invert(1) sepia(100%) saturate(X%) hue-rotate(Ydeg) brightness(Z%)
+
+  // Calculate values
+  const sepia = 100;
+  // Saturation: significantly reduced to prevent color flickering
+  // Much lower saturation values to prevent multiple colors showing
+  const saturateValue = s > 0.1 ? Math.min(Math.round(s * 5000), 5000) : Math.round(s * 2000);
+  const hueRotate = Math.round(h);
+
+  // Brightness: more accurate calculation based on lightness
+  // Light colors need less brightness, dark colors need more
+  let brightnessValue;
+  if (l < 0.2) {
+    // Very dark colors
+    brightnessValue = Math.round(l * 250 + 40);
+  } else if (l < 0.5) {
+    // Medium dark colors
+    brightnessValue = Math.round(l * 180 + 60);
+  } else if (l < 0.8) {
+    // Medium light colors
+    brightnessValue = Math.round(l * 100 + 90);
+  } else {
+    // Very light colors
+    brightnessValue = Math.round(l * 70 + 110);
+  }
+  return `brightness(0) saturate(100%) invert(1) sepia(${sepia}%) saturate(${saturateValue}%) hue-rotate(${hueRotate}deg) brightness(${brightnessValue}%)`;
 };
 const generateFeatureCardsHTML = attributes => {
   const {
@@ -935,7 +1122,6 @@ const generateFeatureCardsHTML = attributes => {
     cardHoverBackgroundColor = "",
     cardHoverTextColor = "",
     iconHoverBackgroundColor = "",
-    iconHoverColor = "",
     blockId = "bs-feature-cards-default"
   } = attributes;
 
@@ -963,18 +1149,17 @@ const generateFeatureCardsHTML = attributes => {
 								<img src="${item.iconUrl}" alt="" style="
 									width: 100%;
 									height: 100%;
+									max-width: 100%;
+									max-height: 100%;
 									object-fit: contain;
-									padding: 12px;
+									padding: 8px;
 									display: block;
+									box-sizing: border-box;
 								" />
 							</div>` : ""}
 					<div class="bs-feature-card-content">
-						<h3 class="bs-feature-card-title" style="color: ${textColor}; transition: color 0.3s ease;">
-							${item.title || ""}
-						</h3>
-						<div class="bs-feature-card-description" style="color: ${textColor}; transition: color 0.3s ease;">
-							${item.description || ""}
-						</div>
+						${item.title ? item.title.trim().startsWith("<") ? `<div class="bs-feature-card-title" style="color: ${textColor}; transition: color 0.3s ease;">${item.title}</div>` : `<h3 class="bs-feature-card-title" style="color: ${textColor}; transition: color 0.3s ease;">${item.title}</h3>` : ""}
+						${item.description ? `<div class="bs-feature-card-description" style="color: ${textColor}; transition: color 0.3s ease;">${item.description}</div>` : ""}
 					</div>
 				</div>
 			`;
@@ -1014,13 +1199,20 @@ const generateFeatureCardsHTML = attributes => {
                         background-color: ${iconHoverBackgroundColor} !important;
                     }
                 ` : ""}
-                ${iconHoverColor ? `
-                    #${uniqueId} .bs-feature-card:hover .bs-feature-card-icon img,
-                    #${uniqueId} .bs-feature-card:hover .bs-feature-card-icon picture,
-                    #${uniqueId} .bs-feature-card:hover .bs-feature-card-icon picture img {
-                        filter: ${hexToFilter(iconHoverColor)} !important;
+                ${items.map((item, index) => {
+      // Use per-card icon hover color
+      if (!item.iconHoverColor) return "";
+      return `
+                    #${uniqueId} .bs-feature-card:nth-child(${index + 1}):hover .bs-feature-card-icon img,
+                    #${uniqueId} .bs-feature-card:nth-child(${index + 1}):hover .bs-feature-card-icon picture,
+                    #${uniqueId} .bs-feature-card:nth-child(${index + 1}):hover .bs-feature-card-icon picture img,
+                    #${uniqueId} .bs-feature-card:nth-child(${index + 1}):hover .bs-feature-card-icon svg,
+                    #${uniqueId} .bs-feature-card:nth-child(${index + 1}):hover .bs-feature-card-icon picture source {
+                        filter: ${hexToFilter(item.iconHoverColor)} !important;
+                        -webkit-filter: ${hexToFilter(item.iconHoverColor)} !important;
                     }
-                ` : ""}
+                `;
+    }).join("")}
 
                 @media (max-width: 768px) {
                     #${uniqueId} .bs-feature-cards-grid {
