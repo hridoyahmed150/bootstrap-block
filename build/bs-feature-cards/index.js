@@ -38,8 +38,12 @@ __webpack_require__.r(__webpack_exports__);
       items,
       columns,
       cardSpacing,
+      hideCardGap,
       cardPadding,
       cardBorderRadius,
+      cardBorderWidth,
+      cardBorderStyle,
+      cardBorderColor,
       iconSize,
       iconBorderRadius,
       iconPosition,
@@ -57,7 +61,7 @@ __webpack_require__.r(__webpack_exports__);
     const [cardHoverBgColorPopoverOpen, setCardHoverBgColorPopoverOpen] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useState)(false);
     const [cardHoverTextColorPopoverOpen, setCardHoverTextColorPopoverOpen] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useState)(false);
     const [iconHoverBgColorPopoverOpen, setIconHoverBgColorPopoverOpen] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useState)(false);
-    const [iconHoverColorPopoverOpen, setIconHoverColorPopoverOpen] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useState)(false);
+    const [cardBorderColorPopoverOpen, setCardBorderColorPopoverOpen] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useState)(false);
     // Per-card icon hover color popovers
     const [cardIconHoverColorPopovers, setCardIconHoverColorPopovers] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useState)({});
     // HTML mode for title and description
@@ -208,7 +212,15 @@ __webpack_require__.r(__webpack_exports__);
             }),
             min: 0,
             max: 100,
-            step: 1
+            step: 1,
+            disabled: hideCardGap
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ToggleControl, {
+            label: "Hide Card Gap",
+            checked: hideCardGap,
+            onChange: value => setAttributes({
+              hideCardGap: value
+            }),
+            help: hideCardGap ? "Card gap is hidden" : "Card gap is visible"
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextControl, {
             label: "Card Padding (Optional)",
             value: cardPadding || "",
@@ -226,6 +238,103 @@ __webpack_require__.r(__webpack_exports__);
             max: 50,
             step: 1,
             allowReset: true
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.RangeControl, {
+            label: "Card Border Width (Optional)",
+            value: cardBorderWidth || 0,
+            onChange: value => setAttributes({
+              cardBorderWidth: value || 0
+            }),
+            min: 0,
+            max: 20,
+            step: 1,
+            allowReset: true
+          }), cardBorderWidth > 0 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.Fragment, {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.SelectControl, {
+              label: "Card Border Style",
+              value: cardBorderStyle,
+              options: [{
+                label: "Solid",
+                value: "solid"
+              }, {
+                label: "Dashed",
+                value: "dashed"
+              }, {
+                label: "Dotted",
+                value: "dotted"
+              }, {
+                label: "Double",
+                value: "double"
+              }, {
+                label: "Groove",
+                value: "groove"
+              }, {
+                label: "Ridge",
+                value: "ridge"
+              }, {
+                label: "Inset",
+                value: "inset"
+              }, {
+                label: "Outset",
+                value: "outset"
+              }],
+              onChange: value => setAttributes({
+                cardBorderStyle: value
+              })
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+              style: {
+                marginBottom: "10px"
+              },
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("label", {
+                style: {
+                  display: "block",
+                  marginBottom: "5px",
+                  fontSize: "12px",
+                  fontWeight: "600"
+                },
+                children: "Card Border Color"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+                style: {
+                  position: "relative"
+                },
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Button, {
+                  onClick: () => setCardBorderColorPopoverOpen(!cardBorderColorPopoverOpen),
+                  variant: "secondary",
+                  style: {
+                    width: "100%",
+                    height: "32px",
+                    backgroundColor: cardBorderColor || "transparent",
+                    border: "1px solid #ddd"
+                  },
+                  children: cardBorderColor || "Select"
+                }), cardBorderColorPopoverOpen && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Popover, {
+                  onClose: () => setCardBorderColorPopoverOpen(false),
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ColorPicker, {
+                    color: cardBorderColor || undefined,
+                    onChangeComplete: value => {
+                      let colorValue = "";
+                      if (value.rgb && value.rgb.a !== undefined && value.rgb.a < 1) {
+                        colorValue = `rgba(${value.rgb.r}, ${value.rgb.g}, ${value.rgb.b}, ${value.rgb.a})`;
+                      } else {
+                        colorValue = value.hex || "";
+                      }
+                      setAttributes({
+                        cardBorderColor: colorValue
+                      });
+                    }
+                  })
+                })]
+              }), cardBorderColor && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Button, {
+                onClick: () => setAttributes({
+                  cardBorderColor: "#000000"
+                }),
+                variant: "link",
+                style: {
+                  marginTop: "4px",
+                  fontSize: "11px"
+                },
+                children: "Reset"
+              })]
+            })]
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.SelectControl, {
             label: "Icon Position",
             value: iconPosition,
@@ -777,7 +886,7 @@ __webpack_require__.r(__webpack_exports__);
             className: "bs-feature-cards-grid",
             style: {
               gridTemplateColumns: `repeat(${columns}, 1fr)`,
-              gap: `${cardSpacing}px`
+              gap: hideCardGap ? "0px" : `${cardSpacing}px`
             },
             children: [items.map((item, index) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
               style: {
@@ -809,7 +918,10 @@ __webpack_require__.r(__webpack_exports__);
                   backgroundColor: cardBackgroundColor || "#ffffff",
                   color: textColor || "#333333",
                   padding: cardPadding || undefined,
-                  borderRadius: cardBorderRadius || undefined
+                  borderRadius: cardBorderRadius || undefined,
+                  borderWidth: cardBorderWidth > 0 ? `${cardBorderWidth}px` : undefined,
+                  borderStyle: cardBorderWidth > 0 ? cardBorderStyle || "solid" : undefined,
+                  borderColor: cardBorderWidth > 0 ? cardBorderColor || "#000000" : undefined
                 },
                 onMouseEnter: e => {
                   if (cardHoverBackgroundColor) {
@@ -1111,8 +1223,12 @@ const generateFeatureCardsHTML = attributes => {
     items = [],
     columns = 3,
     cardSpacing = 20,
+    hideCardGap = false,
     cardPadding = "",
     cardBorderRadius = "",
+    cardBorderWidth = 0,
+    cardBorderStyle = "solid",
+    cardBorderColor = "#000000",
     iconSize = "",
     iconBorderRadius = "",
     iconPosition = "top",
@@ -1137,6 +1253,9 @@ const generateFeatureCardsHTML = attributes => {
 					color: ${textColor};
 					${cardPadding ? `padding: ${cardPadding};` : ""}
 					${cardBorderRadius ? `border-radius: ${cardBorderRadius};` : ""}
+					${cardBorderWidth > 0 ? `border-width: ${cardBorderWidth}px;` : ""}
+					${cardBorderWidth > 0 ? `border-style: ${cardBorderStyle};` : ""}
+					${cardBorderWidth > 0 ? `border-color: ${cardBorderColor};` : ""}
 				">
 					${item.iconUrl ? `<div class="bs-feature-card-icon" style="
 								background-color: ${iconBackgroundColor};
@@ -1173,7 +1292,7 @@ const generateFeatureCardsHTML = attributes => {
                 #${uniqueId} .bs-feature-cards-grid {
                     display: grid;
                     grid-template-columns: repeat(${columns}, 1fr);
-                    gap: ${cardSpacing}px;
+                    gap: ${hideCardGap ? "0px" : `${cardSpacing}px`};
                 }
 
                 #${uniqueId} .bs-feature-card {

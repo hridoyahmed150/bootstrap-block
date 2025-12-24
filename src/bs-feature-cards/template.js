@@ -75,8 +75,12 @@ export const generateFeatureCardsHTML = (attributes) => {
         items = [],
         columns = 3,
         cardSpacing = 20,
+        hideCardGap = false,
         cardPadding = "",
         cardBorderRadius = "",
+        cardBorderWidth = 0,
+        cardBorderStyle = "solid",
+        cardBorderColor = "#000000",
         iconSize = "",
         iconBorderRadius = "",
         iconPosition = "top",
@@ -104,6 +108,9 @@ export const generateFeatureCardsHTML = (attributes) => {
 					color: ${textColor};
 					${cardPadding ? `padding: ${cardPadding};` : ""}
 					${cardBorderRadius ? `border-radius: ${cardBorderRadius};` : ""}
+					${cardBorderWidth > 0 ? `border-width: ${cardBorderWidth}px;` : ""}
+					${cardBorderWidth > 0 ? `border-style: ${cardBorderStyle};` : ""}
+					${cardBorderWidth > 0 ? `border-color: ${cardBorderColor};` : ""}
 				">
 					${
                         item.iconUrl
@@ -155,7 +162,7 @@ export const generateFeatureCardsHTML = (attributes) => {
                 #${uniqueId} .bs-feature-cards-grid {
                     display: grid;
                     grid-template-columns: repeat(${columns}, 1fr);
-                    gap: ${cardSpacing}px;
+                    gap: ${hideCardGap ? "0px" : `${cardSpacing}px`};
                 }
 
                 #${uniqueId} .bs-feature-card {

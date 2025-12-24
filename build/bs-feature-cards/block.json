@@ -60,6 +60,10 @@
       "type": "number",
       "default": 20
     },
+    "hideCardGap": {
+      "type": "boolean",
+      "default": false
+    },
     "cardPadding": {
       "type": "string",
       "default": ""
@@ -67,6 +71,18 @@
     "cardBorderRadius": {
       "type": "string",
       "default": ""
+    },
+    "cardBorderWidth": {
+      "type": "number",
+      "default": 0
+    },
+    "cardBorderStyle": {
+      "type": "string",
+      "default": "solid"
+    },
+    "cardBorderColor": {
+      "type": "string",
+      "default": "#000000"
     },
     "iconSize": {
       "type": "string",

@@ -16,6 +16,7 @@ import {
     ColorPicker,
     Popover,
     SelectControl,
+    ToggleControl,
     __experimentalRepeaterControl as RepeaterControl,
 } from "@wordpress/components";
 import { useState } from "@wordpress/element";
@@ -27,8 +28,12 @@ registerBlockType("bootstrap-blocks/bs-feature-cards", {
             items,
             columns,
             cardSpacing,
+            hideCardGap,
             cardPadding,
             cardBorderRadius,
+            cardBorderWidth,
+            cardBorderStyle,
+            cardBorderColor,
             iconSize,
             iconBorderRadius,
             iconPosition,
@@ -53,7 +58,7 @@ registerBlockType("bootstrap-blocks/bs-feature-cards", {
         ] = useState(false);
         const [iconHoverBgColorPopoverOpen, setIconHoverBgColorPopoverOpen] =
             useState(false);
-        const [iconHoverColorPopoverOpen, setIconHoverColorPopoverOpen] =
+        const [cardBorderColorPopoverOpen, setCardBorderColorPopoverOpen] =
             useState(false);
         // Per-card icon hover color popovers
         const [cardIconHoverColorPopovers, setCardIconHoverColorPopovers] =
@@ -199,6 +204,19 @@ registerBlockType("bootstrap-blocks/bs-feature-cards", {
                             min={0}
                             max={100}
                             step={1}
+                            disabled={hideCardGap}
+                        />
+                        <ToggleControl
+                            label="Hide Card Gap"
+                            checked={hideCardGap}
+                            onChange={(value) =>
+                                setAttributes({ hideCardGap: value })
+                            }
+                            help={
+                                hideCardGap
+                                    ? "Card gap is hidden"
+                                    : "Card gap is visible"
+                            }
                         />
                         <TextControl
                             label="Card Padding (Optional)"
@@ -225,6 +243,126 @@ registerBlockType("bootstrap-blocks/bs-feature-cards", {
                             step={1}
                             allowReset={true}
                         />
+                        <RangeControl
+                            label="Card Border Width (Optional)"
+                            value={cardBorderWidth || 0}
+                            onChange={(value) =>
+                                setAttributes({
+                                    cardBorderWidth: value || 0,
+                                })
+                            }
+                            min={0}
+                            max={20}
+                            step={1}
+                            allowReset={true}
+                        />
+                        {cardBorderWidth > 0 && (
+                            <>
+                                <SelectControl
+                                    label="Card Border Style"
+                                    value={cardBorderStyle}
+                                    options={[
+                                        { label: "Solid", value: "solid" },
+                                        { label: "Dashed", value: "dashed" },
+                                        { label: "Dotted", value: "dotted" },
+                                        { label: "Double", value: "double" },
+                                        { label: "Groove", value: "groove" },
+                                        { label: "Ridge", value: "ridge" },
+                                        { label: "Inset", value: "inset" },
+                                        { label: "Outset", value: "outset" },
+                                    ]}
+                                    onChange={(value) =>
+                                        setAttributes({
+                                            cardBorderStyle: value,
+                                        })
+                                    }
+                                />
+                                <div style={{ marginBottom: "10px" }}>
+                                    <label
+                                        style={{
+                                            display: "block",
+                                            marginBottom: "5px",
+                                            fontSize: "12px",
+                                            fontWeight: "600",
+                                        }}
+                                    >
+                                        Card Border Color
+                                    </label>
+                                    <div style={{ position: "relative" }}>
+                                        <Button
+                                            onClick={() =>
+                                                setCardBorderColorPopoverOpen(
+                                                    !cardBorderColorPopoverOpen
+                                                )
+                                            }
+                                            variant="secondary"
+                                            style={{
+                                                width: "100%",
+                                                height: "32px",
+                                                backgroundColor:
+                                                    cardBorderColor ||
+                                                    "transparent",
+                                                border: "1px solid #ddd",
+                                            }}
+                                        >
+                                            {cardBorderColor || "Select"}
+                                        </Button>
+                                        {cardBorderColorPopoverOpen && (
+                                            <Popover
+                                                onClose={() =>
+                                                    setCardBorderColorPopoverOpen(
+                                                        false
+                                                    )
+                                                }
+                                            >
+                                                <ColorPicker
+                                                    color={
+                                                        cardBorderColor ||
+                                                        undefined
+                                                    }
+                                                    onChangeComplete={(
+                                                        value
+                                                    ) => {
+                                                        let colorValue = "";
+                                                        if (
+                                                            value.rgb &&
+                                                            value.rgb.a !==
+                                                                undefined &&
+                                                            value.rgb.a < 1
+                                                        ) {
+                                                            colorValue = `rgba(${value.rgb.r}, ${value.rgb.g}, ${value.rgb.b}, ${value.rgb.a})`;
+                                                        } else {
+                                                            colorValue =
+                                                                value.hex || "";
+                                                        }
+                                                        setAttributes({
+                                                            cardBorderColor:
+                                                                colorValue,
+                                                        });
+                                                    }}
+                                                />
+                                            </Popover>
+                                        )}
+                                    </div>
+                                    {cardBorderColor && (
+                                        <Button
+                                            onClick={() =>
+                                                setAttributes({
+                                                    cardBorderColor: "#000000",
+                                                })
+                                            }
+                                            variant="link"
+                                            style={{
+                                                marginTop: "4px",
+                                                fontSize: "11px",
+                                            }}
+                                        >
+                                            Reset
+                                        </Button>
+                                    )}
+                                </div>
+                            </>
+                        )}
                         <SelectControl
                             label="Icon Position"
                             value={iconPosition}
@@ -1037,7 +1175,7 @@ registerBlockType("bootstrap-blocks/bs-feature-cards", {
                             className="bs-feature-cards-grid"
                             style={{
                                 gridTemplateColumns: `repeat(${columns}, 1fr)`,
-                                gap: `${cardSpacing}px`,
+                                gap: hideCardGap ? "0px" : `${cardSpacing}px`,
                             }}
                         >
                             {items.map((item, index) => (
@@ -1082,6 +1220,19 @@ registerBlockType("bootstrap-blocks/bs-feature-cards", {
                                             padding: cardPadding || undefined,
                                             borderRadius:
                                                 cardBorderRadius || undefined,
+                                            borderWidth:
+                                                cardBorderWidth > 0
+                                                    ? `${cardBorderWidth}px`
+                                                    : undefined,
+                                            borderStyle:
+                                                cardBorderWidth > 0
+                                                    ? cardBorderStyle || "solid"
+                                                    : undefined,
+                                            borderColor:
+                                                cardBorderWidth > 0
+                                                    ? cardBorderColor ||
+                                                      "#000000"
+                                                    : undefined,
                                         }}
                                         onMouseEnter={(e) => {
                                             if (cardHoverBackgroundColor) {
