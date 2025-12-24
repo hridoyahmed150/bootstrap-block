@@ -2,29 +2,36 @@
  * Generate HTML for BS Accordion block
  */
 export const generateAccordionHTML = (attributes) => {
-	const {
-		items = [],
-		allowMultipleOpen = true,
-		showNumbering = true,
-		iconStyle = 'plus-minus',
-		backgroundColor = '#EAF9FF',
-		textColor = '#333333',
-		activeBackgroundColor = '#34B0E3',
-		activeTextColor = '#ffffff',
-		itemSpacing = 8,
-		blockId = 'bs-accordion-default'
-	} = attributes;
+    const {
+        items = [],
+        allowMultipleOpen = true,
+        showNumbering = true,
+        iconStyle = "plus-minus",
+        backgroundColor = "#EAF9FF",
+        textColor = "#333333",
+        activeBackgroundColor = "#34B0E3",
+        activeTextColor = "#ffffff",
+        itemSpacing = 8,
+        blockId = "bs-accordion-default",
+        itemPadding = "",
+        iconColor = "",
+        iconBackgroundColor = "",
+        iconBackgroundWidth = "",
+        iconBackgroundHeight = "",
+        iconSize = "",
+    } = attributes;
 
-	// Use the unique block ID for styling
-	const uniqueId = blockId;
+    // Use the unique block ID for styling
+    const uniqueId = blockId;
 
-	// Generate accordion items HTML
-	const generateAccordionItems = () => {
-		return items.map((item, index) => {
-			const itemId = `${uniqueId}-item-${index}`;
-			const isOpen = item.isOpen ? 'open' : '';
-			
-			return `
+    // Generate accordion items HTML
+    const generateAccordionItems = () => {
+        return items
+            .map((item, index) => {
+                const itemId = `${uniqueId}-item-${index}`;
+                const isOpen = item.isOpen ? "open" : "";
+
+                return `
 				<div class="bs-accordion-item ${isOpen}" data-index="${index}">
 					<button 
 						class="bs-accordion-header" 
@@ -34,14 +41,29 @@ export const generateAccordionHTML = (attributes) => {
 						data-index="${index}"
 					>
 						<div class="bs-accordion-title">
-							${showNumbering ? `<span class="bs-accordion-number">${index + 1}.</span>` : ''}
+							${showNumbering ? `<span class="bs-accordion-number">${index + 1}.</span>` : ""}
 							<span class="bs-accordion-title-text">${item.title}</span>
 						</div>
 						<div class="bs-accordion-icon">
-							${iconStyle === 'plus-minus' ? 
-								(item.isOpen ? '−' : '+') : 
-								(item.isOpen ? '⌄' : '⌃')
-							}
+							<span class="bs-accordion-icon-inner ${
+                                iconStyle === "plus-minus"
+                                    ? "bs-icon-plus-minus"
+                                    : "bs-icon-chevron"
+                            }">
+								${
+                                    iconStyle === "plus-minus"
+                                        ? item.isOpen
+                                            ? "−"
+                                            : "+"
+                                        : `<svg width="${
+                                              iconSize || "24"
+                                          }" height="${
+                                              iconSize || "24"
+                                          }" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+											<path d="M6.5 11.6L12 16l5.5-4.4-.9-1.2L12 14l-4.5-3.6-1 1.2z" fill="currentColor"/>
+										</svg>`
+                                }
+							</span>
 						</div>
 					</button>
 					
@@ -55,15 +77,42 @@ export const generateAccordionHTML = (attributes) => {
 					</div>
 				</div>
 			`;
-		}).join('');
-	};
+            })
+            .join("");
+    };
 
-	// Generate inline styles (only dynamic colors and spacing)
-	const generateStyles = () => {
-		return `
-			<style>
+    // Generate inline styles (only dynamic colors and spacing)
+    const generateStyles = () => {
+        return `
+            <style>
+                #${uniqueId} {
+                    --bs-accordion-item-padding: ${itemPadding || "unset"};
+                    ${
+                        iconColor
+                            ? `--bs-accordion-icon-color: ${iconColor};`
+                            : ""
+                    }
+                    ${
+                        iconBackgroundColor
+                            ? `--bs-accordion-icon-bg-color: ${iconBackgroundColor};`
+                            : ""
+                    }
+                    ${
+                        iconBackgroundWidth
+                            ? `--bs-accordion-icon-bg-width: ${iconBackgroundWidth};`
+                            : ""
+                    }
+                    ${
+                        iconBackgroundHeight
+                            ? `--bs-accordion-icon-bg-height: ${iconBackgroundHeight};`
+                            : ""
+                    }
+                    ${iconSize ? `--bs-accordion-icon-size: ${iconSize};` : ""}
+                }
+				
 				#${uniqueId} .bs-accordion-item {
 					margin-bottom: ${itemSpacing}px;
+					padding: var(--bs-accordion-item-padding);
 				}
 				
 				#${uniqueId} .bs-accordion-header {
@@ -89,13 +138,42 @@ export const generateAccordionHTML = (attributes) => {
 					background-color: ${activeBackgroundColor};
 					color: ${activeTextColor};
 				}
+				
+				${
+                    iconColor
+                        ? `#${uniqueId} .bs-accordion-icon { color: var(--bs-accordion-icon-color); }`
+                        : ""
+                }
+				${
+                    iconSize
+                        ? `#${uniqueId} .bs-accordion-icon-inner {
+					${iconStyle === "plus-minus" ? `font-size: var(--bs-accordion-icon-size);` : ""}
+				}`
+                        : ""
+                }
+				${
+                    iconBackgroundColor ||
+                    iconBackgroundWidth ||
+                    iconBackgroundHeight
+                        ? `
+				#${uniqueId} .bs-accordion-icon {
+					${
+                        iconBackgroundColor
+                            ? `background-color: var(--bs-accordion-icon-bg-color);`
+                            : ""
+                    }
+					${iconBackgroundWidth ? `width: var(--bs-accordion-icon-bg-width);` : ""}
+					${iconBackgroundHeight ? `height: var(--bs-accordion-icon-bg-height);` : ""}
+				}`
+                        : ""
+                }
 			</style>
 		`;
-	};
+    };
 
-	// Generate JavaScript for accordion functionality
-	const generateJavaScript = () => {
-		return `
+    // Generate JavaScript for accordion functionality
+    const generateJavaScript = () => {
+        return `
 			<script>
 				(function() {
 					function initAccordion() {
@@ -132,13 +210,12 @@ export const generateAccordionHTML = (attributes) => {
 						accordion.querySelectorAll('.bs-accordion-item').forEach((item, index) => {
 							const header = item.querySelector('.bs-accordion-header');
 							const icon = header.querySelector('.bs-accordion-icon');
+							const iconInner = icon ? icon.querySelector('.bs-accordion-icon-inner') : null;
 							const isOpen = item.classList.contains('open');
 							
-							if (icon) {
+							if (iconInner) {
 								if ('${iconStyle}' === 'plus-minus') {
-									icon.textContent = isOpen ? '−' : '+';
-								} else {
-									icon.textContent = isOpen ? '⌄' : '⌃';
+									iconInner.textContent = isOpen ? '−' : '+';
 								}
 							}
 						});
@@ -234,9 +311,9 @@ export const generateAccordionHTML = (attributes) => {
 				})();
 			</script>
 		`;
-	};
+    };
 
-	return `
+    return `
 		<div class="bs-accordion" id="${uniqueId}" data-allow-multiple="${allowMultipleOpen}">
 			${generateAccordionItems()}
 		</div>

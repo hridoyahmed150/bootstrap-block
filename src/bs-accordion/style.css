@@ -1,271 +1,323 @@
 /* BS Accordion Block Styles */
 
 .bs-accordion-container {
-	margin: 20px 0;
+    margin: 20px 0;
 }
 
 /* Editor Styles */
 .bs-accordion-editor {
-	max-width: 100%;
+    max-width: 100%;
 }
 
 .bs-accordion-editor .bs-accordion-item {
-	/* margin-bottom is handled by inline styles */
-	border-radius: 6px;
-	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-	overflow: hidden;
-	position: relative;
+    /* margin-bottom is handled by inline styles */
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    position: relative;
 }
 
 .bs-accordion-editor .bs-accordion-header {
-	width: 100%;
-	padding: 16px 20px;
-	border: none;
-	outline: 0;
-	text-align: left;
-	cursor: pointer;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	transition: all 0.3s ease;
-	font-size: 16px;
-	font-weight: 500;
-	/* Colors are handled by inline styles */
+    width: 100%;
+    padding: 16px 20px;
+    border: none;
+    outline: 0;
+    text-align: left;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s ease;
+    font-size: 16px;
+    font-weight: 500;
+    /* Colors are handled by inline styles */
 }
-
 
 /* Dynamic colors are handled by inline styles */
 
 .bs-accordion-editor .bs-accordion-title {
-	flex: 1;
-	display: flex;
-	align-items: center;
-	gap: 8px;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .bs-accordion-editor .bs-accordion-number {
-	font-weight: bold;
-	min-width: 20px;
+    font-weight: bold;
+    min-width: 20px;
 }
 
 .bs-accordion-editor .bs-accordion-icon {
-	font-size: 24px;
-	font-weight: bold;
-	transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-	min-width: 24px;
-	text-align: center;
+    min-width: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.bs-accordion-editor .bs-accordion-item.open .bs-accordion-icon {
-	transform: rotate(180deg);
+.bs-accordion-editor .bs-accordion-icon-inner {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    transform-origin: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+/* Plus/Minus animation only */
+.bs-accordion-editor .bs-accordion-icon-inner.bs-icon-plus-minus {
+    transition: transform 0.3s ease;
+}
+
+.bs-accordion-editor
+    .bs-accordion-item.open
+    .bs-accordion-icon-inner.bs-icon-plus-minus {
+    transform: rotate(0deg);
+}
+
+/* Chevron/Arrow animation */
+.bs-accordion-editor .bs-accordion-icon-inner.bs-icon-chevron {
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.bs-accordion-editor
+    .bs-accordion-item.open
+    .bs-accordion-icon-inner.bs-icon-chevron {
+    transform: rotate(180deg);
 }
 
 .bs-accordion-editor .bs-accordion-body {
-	/* Colors are handled by inline styles */
-	padding: 20px;
-	line-height: 1.6;
+    /* Colors are handled by inline styles */
+    padding: 20px;
+    line-height: 1.6;
 }
 
 .bs-accordion-editor .bs-accordion-body p {
-	margin: 0 0 16px 0;
+    margin: 0 0 16px 0;
 }
 
 .bs-accordion-editor .bs-accordion-body p:last-child {
-	margin-bottom: 0;
+    margin-bottom: 0;
 }
 
 /* Editor Controls */
 .bs-accordion-controls {
-	position: absolute;
-	top: 8px;
-	right: 8px;
-	display: flex;
-	gap: 4px;
-	opacity: 0;
-	transition: opacity 0.3s ease;
-	background: rgba(255, 255, 255, 0.95);
-	padding: 4px;
-	border-radius: 6px;
-	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-	border: 1px solid rgba(0, 0, 0, 0.1);
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    display: flex;
+    gap: 4px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 4px;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .bs-accordion-editor .bs-accordion-item:hover .bs-accordion-controls {
-	opacity: 1;
+    opacity: 1;
 }
 
 .bs-accordion-controls .components-button {
-	height: 28px;
-	width: 28px;
-	min-width: 28px;
-	padding: 0;
-	background: rgba(255, 255, 255, 0.9);
-	border: 1px solid rgba(0, 0, 0, 0.1);
-	border-radius: 4px;
+    height: 28px;
+    width: 28px;
+    min-width: 28px;
+    padding: 0;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
 }
 
 .bs-accordion-controls .components-button:hover {
-	background: rgba(255, 255, 255, 1);
+    background: rgba(255, 255, 255, 1);
 }
 
 .bs-accordion-controls .components-button.is-destructive {
-	background: rgba(220, 38, 38, 0.1);
-	border-color: rgba(220, 38, 38, 0.3);
+    background: rgba(220, 38, 38, 0.1);
+    border-color: rgba(220, 38, 38, 0.3);
 }
 
 .bs-accordion-controls .components-button.is-destructive:hover {
-	background: rgba(220, 38, 38, 0.2);
+    background: rgba(220, 38, 38, 0.2);
 }
 
 .bs-accordion-controls .components-button:disabled {
-	opacity: 0.5;
-	cursor: not-allowed;
+    opacity: 0.5;
+    cursor: not-allowed;
 }
 
 /* Add Item Button */
 .bs-accordion-add-item {
-	width: 100%;
-	margin-top: 16px;
-	padding: 12px 20px;
-	background: #f0f0f0;
-	border: 2px dashed #ccc;
-	border-radius: 8px;
-	color: #666;
-	text-align: center;
-	transition: all 0.3s ease;
+    width: 100%;
+    margin-top: 16px;
+    padding: 12px 20px;
+    background: #f0f0f0;
+    border: 2px dashed #ccc;
+    border-radius: 8px;
+    color: #666;
+    text-align: center;
+    transition: all 0.3s ease;
 }
 
 .bs-accordion-add-item:hover {
-	background: #e0e0e0;
-	border-color: #999;
-	color: #333;
+    background: #e0e0e0;
+    border-color: #999;
+    color: #333;
 }
 
 /* Frontend Styles */
 .bs-accordion {
-	max-width: 100%;
+    max-width: 100%;
 }
 
 .bs-accordion .bs-accordion-item {
-	/* margin-bottom is handled by inline styles */
-	border-radius: 6px;
-	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-	overflow: hidden;
+    /* margin-bottom is handled by inline styles */
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
 }
 
 .bs-accordion .bs-accordion-header {
-	width: 100%;
-	padding: 16px 20px;
-	border: none;
-	outline: 0;
-	text-align: left;
-	cursor: pointer;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	transition: all 0.3s ease;
-	font-size: 16px;
-	font-weight: 500;
-	/* Colors are handled by inline styles */
+    width: 100%;
+    padding: 16px 20px;
+    border: none;
+    outline: 0;
+    text-align: left;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s ease;
+    font-size: 16px;
+    font-weight: 500;
+    /* Colors are handled by inline styles */
 }
-
 
 /* Dynamic colors are handled by inline styles */
 
 .bs-accordion .bs-accordion-title {
-	flex: 1;
-	display: flex;
-	align-items: center;
-	gap: 8px;
-	font-size: 19px;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 19px;
 }
 
 .bs-accordion .bs-accordion-number {
-	font-weight: bold;
-	min-width: 20px;
+    font-weight: bold;
+    min-width: 20px;
 }
 
 .bs-accordion .bs-accordion-icon {
-	font-size: 24px;
-	font-weight: bold;
-	transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-	min-width: 24px;
-	text-align: center;
+    min-width: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.bs-accordion .bs-accordion-item.open .bs-accordion-icon {
-	transform: rotate(180deg);
+.bs-accordion .bs-accordion-icon-inner {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    transform-origin: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+/* Plus/Minus animation only */
+.bs-accordion .bs-accordion-icon-inner.bs-icon-plus-minus {
+    transition: transform 0.3s ease;
+}
+
+.bs-accordion
+    .bs-accordion-item.open
+    .bs-accordion-icon-inner.bs-icon-plus-minus {
+    transform: rotate(0deg);
+}
+
+/* Chevron/Arrow animation */
+.bs-accordion .bs-accordion-icon-inner.bs-icon-chevron {
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.bs-accordion .bs-accordion-item.open .bs-accordion-icon-inner.bs-icon-chevron {
+    transform: rotate(180deg);
 }
 
 .bs-accordion .bs-accordion-body {
-	max-height: 0;
-	overflow: hidden;
-	transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-	will-change: max-height;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: max-height;
 }
 
 .bs-accordion .bs-accordion-item .bs-accordion-body {
-	font-size: 17px;
+    font-size: 17px;
 }
 
 .bs-accordion .bs-accordion-item.open .bs-accordion-body {
-	max-height: 1000px;
+    max-height: 1000px;
 }
 
 .bs-accordion .bs-accordion-content {
-	padding: 20px;
-	line-height: 1.6;
-	/* Colors are handled by inline styles */
+    padding: 20px;
+    line-height: 1.6;
+    /* Colors are handled by inline styles */
 }
 
 .bs-accordion .bs-accordion-content p {
-	margin: 0 0 16px 0;
+    margin: 0 0 16px 0;
 }
 
 .bs-accordion .bs-accordion-content p:last-child {
-	margin-bottom: 0;
+    margin-bottom: 0;
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
-	.bs-accordion-editor .bs-accordion-header,
-	.bs-accordion .bs-accordion-header {
-		padding: 12px 16px;
-		font-size: 14px;
-	}
-	
-	.bs-accordion-editor .bs-accordion-body,
-	.bs-accordion .bs-accordion-content {
-		padding: 16px;
-	}
-	
-	.bs-accordion-controls {
-		position: static;
-		opacity: 1;
-		margin-top: 8px;
-		justify-content: center;
-	}
+    .bs-accordion-editor .bs-accordion-header,
+    .bs-accordion .bs-accordion-header {
+        padding: 12px 16px;
+        font-size: 14px;
+    }
+
+    .bs-accordion-editor .bs-accordion-body,
+    .bs-accordion .bs-accordion-content {
+        padding: 16px;
+    }
+
+    .bs-accordion-controls {
+        position: static;
+        opacity: 1;
+        margin-top: 8px;
+        justify-content: center;
+    }
 }
 
 /* Focus States for Accessibility */
 .bs-accordion .bs-accordion-header:focus {
-	outline: 0 !important;
+    outline: 0 !important;
 }
 
 /* Print Styles */
 @media print {
-	.bs-accordion .bs-accordion-item {
-		box-shadow: none;
-		border: 1px solid #ccc;
-		margin-bottom: 10px;
-	}
-	
-	.bs-accordion .bs-accordion-body {
-		max-height: none !important;
-		display: block !important;
-	}
-	
-	.bs-accordion .bs-accordion-icon {
-		display: none;
-	}
+    .bs-accordion .bs-accordion-item {
+        box-shadow: none;
+        border: 1px solid #ccc;
+        margin-bottom: 10px;
+    }
+
+    .bs-accordion .bs-accordion-body {
+        max-height: none !important;
+        display: block !important;
+    }
+
+    .bs-accordion .bs-accordion-icon {
+        display: none;
+    }
 }

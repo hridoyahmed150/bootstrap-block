@@ -25,21 +25,18 @@
           "id": "item-1",
           "title": "Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit, Sed Do Eiusmod?",
           "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-          "imageUrl": null,
           "isOpen": true
         },
         {
           "id": "item-2",
           "title": "Excepteur Sint Occaecat Cupidatat Non Proident, Sunt In Culpa Qui Officia Deserunt?",
           "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-          "imageUrl": null,
           "isOpen": false
         },
         {
           "id": "item-3",
           "title": "Ut Enim Ad Minim Veniam, Quis Nostrud Exercitation Ullamco Laboris?",
           "content": "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-          "imageUrl": null,
           "isOpen": false
         }
       ]
@@ -80,49 +77,29 @@
       "type": "string",
       "default": ""
     },
-    "itemPaddingTop": {
-      "type": "number",
-      "default": null
-    },
-    "itemPaddingBottom": {
-      "type": "number",
-      "default": null
-    },
-    "itemPaddingLeft": {
-      "type": "number",
-      "default": null
-    },
-    "itemPaddingRight": {
-      "type": "number",
-      "default": null
-    },
-    "iconBackgroundColor": {
+    "itemPadding": {
       "type": "string",
-      "default": null
+      "default": ""
     },
     "iconColor": {
       "type": "string",
-      "default": null
+      "default": ""
     },
-    "iconWidth": {
-      "type": "number",
-      "default": null
+    "iconBackgroundColor": {
+      "type": "string",
+      "default": ""
     },
-    "iconHeight": {
-      "type": "number",
-      "default": null
+    "iconBackgroundWidth": {
+      "type": "string",
+      "default": ""
     },
-    "imageWidth": {
-      "type": "number",
-      "default": null
+    "iconBackgroundHeight": {
+      "type": "string",
+      "default": ""
     },
-    "imageHeightClosed": {
-      "type": "number",
-      "default": null
-    },
-    "imageHeightOpen": {
-      "type": "number",
-      "default": null
+    "iconSize": {
+      "type": "string",
+      "default": ""
     }
   },
   "supports": {
