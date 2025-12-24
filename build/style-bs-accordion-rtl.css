@@ -232,6 +232,7 @@
 .bs-accordion .bs-accordion-image-wrapper {
     display: none;
     flex-shrink: 0;
+    margin-left: 15px;
 }
 
 .bs-accordion .bs-accordion-image-wrapper:not(:empty) {
@@ -376,12 +377,18 @@
     }
 
     .bs-accordion .bs-accordion-image-wrapper {
-        width: 100%;
+        width: 100% !important;
+        max-width: 100% !important;
+        margin-left: 0 !important;
+        margin-bottom: 15px;
         order: -1;
     }
 
-    .bs-accordion .bs-accordion-image {
-        width: 100%;
+    .bs-accordion .bs-accordion-image,
+    .bs-accordion .bs-accordion-image picture,
+    .bs-accordion .bs-accordion-image img {
+        width: 100% !important;
+        max-width: 100% !important;
     }
 
     .bs-accordion-editor .bs-accordion-header,

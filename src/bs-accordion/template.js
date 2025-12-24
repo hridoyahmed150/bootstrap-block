@@ -212,6 +212,19 @@ export const generateAccordionHTML = (attributes) => {
 				#${uniqueId} .bs-accordion-item:not(.open) .bs-accordion-image picture,
 				#${uniqueId} .bs-accordion-item:not(.open) .bs-accordion-image img {
 					${imageHeightClosed ? `height: var(--bs-accordion-image-height-closed);` : ""}
+				}
+				@media (max-width: 768px) {
+					#${uniqueId} .bs-accordion-image-wrapper {
+						width: 100% !important;
+						max-width: 100% !important;
+						margin-right: 0 !important;
+					}
+					#${uniqueId} .bs-accordion-image,
+					#${uniqueId} .bs-accordion-image picture,
+					#${uniqueId} .bs-accordion-image img {
+						width: 100% !important;
+						max-width: 100% !important;
+					}
 				}`
                         : ""
                 }
