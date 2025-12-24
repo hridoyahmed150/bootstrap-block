@@ -51,10 +51,26 @@ __webpack_require__.r(__webpack_exports__);
       iconBackgroundWidth,
       iconBackgroundHeight,
       iconSize,
+      showIconBorder,
+      iconBorderWidth,
+      iconBorderColor,
+      iconBorderStyle,
+      iconBorderRadius,
       imageHeightOpen,
       imageWidth,
       imageHeightClosed,
-      titleFontSize
+      titleFontSize,
+      showBorder,
+      borderWidth,
+      borderColor,
+      borderStyle,
+      borderTop,
+      borderBottom,
+      borderLeft,
+      borderRight,
+      showBoxShadow,
+      boxShadow,
+      borderRadius
     } = attributes;
     const [iconColorPopoverOpen, setIconColorPopoverOpen] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useState)(false);
     const [iconBgColorPopoverOpen, setIconBgColorPopoverOpen] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useState)(false);
@@ -536,6 +552,88 @@ __webpack_require__.r(__webpack_exports__);
               max: 200,
               step: 1,
               allowReset: true
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+              style: {
+                marginTop: "16px",
+                paddingTop: "16px",
+                borderTop: "1px solid #eee"
+              },
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ToggleControl, {
+                label: "Show Icon Border",
+                checked: showIconBorder,
+                onChange: value => setAttributes({
+                  showIconBorder: value
+                })
+              }), showIconBorder && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.Fragment, {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.RangeControl, {
+                  label: "Icon Border Width (Optional)",
+                  value: iconBorderWidth ? parseInt(iconBorderWidth) || 0 : undefined,
+                  onChange: value => setAttributes({
+                    iconBorderWidth: value ? `${value}px` : ""
+                  }),
+                  min: 0,
+                  max: 10,
+                  step: 1,
+                  allowReset: true
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+                  style: {
+                    marginBottom: "10px"
+                  },
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("label", {
+                    style: {
+                      display: "block",
+                      marginBottom: "5px",
+                      fontSize: "12px",
+                      fontWeight: "600"
+                    },
+                    children: "Icon Border Color (Optional)"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("input", {
+                    type: "color",
+                    value: iconBorderColor || "#000000",
+                    onChange: e => setAttributes({
+                      iconBorderColor: e.target.value
+                    }),
+                    style: {
+                      width: "100%",
+                      height: "32px",
+                      border: "1px solid #ddd",
+                      borderRadius: "4px"
+                    }
+                  })]
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.SelectControl, {
+                  label: "Icon Border Style (Optional)",
+                  value: iconBorderStyle,
+                  options: [{
+                    label: "Solid",
+                    value: "solid"
+                  }, {
+                    label: "Dashed",
+                    value: "dashed"
+                  }, {
+                    label: "Dotted",
+                    value: "dotted"
+                  }, {
+                    label: "Double",
+                    value: "double"
+                  }, {
+                    label: "None",
+                    value: "none"
+                  }],
+                  onChange: value => setAttributes({
+                    iconBorderStyle: value
+                  })
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.RangeControl, {
+                  label: "Icon Border Radius (Optional)",
+                  value: iconBorderRadius ? parseInt(iconBorderRadius) || 0 : undefined,
+                  onChange: value => setAttributes({
+                    iconBorderRadius: value ? `${value}px` : ""
+                  }),
+                  min: 0,
+                  max: 50,
+                  step: 1,
+                  allowReset: true
+                })]
+              })]
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.RangeControl, {
               label: "Icon Size (Optional)",
               value: iconSize ? parseInt(iconSize) || 0 : undefined,
@@ -618,6 +716,175 @@ __webpack_require__.r(__webpack_exports__);
               max: 500,
               step: 1,
               allowReset: true
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+            style: {
+              marginBottom: "16px",
+              marginTop: "24px",
+              paddingTop: "16px",
+              borderTop: "1px solid #ddd"
+            },
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("h3", {
+              style: {
+                marginTop: 0,
+                marginBottom: "12px",
+                fontSize: "13px",
+                fontWeight: "600"
+              },
+              children: "Border & Shadow Settings"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ToggleControl, {
+              label: "Show Border",
+              checked: showBorder,
+              onChange: value => setAttributes({
+                showBorder: value
+              })
+            }), showBorder && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.Fragment, {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.RangeControl, {
+                label: "Border Width (Optional)",
+                value: borderWidth ? parseInt(borderWidth) || 0 : undefined,
+                onChange: value => setAttributes({
+                  borderWidth: value ? `${value}px` : ""
+                }),
+                min: 0,
+                max: 20,
+                step: 1,
+                allowReset: true
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+                style: {
+                  marginBottom: "10px"
+                },
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("label", {
+                  style: {
+                    display: "block",
+                    marginBottom: "5px",
+                    fontSize: "12px",
+                    fontWeight: "600"
+                  },
+                  children: "Border Color (Optional)"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("input", {
+                  type: "color",
+                  value: borderColor || "#000000",
+                  onChange: e => setAttributes({
+                    borderColor: e.target.value
+                  }),
+                  style: {
+                    width: "100%",
+                    height: "32px",
+                    border: "1px solid #ddd",
+                    borderRadius: "4px"
+                  }
+                })]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.SelectControl, {
+                label: "Border Style (Optional)",
+                value: borderStyle,
+                options: [{
+                  label: "Solid",
+                  value: "solid"
+                }, {
+                  label: "Dashed",
+                  value: "dashed"
+                }, {
+                  label: "Dotted",
+                  value: "dotted"
+                }, {
+                  label: "Double",
+                  value: "double"
+                }, {
+                  label: "None",
+                  value: "none"
+                }],
+                onChange: value => setAttributes({
+                  borderStyle: value
+                })
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+                style: {
+                  marginTop: "16px"
+                },
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("h4", {
+                  style: {
+                    marginTop: 0,
+                    marginBottom: "10px",
+                    fontSize: "12px",
+                    fontWeight: "600"
+                  },
+                  children: "Individual Border Sides (Optional)"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.RangeControl, {
+                  label: "Border Top",
+                  value: borderTop ? parseInt(borderTop) || 0 : undefined,
+                  onChange: value => setAttributes({
+                    borderTop: value ? `${value}px` : ""
+                  }),
+                  min: 0,
+                  max: 20,
+                  step: 1,
+                  allowReset: true
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.RangeControl, {
+                  label: "Border Bottom",
+                  value: borderBottom ? parseInt(borderBottom) || 0 : undefined,
+                  onChange: value => setAttributes({
+                    borderBottom: value ? `${value}px` : ""
+                  }),
+                  min: 0,
+                  max: 20,
+                  step: 1,
+                  allowReset: true
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.RangeControl, {
+                  label: "Border Left",
+                  value: borderLeft ? parseInt(borderLeft) || 0 : undefined,
+                  onChange: value => setAttributes({
+                    borderLeft: value ? `${value}px` : ""
+                  }),
+                  min: 0,
+                  max: 20,
+                  step: 1,
+                  allowReset: true
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.RangeControl, {
+                  label: "Border Right",
+                  value: borderRight ? parseInt(borderRight) || 0 : undefined,
+                  onChange: value => setAttributes({
+                    borderRight: value ? `${value}px` : ""
+                  }),
+                  min: 0,
+                  max: 20,
+                  step: 1,
+                  allowReset: true
+                })]
+              })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+              style: {
+                marginTop: "16px"
+              },
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ToggleControl, {
+                label: "Show Box Shadow",
+                checked: showBoxShadow,
+                onChange: value => setAttributes({
+                  showBoxShadow: value
+                })
+              }), showBoxShadow && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextControl, {
+                label: "Box Shadow (Optional)",
+                value: boxShadow || "",
+                onChange: value => setAttributes({
+                  boxShadow: value
+                }),
+                placeholder: "e.g., 0 2px 4px rgba(0,0,0,0.1)",
+                help: "Enter CSS box-shadow value"
+              })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+              style: {
+                marginTop: "16px"
+              },
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.RangeControl, {
+                label: "Border Radius (Optional)",
+                value: borderRadius ? parseInt(borderRadius) || 0 : undefined,
+                onChange: value => setAttributes({
+                  borderRadius: value ? `${value}px` : ""
+                }),
+                min: 0,
+                max: 50,
+                step: 1,
+                allowReset: true,
+                help: "Rounded corners for accordion items"
+              })
             })]
           })]
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelBody, {
@@ -708,7 +975,19 @@ __webpack_require__.r(__webpack_exports__);
             className: `bs-accordion-item ${item.isOpen ? "open" : ""}`,
             style: {
               marginBottom: `${itemSpacing}px`,
-              padding: itemPadding || undefined
+              padding: itemPadding || undefined,
+              ...(showBorder ? borderTop || borderBottom || borderLeft || borderRight ? {
+                borderTop: borderTop ? `${borderTop} ${borderStyle} ${borderColor || "rgba(0, 0, 0, 0.1)"}` : "none",
+                borderBottom: borderBottom ? `${borderBottom} ${borderStyle} ${borderColor || "rgba(0, 0, 0, 0.1)"}` : "none",
+                borderLeft: borderLeft ? `${borderLeft} ${borderStyle} ${borderColor || "rgba(0, 0, 0, 0.1)"}` : "none",
+                borderRight: borderRight ? `${borderRight} ${borderStyle} ${borderColor || "rgba(0, 0, 0, 0.1)"}` : "none"
+              } : {
+                border: `${borderWidth || "1px"} ${borderStyle} ${borderColor || "rgba(0, 0, 0, 0.1)"}`
+              } : {
+                border: "none"
+              }),
+              boxShadow: showBoxShadow ? boxShadow || "0 2px 4px rgba(0, 0, 0, 0.1)" : "none",
+              borderRadius: borderRadius || undefined
             },
             children: [item.imageUrl && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
               className: "bs-accordion-image-wrapper",
@@ -753,7 +1032,11 @@ __webpack_require__.r(__webpack_exports__);
                   style: {
                     backgroundColor: iconBackgroundColor || undefined,
                     width: iconBackgroundWidth || undefined,
-                    height: iconBackgroundHeight || undefined
+                    height: iconBackgroundHeight || undefined,
+                    ...(showIconBorder ? {
+                      border: `${iconBorderWidth || "1px"} ${iconBorderStyle} ${iconBorderColor || "#000000"}`,
+                      borderRadius: iconBorderRadius || undefined
+                    } : {})
                   },
                   children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("span", {
                     className: `bs-accordion-icon-inner ${iconStyle === "plus-minus" ? "bs-icon-plus-minus" : "bs-icon-chevron"}`,
@@ -902,10 +1185,26 @@ const generateAccordionHTML = attributes => {
     iconBackgroundWidth = "",
     iconBackgroundHeight = "",
     iconSize = "",
+    showIconBorder = false,
+    iconBorderWidth = "",
+    iconBorderColor = "",
+    iconBorderStyle = "solid",
+    iconBorderRadius = "",
     imageHeightOpen = "",
     imageWidth = "",
     imageHeightClosed = "",
-    titleFontSize = ""
+    titleFontSize = "",
+    showBorder = false,
+    borderWidth = "",
+    borderColor = "",
+    borderStyle = "solid",
+    borderTop = "",
+    borderBottom = "",
+    borderLeft = "",
+    borderRight = "",
+    showBoxShadow = true,
+    boxShadow = "",
+    borderRadius = ""
   } = attributes;
 
   // Use the unique block ID for styling
@@ -967,15 +1266,42 @@ const generateAccordionHTML = attributes => {
                     ${iconBackgroundWidth ? `--bs-accordion-icon-bg-width: ${iconBackgroundWidth};` : ""}
                     ${iconBackgroundHeight ? `--bs-accordion-icon-bg-height: ${iconBackgroundHeight};` : ""}
                     ${iconSize ? `--bs-accordion-icon-size: ${iconSize};` : ""}
+                    ${showIconBorder && iconBorderWidth ? `--bs-accordion-icon-border-width: ${iconBorderWidth};` : ""}
+                    ${showIconBorder && iconBorderColor ? `--bs-accordion-icon-border-color: ${iconBorderColor};` : ""}
+                    ${showIconBorder ? `--bs-accordion-icon-border-style: ${iconBorderStyle};` : ""}
+                    ${showIconBorder && iconBorderRadius ? `--bs-accordion-icon-border-radius: ${iconBorderRadius};` : ""}
                     ${imageHeightOpen ? `--bs-accordion-image-height-open: ${imageHeightOpen};` : ""}
                     ${imageWidth ? `--bs-accordion-image-width: ${imageWidth};` : ""}
                     ${imageHeightClosed ? `--bs-accordion-image-height-closed: ${imageHeightClosed};` : ""}
                     ${titleFontSize ? `--bs-accordion-title-font-size: ${titleFontSize};` : ""}
+                    ${showBorder && borderWidth ? `--bs-accordion-border-width: ${borderWidth};` : ""}
+                    ${showBorder && borderColor ? `--bs-accordion-border-color: ${borderColor};` : ""}
+                    ${showBorder ? `--bs-accordion-border-style: ${borderStyle};` : ""}
+                    ${showBorder && borderTop ? `--bs-accordion-border-top: ${borderTop};` : ""}
+                    ${showBorder && borderBottom ? `--bs-accordion-border-bottom: ${borderBottom};` : ""}
+                    ${showBorder && borderLeft ? `--bs-accordion-border-left: ${borderLeft};` : ""}
+                    ${showBorder && borderRight ? `--bs-accordion-border-right: ${borderRight};` : ""}
+                    ${showBoxShadow && boxShadow ? `--bs-accordion-box-shadow: ${boxShadow};` : ""}
+                    ${borderRadius ? `--bs-accordion-border-radius: ${borderRadius};` : ""}
                 }
 				
 				#${uniqueId} .bs-accordion-item {
 					margin-bottom: ${itemSpacing}px;
 					padding: var(--bs-accordion-item-padding);
+					${showBorder ? borderTop || borderBottom || borderLeft || borderRight ? `
+						border-top: ${borderTop ? `var(--bs-accordion-border-top) var(--bs-accordion-border-style, solid) var(--bs-accordion-border-color, rgba(0, 0, 0, 0.1))` : "none"};
+						border-bottom: ${borderBottom ? `var(--bs-accordion-border-bottom) var(--bs-accordion-border-style, solid) var(--bs-accordion-border-color, rgba(0, 0, 0, 0.1))` : "none"};
+						border-left: ${borderLeft ? `var(--bs-accordion-border-left) var(--bs-accordion-border-style, solid) var(--bs-accordion-border-color, rgba(0, 0, 0, 0.1))` : "none"};
+						border-right: ${borderRight ? `var(--bs-accordion-border-right) var(--bs-accordion-border-style, solid) var(--bs-accordion-border-color, rgba(0, 0, 0, 0.1))` : "none"};
+					` : `
+						border-width: var(--bs-accordion-border-width, 1px);
+						border-color: var(--bs-accordion-border-color, rgba(0, 0, 0, 0.1));
+						border-style: var(--bs-accordion-border-style, solid);
+					` : "border: none;"}
+					${showBoxShadow ? `
+						box-shadow: var(--bs-accordion-box-shadow, 0 2px 4px rgba(0, 0, 0, 0.1));
+					` : "box-shadow: none;"}
+					${borderRadius ? `border-radius: ${borderRadius};` : ""}
 				}
 				
 				#${uniqueId} .bs-accordion-header {
@@ -1011,11 +1337,15 @@ const generateAccordionHTML = attributes => {
 				${iconSize ? `#${uniqueId} .bs-accordion-icon-inner {
 					${iconStyle === "plus-minus" ? `font-size: var(--bs-accordion-icon-size);` : ""}
 				}` : ""}
-				${iconBackgroundColor || iconBackgroundWidth || iconBackgroundHeight ? `
+				${iconBackgroundColor || iconBackgroundWidth || iconBackgroundHeight || showIconBorder ? `
 				#${uniqueId} .bs-accordion-icon {
 					${iconBackgroundColor ? `background-color: var(--bs-accordion-icon-bg-color);` : ""}
 					${iconBackgroundWidth ? `width: var(--bs-accordion-icon-bg-width);` : ""}
 					${iconBackgroundHeight ? `height: var(--bs-accordion-icon-bg-height);` : ""}
+					${showIconBorder ? `
+						border: var(--bs-accordion-icon-border-width, 1px) var(--bs-accordion-icon-border-style, solid) var(--bs-accordion-icon-border-color, #000000);
+						border-radius: var(--bs-accordion-icon-border-radius, 0);
+					` : ""}
 				}` : ""}
 				${imageHeightOpen || imageWidth || imageHeightClosed ? `
 				#${uniqueId} .bs-accordion-image,

@@ -42,10 +42,26 @@ registerBlockType("bootstrap-blocks/bs-accordion", {
             iconBackgroundWidth,
             iconBackgroundHeight,
             iconSize,
+            showIconBorder,
+            iconBorderWidth,
+            iconBorderColor,
+            iconBorderStyle,
+            iconBorderRadius,
             imageHeightOpen,
             imageWidth,
             imageHeightClosed,
             titleFontSize,
+            showBorder,
+            borderWidth,
+            borderColor,
+            borderStyle,
+            borderTop,
+            borderBottom,
+            borderLeft,
+            borderRight,
+            showBoxShadow,
+            boxShadow,
+            borderRadius,
         } = attributes;
 
         const [iconColorPopoverOpen, setIconColorPopoverOpen] = useState(false);
@@ -603,6 +619,128 @@ registerBlockType("bootstrap-blocks/bs-accordion", {
                                 step={1}
                                 allowReset={true}
                             />
+                            <div
+                                style={{
+                                    marginTop: "16px",
+                                    paddingTop: "16px",
+                                    borderTop: "1px solid #eee",
+                                }}
+                            >
+                                <ToggleControl
+                                    label="Show Icon Border"
+                                    checked={showIconBorder}
+                                    onChange={(value) =>
+                                        setAttributes({ showIconBorder: value })
+                                    }
+                                />
+                                {showIconBorder && (
+                                    <>
+                                        <RangeControl
+                                            label="Icon Border Width (Optional)"
+                                            value={
+                                                iconBorderWidth
+                                                    ? parseInt(
+                                                          iconBorderWidth
+                                                      ) || 0
+                                                    : undefined
+                                            }
+                                            onChange={(value) =>
+                                                setAttributes({
+                                                    iconBorderWidth: value
+                                                        ? `${value}px`
+                                                        : "",
+                                                })
+                                            }
+                                            min={0}
+                                            max={10}
+                                            step={1}
+                                            allowReset={true}
+                                        />
+                                        <div style={{ marginBottom: "10px" }}>
+                                            <label
+                                                style={{
+                                                    display: "block",
+                                                    marginBottom: "5px",
+                                                    fontSize: "12px",
+                                                    fontWeight: "600",
+                                                }}
+                                            >
+                                                Icon Border Color (Optional)
+                                            </label>
+                                            <input
+                                                type="color"
+                                                value={
+                                                    iconBorderColor || "#000000"
+                                                }
+                                                onChange={(e) =>
+                                                    setAttributes({
+                                                        iconBorderColor:
+                                                            e.target.value,
+                                                    })
+                                                }
+                                                style={{
+                                                    width: "100%",
+                                                    height: "32px",
+                                                    border: "1px solid #ddd",
+                                                    borderRadius: "4px",
+                                                }}
+                                            />
+                                        </div>
+                                        <SelectControl
+                                            label="Icon Border Style (Optional)"
+                                            value={iconBorderStyle}
+                                            options={[
+                                                {
+                                                    label: "Solid",
+                                                    value: "solid",
+                                                },
+                                                {
+                                                    label: "Dashed",
+                                                    value: "dashed",
+                                                },
+                                                {
+                                                    label: "Dotted",
+                                                    value: "dotted",
+                                                },
+                                                {
+                                                    label: "Double",
+                                                    value: "double",
+                                                },
+                                                {
+                                                    label: "None",
+                                                    value: "none",
+                                                },
+                                            ]}
+                                            onChange={(value) =>
+                                                setAttributes({
+                                                    iconBorderStyle: value,
+                                                })
+                                            }
+                                        />
+                                        <RangeControl
+                                            label="Icon Border Radius (Optional)"
+                                            value={
+                                                iconBorderRadius
+                                                    ? parseInt(
+                                                          iconBorderRadius
+                                                      ) || 0
+                                                    : undefined
+                                            }
+                                            onChange={(value) =>
+                                                setAttributes({
+                                                    iconBorderRadius: value
+                                                        ? `${value}px`
+                                                        : "",
+                                                })
+                                            }
+                                            min={0}
+                                            max={50}
+                                            step={1}
+                                            allowReset={true}
+                                        />
+                                    </>
+                                )}
+                            </div>
                             <RangeControl
                                 label="Icon Size (Optional)"
                                 value={
@@ -735,6 +873,239 @@ registerBlockType("bootstrap-blocks/bs-accordion", {
                                 allowReset={true}
                             />
                         </div>
+
+                        <div
+                            style={{
+                                marginBottom: "16px",
+                                marginTop: "24px",
+                                paddingTop: "16px",
+                                borderTop: "1px solid #ddd",
+                            }}
+                        >
+                            <h3
+                                style={{
+                                    marginTop: 0,
+                                    marginBottom: "12px",
+                                    fontSize: "13px",
+                                    fontWeight: "600",
+                                }}
+                            >
+                                Border & Shadow Settings
+                            </h3>
+                            <ToggleControl
+                                label="Show Border"
+                                checked={showBorder}
+                                onChange={(value) =>
+                                    setAttributes({ showBorder: value })
+                                }
+                            />
+                            {showBorder && (
+                                <>
+                                    <RangeControl
+                                        label="Border Width (Optional)"
+                                        value={
+                                            borderWidth
+                                                ? parseInt(borderWidth) || 0
+                                                : undefined
+                                        }
+                                        onChange={(value) =>
+                                            setAttributes({
+                                                borderWidth: value
+                                                    ? `${value}px`
+                                                    : "",
+                                            })
+                                        }
+                                        min={0}
+                                        max={20}
+                                        step={1}
+                                        allowReset={true}
+                                    />
+                                    <div style={{ marginBottom: "10px" }}>
+                                        <label
+                                            style={{
+                                                display: "block",
+                                                marginBottom: "5px",
+                                                fontSize: "12px",
+                                                fontWeight: "600",
+                                            }}
+                                        >
+                                            Border Color (Optional)
+                                        </label>
+                                        <input
+                                            type="color"
+                                            value={borderColor || "#000000"}
+                                            onChange={(e) =>
+                                                setAttributes({
+                                                    borderColor: e.target.value,
+                                                })
+                                            }
+                                            style={{
+                                                width: "100%",
+                                                height: "32px",
+                                                border: "1px solid #ddd",
+                                                borderRadius: "4px",
+                                            }}
+                                        />
+                                    </div>
+                                    <SelectControl
+                                        label="Border Style (Optional)"
+                                        value={borderStyle}
+                                        options={[
+                                            { label: "Solid", value: "solid" },
+                                            {
+                                                label: "Dashed",
+                                                value: "dashed",
+                                            },
+                                            {
+                                                label: "Dotted",
+                                                value: "dotted",
+                                            },
+                                            {
+                                                label: "Double",
+                                                value: "double",
+                                            },
+                                            { label: "None", value: "none" },
+                                        ]}
+                                        onChange={(value) =>
+                                            setAttributes({
+                                                borderStyle: value,
+                                            })
+                                        }
+                                    />
+                                    <div style={{ marginTop: "16px" }}>
+                                        <h4
+                                            style={{
+                                                marginTop: 0,
+                                                marginBottom: "10px",
+                                                fontSize: "12px",
+                                                fontWeight: "600",
+                                            }}
+                                        >
+                                            Individual Border Sides (Optional)
+                                        </h4>
+                                        <RangeControl
+                                            label="Border Top"
+                                            value={
+                                                borderTop
+                                                    ? parseInt(borderTop) || 0
+                                                    : undefined
+                                            }
+                                            onChange={(value) =>
+                                                setAttributes({
+                                                    borderTop: value
+                                                        ? `${value}px`
+                                                        : "",
+                                                })
+                                            }
+                                            min={0}
+                                            max={20}
+                                            step={1}
+                                            allowReset={true}
+                                        />
+                                        <RangeControl
+                                            label="Border Bottom"
+                                            value={
+                                                borderBottom
+                                                    ? parseInt(borderBottom) ||
+                                                      0
+                                                    : undefined
+                                            }
+                                            onChange={(value) =>
+                                                setAttributes({
+                                                    borderBottom: value
+                                                        ? `${value}px`
+                                                        : "",
+                                                })
+                                            }
+                                            min={0}
+                                            max={20}
+                                            step={1}
+                                            allowReset={true}
+                                        />
+                                        <RangeControl
+                                            label="Border Left"
+                                            value={
+                                                borderLeft
+                                                    ? parseInt(borderLeft) || 0
+                                                    : undefined
+                                            }
+                                            onChange={(value) =>
+                                                setAttributes({
+                                                    borderLeft: value
+                                                        ? `${value}px`
+                                                        : "",
+                                                })
+                                            }
+                                            min={0}
+                                            max={20}
+                                            step={1}
+                                            allowReset={true}
+                                        />
+                                        <RangeControl
+                                            label="Border Right"
+                                            value={
+                                                borderRight
+                                                    ? parseInt(borderRight) || 0
+                                                    : undefined
+                                            }
+                                            onChange={(value) =>
+                                                setAttributes({
+                                                    borderRight: value
+                                                        ? `${value}px`
+                                                        : "",
+                                                })
+                                            }
+                                            min={0}
+                                            max={20}
+                                            step={1}
+                                            allowReset={true}
+                                        />
+                                    </div>
+                                </>
+                            )}
+                            <div style={{ marginTop: "16px" }}>
+                                <ToggleControl
+                                    label="Show Box Shadow"
+                                    checked={showBoxShadow}
+                                    onChange={(value) =>
+                                        setAttributes({ showBoxShadow: value })
+                                    }
+                                />
+                                {showBoxShadow && (
+                                    <TextControl
+                                        label="Box Shadow (Optional)"
+                                        value={boxShadow || ""}
+                                        onChange={(value) =>
+                                            setAttributes({ boxShadow: value })
+                                        }
+                                        placeholder="e.g., 0 2px 4px rgba(0,0,0,0.1)"
+                                        help="Enter CSS box-shadow value"
+                                    />
+                                )}
+                            </div>
+                            <div style={{ marginTop: "16px" }}>
+                                <RangeControl
+                                    label="Border Radius (Optional)"
+                                    value={
+                                        borderRadius
+                                            ? parseInt(borderRadius) || 0
+                                            : undefined
+                                    }
+                                    onChange={(value) =>
+                                        setAttributes({
+                                            borderRadius: value
+                                                ? `${value}px`
+                                                : "",
+                                        })
+                                    }
+                                    min={0}
+                                    max={50}
+                                    step={1}
+                                    allowReset={true}
+                                    help="Rounded corners for accordion items"
+                                />
+                            </div>
+                        </div>
                     </PanelBody>
                     <PanelBody title="Item Images" initialOpen={false}>
                         {items.map((item, index) => (
@@ -861,6 +1232,51 @@ registerBlockType("bootstrap-blocks/bs-accordion", {
                                 style={{
                                     marginBottom: `${itemSpacing}px`,
                                     padding: itemPadding || undefined,
+                                    ...(showBorder
+                                        ? borderTop ||
+                                          borderBottom ||
+                                          borderLeft ||
+                                          borderRight
+                                            ? {
+                                                  borderTop: borderTop
+                                                      ? `${borderTop} ${borderStyle} ${
+                                                            borderColor ||
+                                                            "rgba(0, 0, 0, 0.1)"
+                                                        }`
+                                                      : "none",
+                                                  borderBottom: borderBottom
+                                                      ? `${borderBottom} ${borderStyle} ${
+                                                            borderColor ||
+                                                            "rgba(0, 0, 0, 0.1)"
+                                                        }`
+                                                      : "none",
+                                                  borderLeft: borderLeft
+                                                      ? `${borderLeft} ${borderStyle} ${
+                                                            borderColor ||
+                                                            "rgba(0, 0, 0, 0.1)"
+                                                        }`
+                                                      : "none",
+                                                  borderRight: borderRight
+                                                      ? `${borderRight} ${borderStyle} ${
+                                                            borderColor ||
+                                                            "rgba(0, 0, 0, 0.1)"
+                                                        }`
+                                                      : "none",
+                                              }
+                                            : {
+                                                  border: `${
+                                                      borderWidth || "1px"
+                                                  } ${borderStyle} ${
+                                                      borderColor ||
+                                                      "rgba(0, 0, 0, 0.1)"
+                                                  }`,
+                                              }
+                                        : { border: "none" }),
+                                    boxShadow: showBoxShadow
+                                        ? boxShadow ||
+                                          "0 2px 4px rgba(0, 0, 0, 0.1)"
+                                        : "none",
+                                    borderRadius: borderRadius || undefined,
                                 }}
                             >
                                 {item.imageUrl && (
@@ -937,6 +1353,20 @@ registerBlockType("bootstrap-blocks/bs-accordion", {
                                                 height:
                                                     iconBackgroundHeight ||
                                                     undefined,
+                                                ...(showIconBorder
+                                                    ? {
+                                                          border: `${
+                                                              iconBorderWidth ||
+                                                              "1px"
+                                                          } ${iconBorderStyle} ${
+                                                              iconBorderColor ||
+                                                              "#000000"
+                                                          }`,
+                                                          borderRadius:
+                                                              iconBorderRadius ||
+                                                              undefined,
+                                                      }
+                                                    : {}),
                                             }}
                                         >
                                             <span

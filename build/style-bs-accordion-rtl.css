@@ -222,7 +222,7 @@
 
 .bs-accordion .bs-accordion-item {
     /* margin-bottom is handled by inline styles */
-    border-radius: 6px;
+    border-radius: 4px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     overflow: hidden;
     display: flex;
@@ -273,7 +273,7 @@
 
 .bs-accordion .bs-accordion-header {
     width: 100%;
-    padding: 16px 20px;
+    padding: 16px 20px 0px;
     border: none;
     outline: 0;
     text-align: right;
@@ -356,7 +356,7 @@
 }
 
 .bs-accordion .bs-accordion-content {
-    padding: 20px;
+    padding: 10px 20px;
     line-height: 1.6;
     /* Colors are handled by inline styles */
 }

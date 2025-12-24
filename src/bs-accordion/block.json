@@ -96,6 +96,26 @@
             "type": "string",
             "default": ""
         },
+        "showIconBorder": {
+            "type": "boolean",
+            "default": false
+        },
+        "iconBorderWidth": {
+            "type": "string",
+            "default": ""
+        },
+        "iconBorderColor": {
+            "type": "string",
+            "default": ""
+        },
+        "iconBorderStyle": {
+            "type": "string",
+            "default": "solid"
+        },
+        "iconBorderRadius": {
+            "type": "string",
+            "default": ""
+        },
         "imageHeightOpen": {
             "type": "string",
             "default": ""
@@ -109,6 +129,50 @@
             "default": ""
         },
         "titleFontSize": {
+            "type": "string",
+            "default": ""
+        },
+        "showBorder": {
+            "type": "boolean",
+            "default": false
+        },
+        "borderWidth": {
+            "type": "string",
+            "default": ""
+        },
+        "borderColor": {
+            "type": "string",
+            "default": ""
+        },
+        "borderStyle": {
+            "type": "string",
+            "default": "solid"
+        },
+        "borderTop": {
+            "type": "string",
+            "default": ""
+        },
+        "borderBottom": {
+            "type": "string",
+            "default": ""
+        },
+        "borderLeft": {
+            "type": "string",
+            "default": ""
+        },
+        "borderRight": {
+            "type": "string",
+            "default": ""
+        },
+        "showBoxShadow": {
+            "type": "boolean",
+            "default": true
+        },
+        "boxShadow": {
+            "type": "string",
+            "default": ""
+        },
+        "borderRadius": {
             "type": "string",
             "default": ""
         }

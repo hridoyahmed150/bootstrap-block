@@ -19,10 +19,26 @@ export const generateAccordionHTML = (attributes) => {
         iconBackgroundWidth = "",
         iconBackgroundHeight = "",
         iconSize = "",
+        showIconBorder = false,
+        iconBorderWidth = "",
+        iconBorderColor = "",
+        iconBorderStyle = "solid",
+        iconBorderRadius = "",
         imageHeightOpen = "",
         imageWidth = "",
         imageHeightClosed = "",
         titleFontSize = "",
+        showBorder = false,
+        borderWidth = "",
+        borderColor = "",
+        borderStyle = "solid",
+        borderTop = "",
+        borderBottom = "",
+        borderLeft = "",
+        borderRight = "",
+        showBoxShadow = true,
+        boxShadow = "",
+        borderRadius = "",
     } = attributes;
 
     // Use the unique block ID for styling
@@ -122,6 +138,26 @@ export const generateAccordionHTML = (attributes) => {
                     }
                     ${iconSize ? `--bs-accordion-icon-size: ${iconSize};` : ""}
                     ${
+                        showIconBorder && iconBorderWidth
+                            ? `--bs-accordion-icon-border-width: ${iconBorderWidth};`
+                            : ""
+                    }
+                    ${
+                        showIconBorder && iconBorderColor
+                            ? `--bs-accordion-icon-border-color: ${iconBorderColor};`
+                            : ""
+                    }
+                    ${
+                        showIconBorder
+                            ? `--bs-accordion-icon-border-style: ${iconBorderStyle};`
+                            : ""
+                    }
+                    ${
+                        showIconBorder && iconBorderRadius
+                            ? `--bs-accordion-icon-border-radius: ${iconBorderRadius};`
+                            : ""
+                    }
+                    ${
                         imageHeightOpen
                             ? `--bs-accordion-image-height-open: ${imageHeightOpen};`
                             : ""
@@ -141,11 +177,99 @@ export const generateAccordionHTML = (attributes) => {
                             ? `--bs-accordion-title-font-size: ${titleFontSize};`
                             : ""
                     }
+                    ${
+                        showBorder && borderWidth
+                            ? `--bs-accordion-border-width: ${borderWidth};`
+                            : ""
+                    }
+                    ${
+                        showBorder && borderColor
+                            ? `--bs-accordion-border-color: ${borderColor};`
+                            : ""
+                    }
+                    ${
+                        showBorder
+                            ? `--bs-accordion-border-style: ${borderStyle};`
+                            : ""
+                    }
+                    ${
+                        showBorder && borderTop
+                            ? `--bs-accordion-border-top: ${borderTop};`
+                            : ""
+                    }
+                    ${
+                        showBorder && borderBottom
+                            ? `--bs-accordion-border-bottom: ${borderBottom};`
+                            : ""
+                    }
+                    ${
+                        showBorder && borderLeft
+                            ? `--bs-accordion-border-left: ${borderLeft};`
+                            : ""
+                    }
+                    ${
+                        showBorder && borderRight
+                            ? `--bs-accordion-border-right: ${borderRight};`
+                            : ""
+                    }
+                    ${
+                        showBoxShadow && boxShadow
+                            ? `--bs-accordion-box-shadow: ${boxShadow};`
+                            : ""
+                    }
+                    ${
+                        borderRadius
+                            ? `--bs-accordion-border-radius: ${borderRadius};`
+                            : ""
+                    }
                 }
 				
 				#${uniqueId} .bs-accordion-item {
 					margin-bottom: ${itemSpacing}px;
 					padding: var(--bs-accordion-item-padding);
+					${
+                        showBorder
+                            ? borderTop ||
+                              borderBottom ||
+                              borderLeft ||
+                              borderRight
+                                ? `
+						border-top: ${
+                            borderTop
+                                ? `var(--bs-accordion-border-top) var(--bs-accordion-border-style, solid) var(--bs-accordion-border-color, rgba(0, 0, 0, 0.1))`
+                                : "none"
+                        };
+						border-bottom: ${
+                            borderBottom
+                                ? `var(--bs-accordion-border-bottom) var(--bs-accordion-border-style, solid) var(--bs-accordion-border-color, rgba(0, 0, 0, 0.1))`
+                                : "none"
+                        };
+						border-left: ${
+                            borderLeft
+                                ? `var(--bs-accordion-border-left) var(--bs-accordion-border-style, solid) var(--bs-accordion-border-color, rgba(0, 0, 0, 0.1))`
+                                : "none"
+                        };
+						border-right: ${
+                            borderRight
+                                ? `var(--bs-accordion-border-right) var(--bs-accordion-border-style, solid) var(--bs-accordion-border-color, rgba(0, 0, 0, 0.1))`
+                                : "none"
+                        };
+					`
+                                : `
+						border-width: var(--bs-accordion-border-width, 1px);
+						border-color: var(--bs-accordion-border-color, rgba(0, 0, 0, 0.1));
+						border-style: var(--bs-accordion-border-style, solid);
+					`
+                            : "border: none;"
+                    }
+					${
+                        showBoxShadow
+                            ? `
+						box-shadow: var(--bs-accordion-box-shadow, 0 2px 4px rgba(0, 0, 0, 0.1));
+					`
+                            : "box-shadow: none;"
+                    }
+					${borderRadius ? `border-radius: ${borderRadius};` : ""}
 				}
 				
 				#${uniqueId} .bs-accordion-header {
@@ -192,7 +316,8 @@ export const generateAccordionHTML = (attributes) => {
 				${
                     iconBackgroundColor ||
                     iconBackgroundWidth ||
-                    iconBackgroundHeight
+                    iconBackgroundHeight ||
+                    showIconBorder
                         ? `
 				#${uniqueId} .bs-accordion-icon {
 					${
@@ -202,6 +327,14 @@ export const generateAccordionHTML = (attributes) => {
                     }
 					${iconBackgroundWidth ? `width: var(--bs-accordion-icon-bg-width);` : ""}
 					${iconBackgroundHeight ? `height: var(--bs-accordion-icon-bg-height);` : ""}
+					${
+                        showIconBorder
+                            ? `
+						border: var(--bs-accordion-icon-border-width, 1px) var(--bs-accordion-icon-border-style, solid) var(--bs-accordion-icon-border-color, #000000);
+						border-radius: var(--bs-accordion-icon-border-radius, 0);
+					`
+                            : ""
+                    }
 				}`
                         : ""
                 }
