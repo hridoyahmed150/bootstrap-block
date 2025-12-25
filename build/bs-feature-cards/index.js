@@ -45,6 +45,8 @@ __webpack_require__.r(__webpack_exports__);
       cardBorderStyle,
       cardBorderColor,
       iconSize,
+      iconContainerWidth,
+      iconContainerHeight,
       iconBorderRadius,
       iconPosition,
       iconBackgroundColor,
@@ -149,7 +151,8 @@ __webpack_require__.r(__webpack_exports__);
         title: "New Feature",
         description: "Add your description here...",
         iconUrl: "",
-        iconHoverColor: ""
+        iconHoverColor: "",
+        linkUrl: ""
       };
       setAttributes({
         items: [...items, newItem]
@@ -357,7 +360,30 @@ __webpack_require__.r(__webpack_exports__);
             min: 20,
             max: 100,
             step: 1,
-            allowReset: true
+            allowReset: true,
+            help: "Size of the icon image"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.RangeControl, {
+            label: "Icon Container Width (Optional)",
+            value: iconContainerWidth ? parseInt(iconContainerWidth) || 0 : undefined,
+            onChange: value => setAttributes({
+              iconContainerWidth: value ? `${value}px` : ""
+            }),
+            min: 20,
+            max: 200,
+            step: 1,
+            allowReset: true,
+            help: "Width of the icon container (div with background)"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.RangeControl, {
+            label: "Icon Container Height (Optional)",
+            value: iconContainerHeight ? parseInt(iconContainerHeight) || 0 : undefined,
+            onChange: value => setAttributes({
+              iconContainerHeight: value ? `${value}px` : ""
+            }),
+            min: 20,
+            max: 200,
+            step: 1,
+            allowReset: true,
+            help: "Height of the icon container (div with background)"
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.RangeControl, {
             label: "Icon Border Radius (Optional)",
             value: iconBorderRadius ? parseInt(iconBorderRadius) || 0 : undefined,
@@ -854,6 +880,35 @@ __webpack_require__.r(__webpack_exports__);
                   },
                   children: "Clear"
                 })]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+                style: {
+                  marginTop: "12px",
+                  marginBottom: "10px"
+                },
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("label", {
+                  style: {
+                    display: "block",
+                    marginBottom: "5px",
+                    fontWeight: "600",
+                    fontSize: "12px"
+                  },
+                  children: "Card Link URL (Optional)"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextControl, {
+                  value: item.linkUrl || "",
+                  onChange: value => updateItem(index, "linkUrl", value),
+                  placeholder: "https://example.com",
+                  style: {
+                    width: "100%"
+                  }
+                }), item.linkUrl && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Button, {
+                  onClick: () => updateItem(index, "linkUrl", ""),
+                  variant: "link",
+                  style: {
+                    marginTop: "4px",
+                    fontSize: "11px"
+                  },
+                  children: "Clear"
+                })]
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
                 style: {
                   display: "flex",
@@ -888,31 +943,8 @@ __webpack_require__.r(__webpack_exports__);
               gridTemplateColumns: `repeat(${columns}, 1fr)`,
               gap: hideCardGap ? "0px" : `${cardSpacing}px`
             },
-            children: [items.map((item, index) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-              style: {
-                position: "relative"
-              },
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
-                style: {
-                  position: "absolute",
-                  top: "10px",
-                  right: "10px",
-                  zIndex: 10,
-                  display: "flex",
-                  gap: "4px"
-                },
-                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Button, {
-                  onClick: () => removeItem(index),
-                  variant: "secondary",
-                  isDestructive: true,
-                  size: "small",
-                  style: {
-                    minWidth: "auto",
-                    padding: "4px 8px"
-                  },
-                  children: "Remove"
-                })
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+            children: [items.map((item, index) => {
+              const cardContent = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
                 className: `bs-feature-card ${iconPosition === "left" ? "icon-left" : "icon-top"}`,
                 style: {
                   backgroundColor: cardBackgroundColor || "#ffffff",
@@ -948,8 +980,12 @@ __webpack_require__.r(__webpack_exports__);
                   style: {
                     backgroundColor: iconBackgroundColor || "#4CAF50",
                     borderRadius: iconBorderRadius || undefined,
-                    width: iconSize || undefined,
-                    height: iconSize || undefined
+                    ...(iconContainerWidth && {
+                      width: iconContainerWidth
+                    }),
+                    ...(iconContainerHeight && {
+                      height: iconContainerHeight
+                    })
                   },
                   onMouseEnter: e => {
                     if (iconHoverBackgroundColor) {
@@ -998,8 +1034,10 @@ __webpack_require__.r(__webpack_exports__);
                     src: item.iconUrl,
                     alt: "",
                     style: {
-                      width: "100%",
-                      height: "100%",
+                      width: iconSize || "100%",
+                      height: iconSize || "100%",
+                      maxWidth: iconSize ? "none" : "100%",
+                      maxHeight: iconSize ? "none" : "100%",
                       objectFit: "contain",
                       padding: "12px"
                     }
@@ -1093,8 +1131,47 @@ __webpack_require__.r(__webpack_exports__);
                     }
                   })]
                 })]
-              })]
-            }, item.id)), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+              });
+              return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+                style: {
+                  position: "relative"
+                },
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+                  style: {
+                    position: "absolute",
+                    top: "10px",
+                    right: "10px",
+                    zIndex: 10,
+                    display: "flex",
+                    gap: "4px"
+                  },
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Button, {
+                    onClick: () => removeItem(index),
+                    variant: "secondary",
+                    isDestructive: true,
+                    size: "small",
+                    style: {
+                      minWidth: "auto",
+                      padding: "4px 8px"
+                    },
+                    children: "Remove"
+                  })
+                }), item.linkUrl && item.linkUrl.trim() !== "" ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("a", {
+                  href: item.linkUrl,
+                  className: "bs-feature-card-link",
+                  style: {
+                    textDecoration: "none",
+                    display: "block",
+                    color: "inherit"
+                  },
+                  onClick: e => {
+                    // Prevent navigation in editor
+                    e.preventDefault();
+                  },
+                  children: cardContent
+                }) : cardContent]
+              }, item.id);
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
               style: {
                 display: "flex",
                 alignItems: "center",
@@ -1230,6 +1307,8 @@ const generateFeatureCardsHTML = attributes => {
     cardBorderStyle = "solid",
     cardBorderColor = "#000000",
     iconSize = "",
+    iconContainerWidth = "",
+    iconContainerHeight = "",
     iconBorderRadius = "",
     iconPosition = "top",
     iconBackgroundColor = "#4CAF50",
@@ -1247,41 +1326,45 @@ const generateFeatureCardsHTML = attributes => {
   // Generate feature cards HTML
   const generateFeatureCards = () => {
     return items.map(item => {
-      return `
-				<div class="bs-feature-card ${iconPosition === "left" ? "icon-left" : "icon-top"}" style="
-					background-color: ${cardBackgroundColor};
-					color: ${textColor};
-					${cardPadding ? `padding: ${cardPadding};` : ""}
-					${cardBorderRadius ? `border-radius: ${cardBorderRadius};` : ""}
-					${cardBorderWidth > 0 ? `border-width: ${cardBorderWidth}px;` : ""}
-					${cardBorderWidth > 0 ? `border-style: ${cardBorderStyle};` : ""}
-					${cardBorderWidth > 0 ? `border-color: ${cardBorderColor};` : ""}
-				">
-					${item.iconUrl ? `<div class="bs-feature-card-icon" style="
-								background-color: ${iconBackgroundColor};
-								${iconBorderRadius ? `border-radius: ${iconBorderRadius};` : ""}
-								${iconSize ? `width: ${iconSize}; height: ${iconSize};` : ""}
-								display: flex;
-								align-items: center;
-								justify-content: center;
-							">
-								<img src="${item.iconUrl}" alt="" style="
-									width: 100%;
-									height: 100%;
-									max-width: 100%;
-									max-height: 100%;
-									object-fit: contain;
-									padding: 8px;
-									display: block;
-									box-sizing: border-box;
-								" />
-							</div>` : ""}
-					<div class="bs-feature-card-content">
-						${item.title ? item.title.trim().startsWith("<") ? `<div class="bs-feature-card-title" style="color: ${textColor}; transition: color 0.3s ease;">${item.title}</div>` : `<h3 class="bs-feature-card-title" style="color: ${textColor}; transition: color 0.3s ease;">${item.title}</h3>` : ""}
-						${item.description ? `<div class="bs-feature-card-description" style="color: ${textColor}; transition: color 0.3s ease;">${item.description}</div>` : ""}
+      const cardContent = `
+					<div class="bs-feature-card ${iconPosition === "left" ? "icon-left" : "icon-top"}" style="
+						background-color: ${cardBackgroundColor};
+						color: ${textColor};
+						${cardPadding ? `padding: ${cardPadding};` : ""}
+						${cardBorderRadius ? `border-radius: ${cardBorderRadius};` : ""}
+						${cardBorderWidth > 0 ? `border-width: ${cardBorderWidth}px;` : ""}
+						${cardBorderWidth > 0 ? `border-style: ${cardBorderStyle};` : ""}
+						${cardBorderWidth > 0 ? `border-color: ${cardBorderColor};` : ""}
+					">
+						${item.iconUrl ? `<div class="bs-feature-card-icon" style="
+									background-color: ${iconBackgroundColor};
+									${iconBorderRadius ? `border-radius: ${iconBorderRadius};` : ""}
+									${iconContainerWidth ? `width: ${iconContainerWidth} !important;` : ""}
+									${iconContainerHeight ? `height: ${iconContainerHeight} !important;` : ""}
+									display: flex;
+									align-items: center;
+									justify-content: center;
+								">
+									<img src="${item.iconUrl}" alt="" style="
+										${iconSize ? `width: ${iconSize} !important; height: ${iconSize} !important;` : "width: 100%; height: 100%;"}
+										${!iconSize ? "max-width: 100%; max-height: 100%;" : ""}
+										object-fit: contain;
+										display: block;
+										box-sizing: border-box;
+									" />
+								</div>` : ""}
+						<div class="bs-feature-card-content">
+							${item.title ? item.title.trim().startsWith("<") ? `<div class="bs-feature-card-title" style="color: ${textColor}; transition: color 0.3s ease;">${item.title}</div>` : `<h3 class="bs-feature-card-title" style="color: ${textColor}; transition: color 0.3s ease;">${item.title}</h3>` : ""}
+							${item.description ? `<div class="bs-feature-card-description" style="color: ${textColor}; transition: color 0.3s ease;">${item.description}</div>` : ""}
+						</div>
 					</div>
-				</div>
-			`;
+				`;
+
+      // Wrap in <a> tag if linkUrl is provided
+      if (item.linkUrl && item.linkUrl.trim() !== "") {
+        return `<a href="${item.linkUrl}" class="bs-feature-card-link" style="text-decoration: none; display: block; color: inherit;">${cardContent}</a>`;
+      }
+      return cardContent;
     }).join("");
   };
 

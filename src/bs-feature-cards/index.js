@@ -35,6 +35,8 @@ registerBlockType("bootstrap-blocks/bs-feature-cards", {
             cardBorderStyle,
             cardBorderColor,
             iconSize,
+            iconContainerWidth,
+            iconContainerHeight,
             iconBorderRadius,
             iconPosition,
             iconBackgroundColor,
@@ -154,6 +156,7 @@ registerBlockType("bootstrap-blocks/bs-feature-cards", {
                 description: "Add your description here...",
                 iconUrl: "",
                 iconHoverColor: "",
+                linkUrl: "",
             };
             setAttributes({
                 items: [...items, newItem],
@@ -388,6 +391,47 @@ registerBlockType("bootstrap-blocks/bs-feature-cards", {
                             max={100}
                             step={1}
                             allowReset={true}
+                            help="Size of the icon image"
+                        />
+                        <RangeControl
+                            label="Icon Container Width (Optional)"
+                            value={
+                                iconContainerWidth
+                                    ? parseInt(iconContainerWidth) || 0
+                                    : undefined
+                            }
+                            onChange={(value) =>
+                                setAttributes({
+                                    iconContainerWidth: value
+                                        ? `${value}px`
+                                        : "",
+                                })
+                            }
+                            min={20}
+                            max={200}
+                            step={1}
+                            allowReset={true}
+                            help="Width of the icon container (div with background)"
+                        />
+                        <RangeControl
+                            label="Icon Container Height (Optional)"
+                            value={
+                                iconContainerHeight
+                                    ? parseInt(iconContainerHeight) || 0
+                                    : undefined
+                            }
+                            onChange={(value) =>
+                                setAttributes({
+                                    iconContainerHeight: value
+                                        ? `${value}px`
+                                        : "",
+                                })
+                            }
+                            min={20}
+                            max={200}
+                            step={1}
+                            allowReset={true}
+                            help="Height of the icon container (div with background)"
                         />
                         <RangeControl
                             label="Icon Border Radius (Optional)"
@@ -1142,6 +1186,55 @@ registerBlockType("bootstrap-blocks/bs-feature-cards", {
                                     )}
                                     <div
                                         style={{
+                                            marginTop: "12px",
+                                            marginBottom: "10px",
+                                        }}
+                                    >
+                                        <label
+                                            style={{
+                                                display: "block",
+                                                marginBottom: "5px",
+                                                fontWeight: "600",
+                                                fontSize: "12px",
+                                            }}
+                                        >
+                                            Card Link URL (Optional)
+                                        </label>
+                                        <TextControl
+                                            value={item.linkUrl || ""}
+                                            onChange={(value) =>
+                                                updateItem(
+                                                    index,
+                                                    "linkUrl",
+                                                    value
+                                                )
+                                            }
+                                            placeholder="https://example.com"
+                                            style={{
+                                                width: "100%",
+                                            }}
+                                        />
+                                        {item.linkUrl && (
+                                            <Button
+                                                onClick={() =>
+                                                    updateItem(
+                                                        index,
+                                                        "linkUrl",
+                                                        ""
+                                                    )
+                                                }
+                                                variant="link"
+                                                style={{
+                                                    marginTop: "4px",
+                                                    fontSize: "11px",
+                                                }}
+                                            >
+                                                Clear
+                                            </Button>
+                                        )}
+                                    </div>
+                                    <div
+                                        style={{
                                             display: "flex",
                                             gap: "8px",
                                             marginTop: "10px",
@@ -1178,34 +1271,8 @@ registerBlockType("bootstrap-blocks/bs-feature-cards", {
                                 gap: hideCardGap ? "0px" : `${cardSpacing}px`,
                             }}
                         >
-                            {items.map((item, index) => (
-                                <div
-                                    key={item.id}
-                                    style={{ position: "relative" }}
-                                >
-                                    <div
-                                        style={{
-                                            position: "absolute",
-                                            top: "10px",
-                                            right: "10px",
-                                            zIndex: 10,
-                                            display: "flex",
-                                            gap: "4px",
-                                        }}
-                                    >
-                                        <Button
-                                            onClick={() => removeItem(index)}
-                                            variant="secondary"
-                                            isDestructive
-                                            size="small"
-                                            style={{
-                                                minWidth: "auto",
-                                                padding: "4px 8px",
-                                            }}
-                                        >
-                                            Remove
-                                        </Button>
-                                    </div>
+                            {items.map((item, index) => {
+                                const cardContent = (
                                     <div
                                         className={`bs-feature-card ${
                                             iconPosition === "left"
@@ -1290,10 +1357,12 @@ registerBlockType("bootstrap-blocks/bs-feature-cards", {
                                                     borderRadius:
                                                         iconBorderRadius ||
                                                         undefined,
-                                                    width:
-                                                        iconSize || undefined,
-                                                    height:
-                                                        iconSize || undefined,
+                                                    ...(iconContainerWidth && {
+                                                        width: iconContainerWidth,
+                                                    }),
+                                                    ...(iconContainerHeight && {
+                                                        height: iconContainerHeight,
+                                                    }),
                                                 }}
                                                 onMouseEnter={(e) => {
                                                     if (
@@ -1388,8 +1457,16 @@ registerBlockType("bootstrap-blocks/bs-feature-cards", {
                                                     src={item.iconUrl}
                                                     alt=""
                                                     style={{
-                                                        width: "100%",
-                                                        height: "100%",
+                                                        width:
+                                                            iconSize || "100%",
+                                                        height:
+                                                            iconSize || "100%",
+                                                        maxWidth: iconSize
+                                                            ? "none"
+                                                            : "100%",
+                                                        maxHeight: iconSize
+                                                            ? "none"
+                                                            : "100%",
                                                         objectFit: "contain",
                                                         padding: "12px",
                                                     }}
@@ -1548,8 +1625,61 @@ registerBlockType("bootstrap-blocks/bs-feature-cards", {
                                             )}
                                         </div>
                                     </div>
-                                </div>
-                            ))}
+                                );
+
+                                return (
+                                    <div
+                                        key={item.id}
+                                        style={{ position: "relative" }}
+                                    >
+                                        <div
+                                            style={{
+                                                position: "absolute",
+                                                top: "10px",
+                                                right: "10px",
+                                                zIndex: 10,
+                                                display: "flex",
+                                                gap: "4px",
+                                            }}
+                                        >
+                                            <Button
+                                                onClick={() =>
+                                                    removeItem(index)
+                                                }
+                                                variant="secondary"
+                                                isDestructive
+                                                size="small"
+                                                style={{
+                                                    minWidth: "auto",
+                                                    padding: "4px 8px",
+                                                }}
+                                            >
+                                                Remove
+                                            </Button>
+                                        </div>
+                                        {item.linkUrl &&
+                                        item.linkUrl.trim() !== "" ? (
+                                            <a
+                                                href={item.linkUrl}
+                                                className="bs-feature-card-link"
+                                                style={{
+                                                    textDecoration: "none",
+                                                    display: "block",
+                                                    color: "inherit",
+                                                }}
+                                                onClick={(e) => {
+                                                    // Prevent navigation in editor
+                                                    e.preventDefault();
+                                                }}
+                                            >
+                                                {cardContent}
+                                            </a>
+                                        ) : (
+                                            cardContent
+                                        )}
+                                    </div>
+                                );
+                            })}
                             <div
                                 style={{
                                     display: "flex",

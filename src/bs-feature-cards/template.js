@@ -82,6 +82,8 @@ export const generateFeatureCardsHTML = (attributes) => {
         cardBorderStyle = "solid",
         cardBorderColor = "#000000",
         iconSize = "",
+        iconContainerWidth = "",
+        iconContainerHeight = "",
         iconBorderRadius = "",
         iconPosition = "top",
         iconBackgroundColor = "#4CAF50",
@@ -100,57 +102,66 @@ export const generateFeatureCardsHTML = (attributes) => {
     const generateFeatureCards = () => {
         return items
             .map((item) => {
-                return `
-				<div class="bs-feature-card ${
-                    iconPosition === "left" ? "icon-left" : "icon-top"
-                }" style="
-					background-color: ${cardBackgroundColor};
-					color: ${textColor};
-					${cardPadding ? `padding: ${cardPadding};` : ""}
-					${cardBorderRadius ? `border-radius: ${cardBorderRadius};` : ""}
-					${cardBorderWidth > 0 ? `border-width: ${cardBorderWidth}px;` : ""}
-					${cardBorderWidth > 0 ? `border-style: ${cardBorderStyle};` : ""}
-					${cardBorderWidth > 0 ? `border-color: ${cardBorderColor};` : ""}
-				">
-					${
-                        item.iconUrl
-                            ? `<div class="bs-feature-card-icon" style="
-								background-color: ${iconBackgroundColor};
-								${iconBorderRadius ? `border-radius: ${iconBorderRadius};` : ""}
-								${iconSize ? `width: ${iconSize}; height: ${iconSize};` : ""}
-								display: flex;
-								align-items: center;
-								justify-content: center;
-							">
-								<img src="${item.iconUrl}" alt="" style="
-									width: 100%;
-									height: 100%;
-									max-width: 100%;
-									max-height: 100%;
-									object-fit: contain;
-									padding: 8px;
-									display: block;
-									box-sizing: border-box;
-								" />
-							</div>`
-                            : ""
-                    }
-					<div class="bs-feature-card-content">
+                const cardContent = `
+					<div class="bs-feature-card ${
+                        iconPosition === "left" ? "icon-left" : "icon-top"
+                    }" style="
+						background-color: ${cardBackgroundColor};
+						color: ${textColor};
+						${cardPadding ? `padding: ${cardPadding};` : ""}
+						${cardBorderRadius ? `border-radius: ${cardBorderRadius};` : ""}
+						${cardBorderWidth > 0 ? `border-width: ${cardBorderWidth}px;` : ""}
+						${cardBorderWidth > 0 ? `border-style: ${cardBorderStyle};` : ""}
+						${cardBorderWidth > 0 ? `border-color: ${cardBorderColor};` : ""}
+					">
 						${
-                            item.title
-                                ? item.title.trim().startsWith("<")
-                                    ? `<div class="bs-feature-card-title" style="color: ${textColor}; transition: color 0.3s ease;">${item.title}</div>`
-                                    : `<h3 class="bs-feature-card-title" style="color: ${textColor}; transition: color 0.3s ease;">${item.title}</h3>`
+                            item.iconUrl
+                                ? `<div class="bs-feature-card-icon" style="
+									background-color: ${iconBackgroundColor};
+									${iconBorderRadius ? `border-radius: ${iconBorderRadius};` : ""}
+									${iconContainerWidth ? `width: ${iconContainerWidth} !important;` : ""}
+									${iconContainerHeight ? `height: ${iconContainerHeight} !important;` : ""}
+									display: flex;
+									align-items: center;
+									justify-content: center;
+								">
+									<img src="${item.iconUrl}" alt="" style="
+										${
+                                            iconSize
+                                                ? `width: ${iconSize} !important; height: ${iconSize} !important;`
+                                                : "width: 100%; height: 100%;"
+                                        }
+										${!iconSize ? "max-width: 100%; max-height: 100%;" : ""}
+										object-fit: contain;
+										display: block;
+										box-sizing: border-box;
+									" />
+								</div>`
                                 : ""
                         }
-						${
-                            item.description
-                                ? `<div class="bs-feature-card-description" style="color: ${textColor}; transition: color 0.3s ease;">${item.description}</div>`
-                                : ""
-                        }
+						<div class="bs-feature-card-content">
+							${
+                                item.title
+                                    ? item.title.trim().startsWith("<")
+                                        ? `<div class="bs-feature-card-title" style="color: ${textColor}; transition: color 0.3s ease;">${item.title}</div>`
+                                        : `<h3 class="bs-feature-card-title" style="color: ${textColor}; transition: color 0.3s ease;">${item.title}</h3>`
+                                    : ""
+                            }
+							${
+                                item.description
+                                    ? `<div class="bs-feature-card-description" style="color: ${textColor}; transition: color 0.3s ease;">${item.description}</div>`
+                                    : ""
+                            }
+						</div>
 					</div>
-				</div>
-			`;
+				`;
+
+                // Wrap in <a> tag if linkUrl is provided
+                if (item.linkUrl && item.linkUrl.trim() !== "") {
+                    return `<a href="${item.linkUrl}" class="bs-feature-card-link" style="text-decoration: none; display: block; color: inherit;">${cardContent}</a>`;
+                }
+
+                return cardContent;
             })
             .join("");
     };
