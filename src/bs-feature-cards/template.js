@@ -125,17 +125,43 @@ export const generateFeatureCardsHTML = (attributes) => {
 									align-items: center;
 									justify-content: center;
 								">
-									<img src="${item.iconUrl}" alt="" style="
-										${
-                                            iconSize
-                                                ? `width: ${iconSize} !important; height: ${iconSize} !important;`
-                                                : "width: 100%; height: 100%;"
-                                        }
-										${!iconSize ? "max-width: 100%; max-height: 100%;" : ""}
-										object-fit: contain;
-										display: block;
-										box-sizing: border-box;
-									" />
+									${
+                                        item.iconUrl
+                                            .toLowerCase()
+                                            .endsWith(".svg")
+                                            ? `<img src="${
+                                                  item.iconUrl
+                                              }" alt="" class="bs-svg-icon" data-svg-url="${
+                                                  item.iconUrl
+                                              }" data-icon-color="${
+                                                  item.iconColor || ""
+                                              }" data-icon-hover-color="${
+                                                  item.iconHoverColor || ""
+                                              }" style="
+												${
+                                                    iconSize
+                                                        ? `width: ${iconSize} !important; height: ${iconSize} !important;`
+                                                        : "width: 100%; height: 100%;"
+                                                }
+												${!iconSize ? "max-width: 100%; max-height: 100%;" : ""}
+												object-fit: contain;
+												display: block;
+												box-sizing: border-box;
+											" />`
+                                            : `<img src="${
+                                                  item.iconUrl
+                                              }" alt="" style="
+												${
+                                                    iconSize
+                                                        ? `width: ${iconSize} !important; height: ${iconSize} !important;`
+                                                        : "width: 100%; height: 100%;"
+                                                }
+												${!iconSize ? "max-width: 100%; max-height: 100%;" : ""}
+												object-fit: contain;
+												display: block;
+												box-sizing: border-box;
+											" />`
+                                    }
 								</div>`
                                 : ""
                         }
@@ -217,30 +243,41 @@ export const generateFeatureCardsHTML = (attributes) => {
                 }
                 ${items
                     .map((item, index) => {
-                        // Use per-card icon hover color
-                        if (!item.iconHoverColor) return "";
-                        return `
+                        // Only apply fill for SVG icons
+                        if (
+                            !item.iconUrl ||
+                            !item.iconUrl.toLowerCase().endsWith(".svg")
+                        ) {
+                            return "";
+                        }
+                        let styles = "";
+                        // Default icon fill color (not hover)
+                        if (item.iconColor) {
+                            styles += `
                     #${uniqueId} .bs-feature-card:nth-child(${
                         index + 1
-                    }):hover .bs-feature-card-icon img,
+                    }) .bs-feature-card-icon svg,
                     #${uniqueId} .bs-feature-card:nth-child(${
                         index + 1
-                    }):hover .bs-feature-card-icon picture,
-                    #${uniqueId} .bs-feature-card:nth-child(${
-                        index + 1
-                    }):hover .bs-feature-card-icon picture img,
+                    }) .bs-feature-card-icon svg * {
+                        fill: ${item.iconColor} !important;
+                    }
+                `;
+                        }
+                        // Icon hover fill color
+                        if (item.iconHoverColor) {
+                            styles += `
                     #${uniqueId} .bs-feature-card:nth-child(${
                         index + 1
                     }):hover .bs-feature-card-icon svg,
                     #${uniqueId} .bs-feature-card:nth-child(${
                         index + 1
-                    }):hover .bs-feature-card-icon picture source {
-                        filter: ${hexToFilter(item.iconHoverColor)} !important;
-                        -webkit-filter: ${hexToFilter(
-                            item.iconHoverColor
-                        )} !important;
+                    }):hover .bs-feature-card-icon svg * {
+                        fill: ${item.iconHoverColor} !important;
                     }
                 `;
+                        }
+                        return styles;
                     })
                     .join("")}
 
@@ -268,5 +305,79 @@ export const generateFeatureCardsHTML = (attributes) => {
 				${generateFeatureCards()}
 			</div>
 		</div>
+		<script>
+		(function() {
+			const container = document.getElementById('${uniqueId}');
+			if (!container) return;
+			
+			const svgIcons = container.querySelectorAll('.bs-svg-icon');
+			svgIcons.forEach(function(img) {
+				const svgUrl = img.getAttribute('data-svg-url');
+				const iconColor = img.getAttribute('data-icon-color');
+				const iconHoverColor = img.getAttribute('data-icon-hover-color');
+				
+				if (!svgUrl) return;
+				
+				fetch(svgUrl)
+					.then(response => response.text())
+					.then(svgText => {
+						const parser = new DOMParser();
+						const svgDoc = parser.parseFromString(svgText, 'image/svg+xml');
+						const svgElement = svgDoc.querySelector('svg');
+						
+						if (!svgElement) return;
+						
+						// Apply default fill color
+						if (iconColor) {
+							svgElement.setAttribute('fill', iconColor);
+							const paths = svgElement.querySelectorAll('*');
+							paths.forEach(function(path) {
+								if (!path.getAttribute('fill') || path.getAttribute('fill') === 'none') {
+									path.setAttribute('fill', iconColor);
+								}
+							});
+						}
+						
+						// Set up hover color
+						const iconContainer = img.closest('.bs-feature-card-icon');
+						const card = img.closest('.bs-feature-card');
+						
+						if (iconHoverColor && card) {
+							card.addEventListener('mouseenter', function() {
+								svgElement.setAttribute('fill', iconHoverColor);
+								const paths = svgElement.querySelectorAll('*');
+								paths.forEach(function(path) {
+									if (!path.getAttribute('fill') || path.getAttribute('fill') === 'none') {
+										path.setAttribute('fill', iconHoverColor);
+									}
+								});
+							});
+							
+							card.addEventListener('mouseleave', function() {
+								const defaultColor = iconColor || '';
+								svgElement.setAttribute('fill', defaultColor);
+								const paths = svgElement.querySelectorAll('*');
+								paths.forEach(function(path) {
+									if (!path.getAttribute('fill') || path.getAttribute('fill') === 'none') {
+										path.setAttribute('fill', defaultColor);
+									}
+								});
+							});
+						}
+						
+						// Replace img with inline SVG
+						svgElement.setAttribute('width', '100%');
+						svgElement.setAttribute('height', '100%');
+						svgElement.setAttribute('style', img.getAttribute('style'));
+						svgElement.classList.add('bs-inline-svg');
+						
+						img.parentNode.replaceChild(svgElement, img);
+					})
+					.catch(function(error) {
+						console.error('Error loading SVG:', error);
+					});
+			});
+		})();
+		</script>
 	`;
 };

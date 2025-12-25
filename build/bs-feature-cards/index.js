@@ -64,6 +64,8 @@ __webpack_require__.r(__webpack_exports__);
     const [cardHoverTextColorPopoverOpen, setCardHoverTextColorPopoverOpen] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useState)(false);
     const [iconHoverBgColorPopoverOpen, setIconHoverBgColorPopoverOpen] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useState)(false);
     const [cardBorderColorPopoverOpen, setCardBorderColorPopoverOpen] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useState)(false);
+    // Per-card icon color popovers
+    const [cardIconColorPopovers, setCardIconColorPopovers] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useState)({});
     // Per-card icon hover color popovers
     const [cardIconHoverColorPopovers, setCardIconHoverColorPopovers] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useState)({});
     // HTML mode for title and description
@@ -144,6 +146,168 @@ __webpack_require__.r(__webpack_exports__);
       className: "bs-feature-cards-container"
     });
 
+    // Convert SVG images to inline SVG and apply fill
+    (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useEffect)(() => {
+      const timeoutId = setTimeout(() => {
+        items.forEach((item, index) => {
+          if (item.iconUrl && item.iconUrl.toLowerCase().endsWith(".svg")) {
+            const iconContainer = document.querySelector(`.bs-feature-cards-editor .bs-feature-card:nth-child(${index + 1}) .bs-feature-card-icon`);
+            if (iconContainer) {
+              const img = iconContainer.querySelector("img");
+              const object = iconContainer.querySelector("object");
+              const existingSvg = iconContainer.querySelector("svg");
+
+              // Skip if already converted
+              if (existingSvg) return;
+
+              // Convert object tag to inline SVG
+              if (object) {
+                object.addEventListener("load", function () {
+                  try {
+                    const objectDoc = object.contentDocument;
+                    if (objectDoc) {
+                      const svg = objectDoc.querySelector("svg");
+                      if (svg) {
+                        const clonedSvg = svg.cloneNode(true);
+
+                        // Apply default fill color
+                        if (item.iconColor) {
+                          clonedSvg.setAttribute("fill", item.iconColor);
+                          const paths = clonedSvg.querySelectorAll("*");
+                          paths.forEach(path => {
+                            if (!path.getAttribute("fill") || path.getAttribute("fill") === "none") {
+                              path.setAttribute("fill", item.iconColor);
+                            }
+                          });
+                        }
+                        clonedSvg.setAttribute("style", object.getAttribute("style") || "");
+                        clonedSvg.setAttribute("width", "100%");
+                        clonedSvg.setAttribute("height", "100%");
+                        object.parentNode.replaceChild(clonedSvg, object);
+
+                        // Set up hover
+                        const card = iconContainer.closest(".bs-feature-card");
+                        if (item.iconHoverColor && card) {
+                          card.addEventListener("mouseenter", function () {
+                            clonedSvg.setAttribute("fill", item.iconHoverColor);
+                            const paths = clonedSvg.querySelectorAll("*");
+                            paths.forEach(path => {
+                              if (!path.getAttribute("fill") || path.getAttribute("fill") === "none") {
+                                path.setAttribute("fill", item.iconHoverColor);
+                              }
+                            });
+                          });
+                          card.addEventListener("mouseleave", function () {
+                            const defaultColor = item.iconColor || "";
+                            clonedSvg.setAttribute("fill", defaultColor);
+                            const paths = clonedSvg.querySelectorAll("*");
+                            paths.forEach(path => {
+                              if (!path.getAttribute("fill") || path.getAttribute("fill") === "none") {
+                                path.setAttribute("fill", defaultColor);
+                              }
+                            });
+                          });
+                        }
+                      }
+                    }
+                  } catch (e) {
+                    // Cross-origin, use fetch
+                    fetch(item.iconUrl).then(response => response.text()).then(svgText => {
+                      const parser = new DOMParser();
+                      const svgDoc = parser.parseFromString(svgText, "image/svg+xml");
+                      const svgElement = svgDoc.querySelector("svg");
+                      if (!svgElement) return;
+                      if (item.iconColor) {
+                        svgElement.setAttribute("fill", item.iconColor);
+                        const paths = svgElement.querySelectorAll("*");
+                        paths.forEach(path => {
+                          if (!path.getAttribute("fill") || path.getAttribute("fill") === "none") {
+                            path.setAttribute("fill", item.iconColor);
+                          }
+                        });
+                      }
+                      svgElement.setAttribute("style", object.getAttribute("style") || "");
+                      svgElement.setAttribute("width", "100%");
+                      svgElement.setAttribute("height", "100%");
+                      object.parentNode.replaceChild(svgElement, object);
+                      const card = iconContainer.closest(".bs-feature-card");
+                      if (item.iconHoverColor && card) {
+                        card.addEventListener("mouseenter", function () {
+                          svgElement.setAttribute("fill", item.iconHoverColor);
+                          const paths = svgElement.querySelectorAll("*");
+                          paths.forEach(path => {
+                            if (!path.getAttribute("fill") || path.getAttribute("fill") === "none") {
+                              path.setAttribute("fill", item.iconHoverColor);
+                            }
+                          });
+                        });
+                        card.addEventListener("mouseleave", function () {
+                          const defaultColor = item.iconColor || "";
+                          svgElement.setAttribute("fill", defaultColor);
+                          const paths = svgElement.querySelectorAll("*");
+                          paths.forEach(path => {
+                            if (!path.getAttribute("fill") || path.getAttribute("fill") === "none") {
+                              path.setAttribute("fill", defaultColor);
+                            }
+                          });
+                        });
+                      }
+                    }).catch(error => console.error("Error loading SVG:", error));
+                  }
+                });
+              }
+
+              // Convert img tag to inline SVG
+              if (img && !object) {
+                fetch(item.iconUrl).then(response => response.text()).then(svgText => {
+                  const parser = new DOMParser();
+                  const svgDoc = parser.parseFromString(svgText, "image/svg+xml");
+                  const svgElement = svgDoc.querySelector("svg");
+                  if (!svgElement) return;
+                  if (item.iconColor) {
+                    svgElement.setAttribute("fill", item.iconColor);
+                    const paths = svgElement.querySelectorAll("*");
+                    paths.forEach(path => {
+                      if (!path.getAttribute("fill") || path.getAttribute("fill") === "none") {
+                        path.setAttribute("fill", item.iconColor);
+                      }
+                    });
+                  }
+                  svgElement.setAttribute("style", img.getAttribute("style") || "");
+                  svgElement.setAttribute("width", "100%");
+                  svgElement.setAttribute("height", "100%");
+                  img.parentNode.replaceChild(svgElement, img);
+                  const card = iconContainer.closest(".bs-feature-card");
+                  if (item.iconHoverColor && card) {
+                    card.addEventListener("mouseenter", function () {
+                      svgElement.setAttribute("fill", item.iconHoverColor);
+                      const paths = svgElement.querySelectorAll("*");
+                      paths.forEach(path => {
+                        if (!path.getAttribute("fill") || path.getAttribute("fill") === "none") {
+                          path.setAttribute("fill", item.iconHoverColor);
+                        }
+                      });
+                    });
+                    card.addEventListener("mouseleave", function () {
+                      const defaultColor = item.iconColor || "";
+                      svgElement.setAttribute("fill", defaultColor);
+                      const paths = svgElement.querySelectorAll("*");
+                      paths.forEach(path => {
+                        if (!path.getAttribute("fill") || path.getAttribute("fill") === "none") {
+                          path.setAttribute("fill", defaultColor);
+                        }
+                      });
+                    });
+                  }
+                }).catch(error => console.error("Error loading SVG:", error));
+              }
+            }
+          }
+        });
+      }, 100);
+      return () => clearTimeout(timeoutId);
+    }, [items]);
+
     // Add new item
     const addItem = () => {
       const newItem = {
@@ -151,6 +315,7 @@ __webpack_require__.r(__webpack_exports__);
         title: "New Feature",
         description: "Add your description here...",
         iconUrl: "",
+        iconColor: "",
         iconHoverColor: "",
         linkUrl: ""
       };
@@ -823,62 +988,121 @@ __webpack_require__.r(__webpack_exports__);
                     })
                   })
                 })]
-              }), item.iconUrl && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-                style: {
-                  marginBottom: "10px",
-                  marginTop: "10px"
-                },
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("label", {
+              }), item.iconUrl && item.iconUrl.toLowerCase().endsWith(".svg") && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.Fragment, {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
                   style: {
-                    display: "block",
-                    marginBottom: "5px",
-                    fontWeight: "600",
-                    fontSize: "12px"
+                    marginBottom: "10px",
+                    marginTop: "10px"
                   },
-                  children: "Icon Hover Color (Optional - For SVG)"
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("label", {
+                    style: {
+                      display: "block",
+                      marginBottom: "5px",
+                      fontWeight: "600",
+                      fontSize: "12px"
+                    },
+                    children: "Icon Color (Optional - For SVG)"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+                    style: {
+                      position: "relative"
+                    },
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Button, {
+                      onClick: () => setCardIconColorPopovers({
+                        ...cardIconColorPopovers,
+                        [index]: !cardIconColorPopovers[index]
+                      }),
+                      variant: "secondary",
+                      style: {
+                        width: "100%",
+                        height: "32px",
+                        backgroundColor: item.iconColor || "transparent",
+                        border: "1px solid #ddd"
+                      },
+                      children: item.iconColor || "Select"
+                    }), cardIconColorPopovers[index] && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Popover, {
+                      onClose: () => setCardIconColorPopovers({
+                        ...cardIconColorPopovers,
+                        [index]: false
+                      }),
+                      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ColorPicker, {
+                        color: item.iconColor || undefined,
+                        onChangeComplete: value => {
+                          let colorValue = "";
+                          if (value.rgb && value.rgb.a !== undefined && value.rgb.a < 1) {
+                            colorValue = `rgba(${value.rgb.r}, ${value.rgb.g}, ${value.rgb.b}, ${value.rgb.a})`;
+                          } else {
+                            colorValue = value.hex || "";
+                          }
+                          updateItem(index, "iconColor", colorValue);
+                        }
+                      })
+                    })]
+                  }), item.iconColor && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Button, {
+                    onClick: () => updateItem(index, "iconColor", ""),
+                    variant: "link",
+                    style: {
+                      marginTop: "4px",
+                      fontSize: "11px"
+                    },
+                    children: "Clear"
+                  })]
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
                   style: {
-                    position: "relative"
+                    marginBottom: "10px",
+                    marginTop: "10px"
                   },
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Button, {
-                    onClick: () => setCardIconHoverColorPopovers({
-                      ...cardIconHoverColorPopovers,
-                      [index]: !cardIconHoverColorPopovers[index]
-                    }),
-                    variant: "secondary",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("label", {
                     style: {
-                      width: "100%",
-                      height: "32px",
-                      backgroundColor: item.iconHoverColor || "transparent",
-                      border: "1px solid #ddd"
+                      display: "block",
+                      marginBottom: "5px",
+                      fontWeight: "600",
+                      fontSize: "12px"
                     },
-                    children: item.iconHoverColor || "Select"
-                  }), cardIconHoverColorPopovers[index] && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Popover, {
-                    onClose: () => setCardIconHoverColorPopovers({
-                      ...cardIconHoverColorPopovers,
-                      [index]: false
-                    }),
-                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ColorPicker, {
-                      color: item.iconHoverColor || undefined,
-                      onChangeComplete: value => {
-                        let colorValue = "";
-                        if (value.rgb && value.rgb.a !== undefined && value.rgb.a < 1) {
-                          colorValue = `rgba(${value.rgb.r}, ${value.rgb.g}, ${value.rgb.b}, ${value.rgb.a})`;
-                        } else {
-                          colorValue = value.hex || "";
+                    children: "Icon Hover Color (Optional - For SVG)"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+                    style: {
+                      position: "relative"
+                    },
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Button, {
+                      onClick: () => setCardIconHoverColorPopovers({
+                        ...cardIconHoverColorPopovers,
+                        [index]: !cardIconHoverColorPopovers[index]
+                      }),
+                      variant: "secondary",
+                      style: {
+                        width: "100%",
+                        height: "32px",
+                        backgroundColor: item.iconHoverColor || "transparent",
+                        border: "1px solid #ddd"
+                      },
+                      children: item.iconHoverColor || "Select"
+                    }), cardIconHoverColorPopovers[index] && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Popover, {
+                      onClose: () => setCardIconHoverColorPopovers({
+                        ...cardIconHoverColorPopovers,
+                        [index]: false
+                      }),
+                      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ColorPicker, {
+                        color: item.iconHoverColor || undefined,
+                        onChangeComplete: value => {
+                          let colorValue = "";
+                          if (value.rgb && value.rgb.a !== undefined && value.rgb.a < 1) {
+                            colorValue = `rgba(${value.rgb.r}, ${value.rgb.g}, ${value.rgb.b}, ${value.rgb.a})`;
+                          } else {
+                            colorValue = value.hex || "";
+                          }
+                          updateItem(index, "iconHoverColor", colorValue);
                         }
-                        updateItem(index, "iconHoverColor", colorValue);
-                      }
-                    })
+                      })
+                    })]
+                  }), item.iconHoverColor && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Button, {
+                    onClick: () => updateItem(index, "iconHoverColor", ""),
+                    variant: "link",
+                    style: {
+                      marginTop: "4px",
+                      fontSize: "11px"
+                    },
+                    children: "Clear"
                   })]
-                }), item.iconHoverColor && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Button, {
-                  onClick: () => updateItem(index, "iconHoverColor", ""),
-                  variant: "link",
-                  style: {
-                    marginTop: "4px",
-                    fontSize: "11px"
-                  },
-                  children: "Clear"
                 })]
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
                 style: {
@@ -991,46 +1215,102 @@ __webpack_require__.r(__webpack_exports__);
                     if (iconHoverBackgroundColor) {
                       e.currentTarget.style.backgroundColor = iconHoverBackgroundColor;
                     }
-                    // Use per-card icon hover color
-                    if (item.iconHoverColor) {
-                      const img = e.currentTarget.querySelector("img");
-                      const picture = e.currentTarget.querySelector("picture");
-                      const pictureImg = e.currentTarget.querySelector("picture img");
+                    // Use per-card icon hover color (for SVG)
+                    if (item.iconHoverColor && item.iconUrl.toLowerCase().endsWith(".svg")) {
                       const svg = e.currentTarget.querySelector("svg");
-                      if (img) {
-                        img.style.filter = hexToFilter(item.iconHoverColor);
-                      }
-                      if (picture) {
-                        picture.style.filter = hexToFilter(item.iconHoverColor);
-                      }
-                      if (pictureImg) {
-                        pictureImg.style.filter = hexToFilter(item.iconHoverColor);
-                      }
+                      const object = e.currentTarget.querySelector("object");
                       if (svg) {
-                        svg.style.filter = hexToFilter(item.iconHoverColor);
+                        svg.setAttribute("fill", item.iconHoverColor);
+                        const paths = svg.querySelectorAll("*");
+                        paths.forEach(path => {
+                          if (!path.getAttribute("fill") || path.getAttribute("fill") === "none") {
+                            path.setAttribute("fill", item.iconHoverColor);
+                          }
+                        });
+                      }
+                      // Also handle object tag SVG
+                      if (object) {
+                        try {
+                          const objectDoc = object.contentDocument;
+                          if (objectDoc) {
+                            const objectSvg = objectDoc.querySelector("svg");
+                            if (objectSvg) {
+                              objectSvg.setAttribute("fill", item.iconHoverColor);
+                              const objectPaths = objectSvg.querySelectorAll("*");
+                              objectPaths.forEach(path => {
+                                if (!path.getAttribute("fill") || path.getAttribute("fill") === "none") {
+                                  path.setAttribute("fill", item.iconHoverColor);
+                                }
+                              });
+                            }
+                          }
+                        } catch (e) {
+                          // Cross-origin restriction
+                        }
                       }
                     }
                   },
                   onMouseLeave: e => {
                     e.currentTarget.style.backgroundColor = iconBackgroundColor || "#4CAF50";
-                    const img = e.currentTarget.querySelector("img");
-                    const picture = e.currentTarget.querySelector("picture");
-                    const pictureImg = e.currentTarget.querySelector("picture img");
-                    const svg = e.currentTarget.querySelector("svg");
-                    if (img) {
-                      img.style.filter = "none";
-                    }
-                    if (picture) {
-                      picture.style.filter = "none";
-                    }
-                    if (pictureImg) {
-                      pictureImg.style.filter = "none";
-                    }
-                    if (svg) {
-                      svg.style.filter = "none";
+                    // Restore default fill color for SVG
+                    if (item.iconUrl.toLowerCase().endsWith(".svg")) {
+                      const svg = e.currentTarget.querySelector("svg");
+                      const object = e.currentTarget.querySelector("object");
+                      if (svg) {
+                        const defaultColor = item.iconColor || "";
+                        svg.setAttribute("fill", defaultColor);
+                        const paths = svg.querySelectorAll("*");
+                        paths.forEach(path => {
+                          if (!path.getAttribute("fill") || path.getAttribute("fill") === "none") {
+                            path.setAttribute("fill", defaultColor);
+                          }
+                        });
+                      }
+                      // Also handle object tag SVG
+                      if (object) {
+                        try {
+                          const objectDoc = object.contentDocument;
+                          if (objectDoc) {
+                            const objectSvg = objectDoc.querySelector("svg");
+                            if (objectSvg) {
+                              const defaultColor = item.iconColor || "";
+                              objectSvg.setAttribute("fill", defaultColor);
+                              const objectPaths = objectSvg.querySelectorAll("*");
+                              objectPaths.forEach(path => {
+                                if (!path.getAttribute("fill") || path.getAttribute("fill") === "none") {
+                                  path.setAttribute("fill", defaultColor);
+                                }
+                              });
+                            }
+                          }
+                        } catch (e) {
+                          // Cross-origin restriction
+                        }
+                      }
                     }
                   },
-                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("img", {
+                  children: item.iconUrl.toLowerCase().endsWith(".svg") ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("object", {
+                    type: "image/svg+xml",
+                    data: item.iconUrl,
+                    style: {
+                      width: iconSize || "100%",
+                      height: iconSize || "100%",
+                      maxWidth: iconSize ? "none" : "100%",
+                      maxHeight: iconSize ? "none" : "100%",
+                      objectFit: "contain"
+                    },
+                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("img", {
+                      src: item.iconUrl,
+                      alt: "",
+                      style: {
+                        width: iconSize || "100%",
+                        height: iconSize || "100%",
+                        maxWidth: iconSize ? "none" : "100%",
+                        maxHeight: iconSize ? "none" : "100%",
+                        objectFit: "contain"
+                      }
+                    })
+                  }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("img", {
                     src: item.iconUrl,
                     alt: "",
                     style: {
@@ -1038,8 +1318,7 @@ __webpack_require__.r(__webpack_exports__);
                       height: iconSize || "100%",
                       maxWidth: iconSize ? "none" : "100%",
                       maxHeight: iconSize ? "none" : "100%",
-                      objectFit: "contain",
-                      padding: "12px"
+                      objectFit: "contain"
                     }
                   })
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
@@ -1345,13 +1624,19 @@ const generateFeatureCardsHTML = attributes => {
 									align-items: center;
 									justify-content: center;
 								">
-									<img src="${item.iconUrl}" alt="" style="
-										${iconSize ? `width: ${iconSize} !important; height: ${iconSize} !important;` : "width: 100%; height: 100%;"}
-										${!iconSize ? "max-width: 100%; max-height: 100%;" : ""}
-										object-fit: contain;
-										display: block;
-										box-sizing: border-box;
-									" />
+									${item.iconUrl.toLowerCase().endsWith(".svg") ? `<img src="${item.iconUrl}" alt="" class="bs-svg-icon" data-svg-url="${item.iconUrl}" data-icon-color="${item.iconColor || ""}" data-icon-hover-color="${item.iconHoverColor || ""}" style="
+												${iconSize ? `width: ${iconSize} !important; height: ${iconSize} !important;` : "width: 100%; height: 100%;"}
+												${!iconSize ? "max-width: 100%; max-height: 100%;" : ""}
+												object-fit: contain;
+												display: block;
+												box-sizing: border-box;
+											" />` : `<img src="${item.iconUrl}" alt="" style="
+												${iconSize ? `width: ${iconSize} !important; height: ${iconSize} !important;` : "width: 100%; height: 100%;"}
+												${!iconSize ? "max-width: 100%; max-height: 100%;" : ""}
+												object-fit: contain;
+												display: block;
+												box-sizing: border-box;
+											" />`}
 								</div>` : ""}
 						<div class="bs-feature-card-content">
 							${item.title ? item.title.trim().startsWith("<") ? `<div class="bs-feature-card-title" style="color: ${textColor}; transition: color 0.3s ease;">${item.title}</div>` : `<h3 class="bs-feature-card-title" style="color: ${textColor}; transition: color 0.3s ease;">${item.title}</h3>` : ""}
@@ -1402,18 +1687,30 @@ const generateFeatureCardsHTML = attributes => {
                     }
                 ` : ""}
                 ${items.map((item, index) => {
-      // Use per-card icon hover color
-      if (!item.iconHoverColor) return "";
-      return `
-                    #${uniqueId} .bs-feature-card:nth-child(${index + 1}):hover .bs-feature-card-icon img,
-                    #${uniqueId} .bs-feature-card:nth-child(${index + 1}):hover .bs-feature-card-icon picture,
-                    #${uniqueId} .bs-feature-card:nth-child(${index + 1}):hover .bs-feature-card-icon picture img,
-                    #${uniqueId} .bs-feature-card:nth-child(${index + 1}):hover .bs-feature-card-icon svg,
-                    #${uniqueId} .bs-feature-card:nth-child(${index + 1}):hover .bs-feature-card-icon picture source {
-                        filter: ${hexToFilter(item.iconHoverColor)} !important;
-                        -webkit-filter: ${hexToFilter(item.iconHoverColor)} !important;
+      // Only apply fill for SVG icons
+      if (!item.iconUrl || !item.iconUrl.toLowerCase().endsWith(".svg")) {
+        return "";
+      }
+      let styles = "";
+      // Default icon fill color (not hover)
+      if (item.iconColor) {
+        styles += `
+                    #${uniqueId} .bs-feature-card:nth-child(${index + 1}) .bs-feature-card-icon svg,
+                    #${uniqueId} .bs-feature-card:nth-child(${index + 1}) .bs-feature-card-icon svg * {
+                        fill: ${item.iconColor} !important;
                     }
                 `;
+      }
+      // Icon hover fill color
+      if (item.iconHoverColor) {
+        styles += `
+                    #${uniqueId} .bs-feature-card:nth-child(${index + 1}):hover .bs-feature-card-icon svg,
+                    #${uniqueId} .bs-feature-card:nth-child(${index + 1}):hover .bs-feature-card-icon svg * {
+                        fill: ${item.iconHoverColor} !important;
+                    }
+                `;
+      }
+      return styles;
     }).join("")}
 
                 @media (max-width: 768px) {
@@ -1437,6 +1734,80 @@ const generateFeatureCardsHTML = attributes => {
 				${generateFeatureCards()}
 			</div>
 		</div>
+		<script>
+		(function() {
+			const container = document.getElementById('${uniqueId}');
+			if (!container) return;
+			
+			const svgIcons = container.querySelectorAll('.bs-svg-icon');
+			svgIcons.forEach(function(img) {
+				const svgUrl = img.getAttribute('data-svg-url');
+				const iconColor = img.getAttribute('data-icon-color');
+				const iconHoverColor = img.getAttribute('data-icon-hover-color');
+				
+				if (!svgUrl) return;
+				
+				fetch(svgUrl)
+					.then(response => response.text())
+					.then(svgText => {
+						const parser = new DOMParser();
+						const svgDoc = parser.parseFromString(svgText, 'image/svg+xml');
+						const svgElement = svgDoc.querySelector('svg');
+						
+						if (!svgElement) return;
+						
+						// Apply default fill color
+						if (iconColor) {
+							svgElement.setAttribute('fill', iconColor);
+							const paths = svgElement.querySelectorAll('*');
+							paths.forEach(function(path) {
+								if (!path.getAttribute('fill') || path.getAttribute('fill') === 'none') {
+									path.setAttribute('fill', iconColor);
+								}
+							});
+						}
+						
+						// Set up hover color
+						const iconContainer = img.closest('.bs-feature-card-icon');
+						const card = img.closest('.bs-feature-card');
+						
+						if (iconHoverColor && card) {
+							card.addEventListener('mouseenter', function() {
+								svgElement.setAttribute('fill', iconHoverColor);
+								const paths = svgElement.querySelectorAll('*');
+								paths.forEach(function(path) {
+									if (!path.getAttribute('fill') || path.getAttribute('fill') === 'none') {
+										path.setAttribute('fill', iconHoverColor);
+									}
+								});
+							});
+							
+							card.addEventListener('mouseleave', function() {
+								const defaultColor = iconColor || '';
+								svgElement.setAttribute('fill', defaultColor);
+								const paths = svgElement.querySelectorAll('*');
+								paths.forEach(function(path) {
+									if (!path.getAttribute('fill') || path.getAttribute('fill') === 'none') {
+										path.setAttribute('fill', defaultColor);
+									}
+								});
+							});
+						}
+						
+						// Replace img with inline SVG
+						svgElement.setAttribute('width', '100%');
+						svgElement.setAttribute('height', '100%');
+						svgElement.setAttribute('style', img.getAttribute('style'));
+						svgElement.classList.add('bs-inline-svg');
+						
+						img.parentNode.replaceChild(svgElement, img);
+					})
+					.catch(function(error) {
+						console.error('Error loading SVG:', error);
+					});
+			});
+		})();
+		</script>
 	`;
 };
 

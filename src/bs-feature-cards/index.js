@@ -19,7 +19,7 @@ import {
     ToggleControl,
     __experimentalRepeaterControl as RepeaterControl,
 } from "@wordpress/components";
-import { useState } from "@wordpress/element";
+import { useState, useEffect, useRef } from "@wordpress/element";
 import "./style.css";
 
 registerBlockType("bootstrap-blocks/bs-feature-cards", {
@@ -62,6 +62,8 @@ registerBlockType("bootstrap-blocks/bs-feature-cards", {
             useState(false);
         const [cardBorderColorPopoverOpen, setCardBorderColorPopoverOpen] =
             useState(false);
+        // Per-card icon color popovers
+        const [cardIconColorPopovers, setCardIconColorPopovers] = useState({});
         // Per-card icon hover color popovers
         const [cardIconHoverColorPopovers, setCardIconHoverColorPopovers] =
             useState({});
@@ -148,6 +150,453 @@ registerBlockType("bootstrap-blocks/bs-feature-cards", {
             className: "bs-feature-cards-container",
         });
 
+        // Convert SVG images to inline SVG and apply fill
+        useEffect(() => {
+            const timeoutId = setTimeout(() => {
+                items.forEach((item, index) => {
+                    if (
+                        item.iconUrl &&
+                        item.iconUrl.toLowerCase().endsWith(".svg")
+                    ) {
+                        const iconContainer = document.querySelector(
+                            `.bs-feature-cards-editor .bs-feature-card:nth-child(${
+                                index + 1
+                            }) .bs-feature-card-icon`
+                        );
+                        if (iconContainer) {
+                            const img = iconContainer.querySelector("img");
+                            const object =
+                                iconContainer.querySelector("object");
+                            const existingSvg =
+                                iconContainer.querySelector("svg");
+
+                            // Skip if already converted
+                            if (existingSvg) return;
+
+                            // Convert object tag to inline SVG
+                            if (object) {
+                                object.addEventListener("load", function () {
+                                    try {
+                                        const objectDoc =
+                                            object.contentDocument;
+                                        if (objectDoc) {
+                                            const svg =
+                                                objectDoc.querySelector("svg");
+                                            if (svg) {
+                                                const clonedSvg =
+                                                    svg.cloneNode(true);
+
+                                                // Apply default fill color
+                                                if (item.iconColor) {
+                                                    clonedSvg.setAttribute(
+                                                        "fill",
+                                                        item.iconColor
+                                                    );
+                                                    const paths =
+                                                        clonedSvg.querySelectorAll(
+                                                            "*"
+                                                        );
+                                                    paths.forEach((path) => {
+                                                        if (
+                                                            !path.getAttribute(
+                                                                "fill"
+                                                            ) ||
+                                                            path.getAttribute(
+                                                                "fill"
+                                                            ) === "none"
+                                                        ) {
+                                                            path.setAttribute(
+                                                                "fill",
+                                                                item.iconColor
+                                                            );
+                                                        }
+                                                    });
+                                                }
+
+                                                clonedSvg.setAttribute(
+                                                    "style",
+                                                    object.getAttribute(
+                                                        "style"
+                                                    ) || ""
+                                                );
+                                                clonedSvg.setAttribute(
+                                                    "width",
+                                                    "100%"
+                                                );
+                                                clonedSvg.setAttribute(
+                                                    "height",
+                                                    "100%"
+                                                );
+
+                                                object.parentNode.replaceChild(
+                                                    clonedSvg,
+                                                    object
+                                                );
+
+                                                // Set up hover
+                                                const card =
+                                                    iconContainer.closest(
+                                                        ".bs-feature-card"
+                                                    );
+                                                if (
+                                                    item.iconHoverColor &&
+                                                    card
+                                                ) {
+                                                    card.addEventListener(
+                                                        "mouseenter",
+                                                        function () {
+                                                            clonedSvg.setAttribute(
+                                                                "fill",
+                                                                item.iconHoverColor
+                                                            );
+                                                            const paths =
+                                                                clonedSvg.querySelectorAll(
+                                                                    "*"
+                                                                );
+                                                            paths.forEach(
+                                                                (path) => {
+                                                                    if (
+                                                                        !path.getAttribute(
+                                                                            "fill"
+                                                                        ) ||
+                                                                        path.getAttribute(
+                                                                            "fill"
+                                                                        ) ===
+                                                                            "none"
+                                                                    ) {
+                                                                        path.setAttribute(
+                                                                            "fill",
+                                                                            item.iconHoverColor
+                                                                        );
+                                                                    }
+                                                                }
+                                                            );
+                                                        }
+                                                    );
+
+                                                    card.addEventListener(
+                                                        "mouseleave",
+                                                        function () {
+                                                            const defaultColor =
+                                                                item.iconColor ||
+                                                                "";
+                                                            clonedSvg.setAttribute(
+                                                                "fill",
+                                                                defaultColor
+                                                            );
+                                                            const paths =
+                                                                clonedSvg.querySelectorAll(
+                                                                    "*"
+                                                                );
+                                                            paths.forEach(
+                                                                (path) => {
+                                                                    if (
+                                                                        !path.getAttribute(
+                                                                            "fill"
+                                                                        ) ||
+                                                                        path.getAttribute(
+                                                                            "fill"
+                                                                        ) ===
+                                                                            "none"
+                                                                    ) {
+                                                                        path.setAttribute(
+                                                                            "fill",
+                                                                            defaultColor
+                                                                        );
+                                                                    }
+                                                                }
+                                                            );
+                                                        }
+                                                    );
+                                                }
+                                            }
+                                        }
+                                    } catch (e) {
+                                        // Cross-origin, use fetch
+                                        fetch(item.iconUrl)
+                                            .then((response) => response.text())
+                                            .then((svgText) => {
+                                                const parser = new DOMParser();
+                                                const svgDoc =
+                                                    parser.parseFromString(
+                                                        svgText,
+                                                        "image/svg+xml"
+                                                    );
+                                                const svgElement =
+                                                    svgDoc.querySelector("svg");
+                                                if (!svgElement) return;
+
+                                                if (item.iconColor) {
+                                                    svgElement.setAttribute(
+                                                        "fill",
+                                                        item.iconColor
+                                                    );
+                                                    const paths =
+                                                        svgElement.querySelectorAll(
+                                                            "*"
+                                                        );
+                                                    paths.forEach((path) => {
+                                                        if (
+                                                            !path.getAttribute(
+                                                                "fill"
+                                                            ) ||
+                                                            path.getAttribute(
+                                                                "fill"
+                                                            ) === "none"
+                                                        ) {
+                                                            path.setAttribute(
+                                                                "fill",
+                                                                item.iconColor
+                                                            );
+                                                        }
+                                                    });
+                                                }
+
+                                                svgElement.setAttribute(
+                                                    "style",
+                                                    object.getAttribute(
+                                                        "style"
+                                                    ) || ""
+                                                );
+                                                svgElement.setAttribute(
+                                                    "width",
+                                                    "100%"
+                                                );
+                                                svgElement.setAttribute(
+                                                    "height",
+                                                    "100%"
+                                                );
+
+                                                object.parentNode.replaceChild(
+                                                    svgElement,
+                                                    object
+                                                );
+
+                                                const card =
+                                                    iconContainer.closest(
+                                                        ".bs-feature-card"
+                                                    );
+                                                if (
+                                                    item.iconHoverColor &&
+                                                    card
+                                                ) {
+                                                    card.addEventListener(
+                                                        "mouseenter",
+                                                        function () {
+                                                            svgElement.setAttribute(
+                                                                "fill",
+                                                                item.iconHoverColor
+                                                            );
+                                                            const paths =
+                                                                svgElement.querySelectorAll(
+                                                                    "*"
+                                                                );
+                                                            paths.forEach(
+                                                                (path) => {
+                                                                    if (
+                                                                        !path.getAttribute(
+                                                                            "fill"
+                                                                        ) ||
+                                                                        path.getAttribute(
+                                                                            "fill"
+                                                                        ) ===
+                                                                            "none"
+                                                                    ) {
+                                                                        path.setAttribute(
+                                                                            "fill",
+                                                                            item.iconHoverColor
+                                                                        );
+                                                                    }
+                                                                }
+                                                            );
+                                                        }
+                                                    );
+
+                                                    card.addEventListener(
+                                                        "mouseleave",
+                                                        function () {
+                                                            const defaultColor =
+                                                                item.iconColor ||
+                                                                "";
+                                                            svgElement.setAttribute(
+                                                                "fill",
+                                                                defaultColor
+                                                            );
+                                                            const paths =
+                                                                svgElement.querySelectorAll(
+                                                                    "*"
+                                                                );
+                                                            paths.forEach(
+                                                                (path) => {
+                                                                    if (
+                                                                        !path.getAttribute(
+                                                                            "fill"
+                                                                        ) ||
+                                                                        path.getAttribute(
+                                                                            "fill"
+                                                                        ) ===
+                                                                            "none"
+                                                                    ) {
+                                                                        path.setAttribute(
+                                                                            "fill",
+                                                                            defaultColor
+                                                                        );
+                                                                    }
+                                                                }
+                                                            );
+                                                        }
+                                                    );
+                                                }
+                                            })
+                                            .catch((error) =>
+                                                console.error(
+                                                    "Error loading SVG:",
+                                                    error
+                                                )
+                                            );
+                                    }
+                                });
+                            }
+
+                            // Convert img tag to inline SVG
+                            if (img && !object) {
+                                fetch(item.iconUrl)
+                                    .then((response) => response.text())
+                                    .then((svgText) => {
+                                        const parser = new DOMParser();
+                                        const svgDoc = parser.parseFromString(
+                                            svgText,
+                                            "image/svg+xml"
+                                        );
+                                        const svgElement =
+                                            svgDoc.querySelector("svg");
+                                        if (!svgElement) return;
+
+                                        if (item.iconColor) {
+                                            svgElement.setAttribute(
+                                                "fill",
+                                                item.iconColor
+                                            );
+                                            const paths =
+                                                svgElement.querySelectorAll(
+                                                    "*"
+                                                );
+                                            paths.forEach((path) => {
+                                                if (
+                                                    !path.getAttribute(
+                                                        "fill"
+                                                    ) ||
+                                                    path.getAttribute(
+                                                        "fill"
+                                                    ) === "none"
+                                                ) {
+                                                    path.setAttribute(
+                                                        "fill",
+                                                        item.iconColor
+                                                    );
+                                                }
+                                            });
+                                        }
+
+                                        svgElement.setAttribute(
+                                            "style",
+                                            img.getAttribute("style") || ""
+                                        );
+                                        svgElement.setAttribute(
+                                            "width",
+                                            "100%"
+                                        );
+                                        svgElement.setAttribute(
+                                            "height",
+                                            "100%"
+                                        );
+
+                                        img.parentNode.replaceChild(
+                                            svgElement,
+                                            img
+                                        );
+
+                                        const card =
+                                            iconContainer.closest(
+                                                ".bs-feature-card"
+                                            );
+                                        if (item.iconHoverColor && card) {
+                                            card.addEventListener(
+                                                "mouseenter",
+                                                function () {
+                                                    svgElement.setAttribute(
+                                                        "fill",
+                                                        item.iconHoverColor
+                                                    );
+                                                    const paths =
+                                                        svgElement.querySelectorAll(
+                                                            "*"
+                                                        );
+                                                    paths.forEach((path) => {
+                                                        if (
+                                                            !path.getAttribute(
+                                                                "fill"
+                                                            ) ||
+                                                            path.getAttribute(
+                                                                "fill"
+                                                            ) === "none"
+                                                        ) {
+                                                            path.setAttribute(
+                                                                "fill",
+                                                                item.iconHoverColor
+                                                            );
+                                                        }
+                                                    });
+                                                }
+                                            );
+
+                                            card.addEventListener(
+                                                "mouseleave",
+                                                function () {
+                                                    const defaultColor =
+                                                        item.iconColor || "";
+                                                    svgElement.setAttribute(
+                                                        "fill",
+                                                        defaultColor
+                                                    );
+                                                    const paths =
+                                                        svgElement.querySelectorAll(
+                                                            "*"
+                                                        );
+                                                    paths.forEach((path) => {
+                                                        if (
+                                                            !path.getAttribute(
+                                                                "fill"
+                                                            ) ||
+                                                            path.getAttribute(
+                                                                "fill"
+                                                            ) === "none"
+                                                        ) {
+                                                            path.setAttribute(
+                                                                "fill",
+                                                                defaultColor
+                                                            );
+                                                        }
+                                                    });
+                                                }
+                                            );
+                                        }
+                                    })
+                                    .catch((error) =>
+                                        console.error(
+                                            "Error loading SVG:",
+                                            error
+                                        )
+                                    );
+                            }
+                        }
+                    }
+                });
+            }, 100);
+
+            return () => clearTimeout(timeoutId);
+        }, [items]);
+
         // Add new item
         const addItem = () => {
             const newItem = {
@@ -155,6 +604,7 @@ registerBlockType("bootstrap-blocks/bs-feature-cards", {
                 title: "New Feature",
                 description: "Add your description here...",
                 iconUrl: "",
+                iconColor: "",
                 iconHoverColor: "",
                 linkUrl: "",
             };
@@ -1071,119 +1521,251 @@ registerBlockType("bootstrap-blocks/bs-feature-cards", {
                                             />
                                         </MediaUploadCheck>
                                     </div>
-                                    {item.iconUrl && (
-                                        <div
-                                            style={{
-                                                marginBottom: "10px",
-                                                marginTop: "10px",
-                                            }}
-                                        >
-                                            <label
-                                                style={{
-                                                    display: "block",
-                                                    marginBottom: "5px",
-                                                    fontWeight: "600",
-                                                    fontSize: "12px",
-                                                }}
-                                            >
-                                                Icon Hover Color (Optional - For
-                                                SVG)
-                                            </label>
-                                            <div
-                                                style={{ position: "relative" }}
-                                            >
-                                                <Button
-                                                    onClick={() =>
-                                                        setCardIconHoverColorPopovers(
-                                                            {
-                                                                ...cardIconHoverColorPopovers,
-                                                                [index]:
-                                                                    !cardIconHoverColorPopovers[
-                                                                        index
-                                                                    ],
-                                                            }
-                                                        )
-                                                    }
-                                                    variant="secondary"
+                                    {item.iconUrl &&
+                                        item.iconUrl
+                                            .toLowerCase()
+                                            .endsWith(".svg") && (
+                                            <>
+                                                <div
                                                     style={{
-                                                        width: "100%",
-                                                        height: "32px",
-                                                        backgroundColor:
-                                                            item.iconHoverColor ||
-                                                            "transparent",
-                                                        border: "1px solid #ddd",
+                                                        marginBottom: "10px",
+                                                        marginTop: "10px",
                                                     }}
                                                 >
-                                                    {item.iconHoverColor ||
-                                                        "Select"}
-                                                </Button>
-                                                {cardIconHoverColorPopovers[
-                                                    index
-                                                ] && (
-                                                    <Popover
-                                                        onClose={() =>
-                                                            setCardIconHoverColorPopovers(
-                                                                {
-                                                                    ...cardIconHoverColorPopovers,
-                                                                    [index]: false,
-                                                                }
-                                                            )
-                                                        }
+                                                    <label
+                                                        style={{
+                                                            display: "block",
+                                                            marginBottom: "5px",
+                                                            fontWeight: "600",
+                                                            fontSize: "12px",
+                                                        }}
                                                     >
-                                                        <ColorPicker
-                                                            color={
-                                                                item.iconHoverColor ||
-                                                                undefined
+                                                        Icon Color (Optional -
+                                                        For SVG)
+                                                    </label>
+                                                    <div
+                                                        style={{
+                                                            position:
+                                                                "relative",
+                                                        }}
+                                                    >
+                                                        <Button
+                                                            onClick={() =>
+                                                                setCardIconColorPopovers(
+                                                                    {
+                                                                        ...cardIconColorPopovers,
+                                                                        [index]:
+                                                                            !cardIconColorPopovers[
+                                                                                index
+                                                                            ],
+                                                                    }
+                                                                )
                                                             }
-                                                            onChangeComplete={(
-                                                                value
-                                                            ) => {
-                                                                let colorValue =
-                                                                    "";
-                                                                if (
-                                                                    value.rgb &&
-                                                                    value.rgb
-                                                                        .a !==
-                                                                        undefined &&
-                                                                    value.rgb
-                                                                        .a < 1
-                                                                ) {
-                                                                    colorValue = `rgba(${value.rgb.r}, ${value.rgb.g}, ${value.rgb.b}, ${value.rgb.a})`;
-                                                                } else {
-                                                                    colorValue =
-                                                                        value.hex ||
-                                                                        "";
+                                                            variant="secondary"
+                                                            style={{
+                                                                width: "100%",
+                                                                height: "32px",
+                                                                backgroundColor:
+                                                                    item.iconColor ||
+                                                                    "transparent",
+                                                                border: "1px solid #ddd",
+                                                            }}
+                                                        >
+                                                            {item.iconColor ||
+                                                                "Select"}
+                                                        </Button>
+                                                        {cardIconColorPopovers[
+                                                            index
+                                                        ] && (
+                                                            <Popover
+                                                                onClose={() =>
+                                                                    setCardIconColorPopovers(
+                                                                        {
+                                                                            ...cardIconColorPopovers,
+                                                                            [index]: false,
+                                                                        }
+                                                                    )
                                                                 }
+                                                            >
+                                                                <ColorPicker
+                                                                    color={
+                                                                        item.iconColor ||
+                                                                        undefined
+                                                                    }
+                                                                    onChangeComplete={(
+                                                                        value
+                                                                    ) => {
+                                                                        let colorValue =
+                                                                            "";
+                                                                        if (
+                                                                            value.rgb &&
+                                                                            value
+                                                                                .rgb
+                                                                                .a !==
+                                                                                undefined &&
+                                                                            value
+                                                                                .rgb
+                                                                                .a <
+                                                                                1
+                                                                        ) {
+                                                                            colorValue = `rgba(${value.rgb.r}, ${value.rgb.g}, ${value.rgb.b}, ${value.rgb.a})`;
+                                                                        } else {
+                                                                            colorValue =
+                                                                                value.hex ||
+                                                                                "";
+                                                                        }
+                                                                        updateItem(
+                                                                            index,
+                                                                            "iconColor",
+                                                                            colorValue
+                                                                        );
+                                                                    }}
+                                                                />
+                                                            </Popover>
+                                                        )}
+                                                    </div>
+                                                    {item.iconColor && (
+                                                        <Button
+                                                            onClick={() =>
+                                                                updateItem(
+                                                                    index,
+                                                                    "iconColor",
+                                                                    ""
+                                                                )
+                                                            }
+                                                            variant="link"
+                                                            style={{
+                                                                marginTop:
+                                                                    "4px",
+                                                                fontSize:
+                                                                    "11px",
+                                                            }}
+                                                        >
+                                                            Clear
+                                                        </Button>
+                                                    )}
+                                                </div>
+                                                <div
+                                                    style={{
+                                                        marginBottom: "10px",
+                                                        marginTop: "10px",
+                                                    }}
+                                                >
+                                                    <label
+                                                        style={{
+                                                            display: "block",
+                                                            marginBottom: "5px",
+                                                            fontWeight: "600",
+                                                            fontSize: "12px",
+                                                        }}
+                                                    >
+                                                        Icon Hover Color
+                                                        (Optional - For SVG)
+                                                    </label>
+                                                    <div
+                                                        style={{
+                                                            position:
+                                                                "relative",
+                                                        }}
+                                                    >
+                                                        <Button
+                                                            onClick={() =>
+                                                                setCardIconHoverColorPopovers(
+                                                                    {
+                                                                        ...cardIconHoverColorPopovers,
+                                                                        [index]:
+                                                                            !cardIconHoverColorPopovers[
+                                                                                index
+                                                                            ],
+                                                                    }
+                                                                )
+                                                            }
+                                                            variant="secondary"
+                                                            style={{
+                                                                width: "100%",
+                                                                height: "32px",
+                                                                backgroundColor:
+                                                                    item.iconHoverColor ||
+                                                                    "transparent",
+                                                                border: "1px solid #ddd",
+                                                            }}
+                                                        >
+                                                            {item.iconHoverColor ||
+                                                                "Select"}
+                                                        </Button>
+                                                        {cardIconHoverColorPopovers[
+                                                            index
+                                                        ] && (
+                                                            <Popover
+                                                                onClose={() =>
+                                                                    setCardIconHoverColorPopovers(
+                                                                        {
+                                                                            ...cardIconHoverColorPopovers,
+                                                                            [index]: false,
+                                                                        }
+                                                                    )
+                                                                }
+                                                            >
+                                                                <ColorPicker
+                                                                    color={
+                                                                        item.iconHoverColor ||
+                                                                        undefined
+                                                                    }
+                                                                    onChangeComplete={(
+                                                                        value
+                                                                    ) => {
+                                                                        let colorValue =
+                                                                            "";
+                                                                        if (
+                                                                            value.rgb &&
+                                                                            value
+                                                                                .rgb
+                                                                                .a !==
+                                                                                undefined &&
+                                                                            value
+                                                                                .rgb
+                                                                                .a <
+                                                                                1
+                                                                        ) {
+                                                                            colorValue = `rgba(${value.rgb.r}, ${value.rgb.g}, ${value.rgb.b}, ${value.rgb.a})`;
+                                                                        } else {
+                                                                            colorValue =
+                                                                                value.hex ||
+                                                                                "";
+                                                                        }
+                                                                        updateItem(
+                                                                            index,
+                                                                            "iconHoverColor",
+                                                                            colorValue
+                                                                        );
+                                                                    }}
+                                                                />
+                                                            </Popover>
+                                                        )}
+                                                    </div>
+                                                    {item.iconHoverColor && (
+                                                        <Button
+                                                            onClick={() =>
                                                                 updateItem(
                                                                     index,
                                                                     "iconHoverColor",
-                                                                    colorValue
-                                                                );
+                                                                    ""
+                                                                )
+                                                            }
+                                                            variant="link"
+                                                            style={{
+                                                                marginTop:
+                                                                    "4px",
+                                                                fontSize:
+                                                                    "11px",
                                                             }}
-                                                        />
-                                                    </Popover>
-                                                )}
-                                            </div>
-                                            {item.iconHoverColor && (
-                                                <Button
-                                                    onClick={() =>
-                                                        updateItem(
-                                                            index,
-                                                            "iconHoverColor",
-                                                            ""
-                                                        )
-                                                    }
-                                                    variant="link"
-                                                    style={{
-                                                        marginTop: "4px",
-                                                        fontSize: "11px",
-                                                    }}
-                                                >
-                                                    Clear
-                                                </Button>
-                                            )}
-                                        </div>
-                                    )}
+                                                        >
+                                                            Clear
+                                                        </Button>
+                                                    )}
+                                                </div>
+                                            </>
+                                        )}
                                     <div
                                         style={{
                                             marginTop: "12px",
@@ -1371,47 +1953,95 @@ registerBlockType("bootstrap-blocks/bs-feature-cards", {
                                                         e.currentTarget.style.backgroundColor =
                                                             iconHoverBackgroundColor;
                                                     }
-                                                    // Use per-card icon hover color
-                                                    if (item.iconHoverColor) {
-                                                        const img =
-                                                            e.currentTarget.querySelector(
-                                                                "img"
-                                                            );
-                                                        const picture =
-                                                            e.currentTarget.querySelector(
-                                                                "picture"
-                                                            );
-                                                        const pictureImg =
-                                                            e.currentTarget.querySelector(
-                                                                "picture img"
-                                                            );
+                                                    // Use per-card icon hover color (for SVG)
+                                                    if (
+                                                        item.iconHoverColor &&
+                                                        item.iconUrl
+                                                            .toLowerCase()
+                                                            .endsWith(".svg")
+                                                    ) {
                                                         const svg =
                                                             e.currentTarget.querySelector(
                                                                 "svg"
                                                             );
-                                                        if (img) {
-                                                            img.style.filter =
-                                                                hexToFilter(
-                                                                    item.iconHoverColor
-                                                                );
-                                                        }
-                                                        if (picture) {
-                                                            picture.style.filter =
-                                                                hexToFilter(
-                                                                    item.iconHoverColor
-                                                                );
-                                                        }
-                                                        if (pictureImg) {
-                                                            pictureImg.style.filter =
-                                                                hexToFilter(
-                                                                    item.iconHoverColor
-                                                                );
-                                                        }
+                                                        const object =
+                                                            e.currentTarget.querySelector(
+                                                                "object"
+                                                            );
                                                         if (svg) {
-                                                            svg.style.filter =
-                                                                hexToFilter(
-                                                                    item.iconHoverColor
+                                                            svg.setAttribute(
+                                                                "fill",
+                                                                item.iconHoverColor
+                                                            );
+                                                            const paths =
+                                                                svg.querySelectorAll(
+                                                                    "*"
                                                                 );
+                                                            paths.forEach(
+                                                                (path) => {
+                                                                    if (
+                                                                        !path.getAttribute(
+                                                                            "fill"
+                                                                        ) ||
+                                                                        path.getAttribute(
+                                                                            "fill"
+                                                                        ) ===
+                                                                            "none"
+                                                                    ) {
+                                                                        path.setAttribute(
+                                                                            "fill",
+                                                                            item.iconHoverColor
+                                                                        );
+                                                                    }
+                                                                }
+                                                            );
+                                                        }
+                                                        // Also handle object tag SVG
+                                                        if (object) {
+                                                            try {
+                                                                const objectDoc =
+                                                                    object.contentDocument;
+                                                                if (objectDoc) {
+                                                                    const objectSvg =
+                                                                        objectDoc.querySelector(
+                                                                            "svg"
+                                                                        );
+                                                                    if (
+                                                                        objectSvg
+                                                                    ) {
+                                                                        objectSvg.setAttribute(
+                                                                            "fill",
+                                                                            item.iconHoverColor
+                                                                        );
+                                                                        const objectPaths =
+                                                                            objectSvg.querySelectorAll(
+                                                                                "*"
+                                                                            );
+                                                                        objectPaths.forEach(
+                                                                            (
+                                                                                path
+                                                                            ) => {
+                                                                                if (
+                                                                                    !path.getAttribute(
+                                                                                        "fill"
+                                                                                    ) ||
+                                                                                    path.getAttribute(
+                                                                                        "fill"
+                                                                                    ) ===
+                                                                                        "none"
+                                                                                ) {
+                                                                                    path.setAttribute(
+                                                                                        "fill",
+                                                                                        item.iconHoverColor
+                                                                                    );
+                                                                                }
+                                                                            }
+                                                                        );
+                                                                    }
+                                                                }
+                                                            } catch (e) {
+                                                                // Cross-origin restriction
+                                                            }
                                                         }
                                                     }
                                                 }}
@@ -1419,58 +2049,172 @@ registerBlockType("bootstrap-blocks/bs-feature-cards", {
                                                     e.currentTarget.style.backgroundColor =
                                                         iconBackgroundColor ||
                                                         "#4CAF50";
-                                                    const img =
-                                                        e.currentTarget.querySelector(
-                                                            "img"
-                                                        );
-                                                    const picture =
-                                                        e.currentTarget.querySelector(
-                                                            "picture"
-                                                        );
-                                                    const pictureImg =
-                                                        e.currentTarget.querySelector(
-                                                            "picture img"
-                                                        );
-                                                    const svg =
-                                                        e.currentTarget.querySelector(
-                                                            "svg"
-                                                        );
-                                                    if (img) {
-                                                        img.style.filter =
-                                                            "none";
-                                                    }
-                                                    if (picture) {
-                                                        picture.style.filter =
-                                                            "none";
-                                                    }
-                                                    if (pictureImg) {
-                                                        pictureImg.style.filter =
-                                                            "none";
-                                                    }
-                                                    if (svg) {
-                                                        svg.style.filter =
-                                                            "none";
+                                                    // Restore default fill color for SVG
+                                                    if (
+                                                        item.iconUrl
+                                                            .toLowerCase()
+                                                            .endsWith(".svg")
+                                                    ) {
+                                                        const svg =
+                                                            e.currentTarget.querySelector(
+                                                                "svg"
+                                                            );
+                                                        const object =
+                                                            e.currentTarget.querySelector(
+                                                                "object"
+                                                            );
+                                                        if (svg) {
+                                                            const defaultColor =
+                                                                item.iconColor ||
+                                                                "";
+                                                            svg.setAttribute(
+                                                                "fill",
+                                                                defaultColor
+                                                            );
+                                                            const paths =
+                                                                svg.querySelectorAll(
+                                                                    "*"
+                                                                );
+                                                            paths.forEach(
+                                                                (path) => {
+                                                                    if (
+                                                                        !path.getAttribute(
+                                                                            "fill"
+                                                                        ) ||
+                                                                        path.getAttribute(
+                                                                            "fill"
+                                                                        ) ===
+                                                                            "none"
+                                                                    ) {
+                                                                        path.setAttribute(
+                                                                            "fill",
+                                                                            defaultColor
+                                                                        );
+                                                                    }
+                                                                }
+                                                            );
+                                                        }
+                                                        // Also handle object tag SVG
+                                                        if (object) {
+                                                            try {
+                                                                const objectDoc =
+                                                                    object.contentDocument;
+                                                                if (objectDoc) {
+                                                                    const objectSvg =
+                                                                        objectDoc.querySelector(
+                                                                            "svg"
+                                                                        );
+                                                                    if (
+                                                                        objectSvg
+                                                                    ) {
+                                                                        const defaultColor =
+                                                                            item.iconColor ||
+                                                                            "";
+                                                                        objectSvg.setAttribute(
+                                                                            "fill",
+                                                                            defaultColor
+                                                                        );
+                                                                        const objectPaths =
+                                                                            objectSvg.querySelectorAll(
+                                                                                "*"
+                                                                            );
+                                                                        objectPaths.forEach(
+                                                                            (
+                                                                                path
+                                                                            ) => {
+                                                                                if (
+                                                                                    !path.getAttribute(
+                                                                                        "fill"
+                                                                                    ) ||
+                                                                                    path.getAttribute(
+                                                                                        "fill"
+                                                                                    ) ===
+                                                                                        "none"
+                                                                                ) {
+                                                                                    path.setAttribute(
+                                                                                        "fill",
+                                                                                        defaultColor
+                                                                                    );
+                                                                                }
+                                                                            }
+                                                                        );
+                                                                    }
+                                                                }
+                                                            } catch (e) {
+                                                                // Cross-origin restriction
+                                                            }
+                                                        }
                                                     }
                                                 }}
                                             >
-                                                <img
-                                                    src={item.iconUrl}
-                                                    alt=""
-                                                    style={{
-                                                        width:
-                                                            iconSize || "100%",
-                                                        height:
-                                                            iconSize || "100%",
-                                                        maxWidth: iconSize
-                                                            ? "none"
-                                                            : "100%",
-                                                        maxHeight: iconSize
-                                                            ? "none"
-                                                            : "100%",
-                                                        objectFit: "contain",
-                                                        padding: "12px",
-                                                    }}
-                                                />
+                                                {item.iconUrl
+                                                    .toLowerCase()
+                                                    .endsWith(".svg") ? (
+                                                    <object
+                                                        type="image/svg+xml"
+                                                        data={item.iconUrl}
+                                                        style={{
+                                                            width:
+                                                                iconSize ||
+                                                                "100%",
+                                                            height:
+                                                                iconSize ||
+                                                                "100%",
+                                                            maxWidth: iconSize
+                                                                ? "none"
+                                                                : "100%",
+                                                            maxHeight: iconSize
+                                                                ? "none"
+                                                                : "100%",
+                                                            objectFit:
+                                                                "contain",
+                                                        }}
+                                                    >
+                                                        <img
+                                                            src={item.iconUrl}
+                                                            alt=""
+                                                            style={{
+                                                                width:
+                                                                    iconSize ||
+                                                                    "100%",
+                                                                height:
+                                                                    iconSize ||
+                                                                    "100%",
+                                                                maxWidth:
+                                                                    iconSize
+                                                                        ? "none"
+                                                                        : "100%",
+                                                                maxHeight:
+                                                                    iconSize
+                                                                        ? "none"
+                                                                        : "100%",
+                                                                objectFit:
+                                                                    "contain",
+                                                            }}
+                                                        />
+                                                    </object>
+                                                ) : (
+                                                    <img
+                                                        src={item.iconUrl}
+                                                        alt=""
+                                                        style={{
+                                                            width:
+                                                                iconSize ||
+                                                                "100%",
+                                                            height:
+                                                                iconSize ||
+                                                                "100%",
+                                                            maxWidth: iconSize
+                                                                ? "none"
+                                                                : "100%",
+                                                            maxHeight: iconSize
+                                                                ? "none"
+                                                                : "100%",
+                                                            objectFit:
+                                                                "contain",
+                                                        }}
+                                                    />
+                                                )}
                                             </div>
                                         )}
                                         <div className="bs-feature-card-content">

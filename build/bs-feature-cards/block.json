@@ -27,6 +27,7 @@
           "title": "Professional Landscape Construction",
           "description": "We specialize in creating outdoor living spaces using top-quality materials and expert craftsmanship.",
           "iconUrl": "",
+          "iconColor": "",
           "iconHoverColor": "",
           "linkUrl": ""
         },
@@ -35,6 +36,7 @@
           "title": "End-To-End Project Management",
           "description": "From site preparation to final cleanup, we handle every step of your project to ensure a smooth process and on-time completion.",
           "iconUrl": "",
+          "iconColor": "",
           "iconHoverColor": "",
           "linkUrl": ""
         },
@@ -43,6 +45,7 @@
           "title": "High-Quality Materials & Techniques",
           "description": "Our team uses proven methods and premium products to build outdoor spaces that withstand weather and stay beautiful for years.",
           "iconUrl": "",
+          "iconColor": "",
           "iconHoverColor": "",
           "linkUrl": ""
         },
@@ -51,6 +54,7 @@
           "title": "Customer-First Approach",
           "description": "We prioritize clear communication, transparency, and your satisfaction—so you get the outdoor space you envisioned, stress-free.",
           "iconUrl": "",
+          "iconColor": "",
           "iconHoverColor": "",
           "linkUrl": ""
         }
