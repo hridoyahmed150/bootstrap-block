@@ -78,9 +78,7 @@
     margin-bottom: 0;
 }
 
-.bs-feature-cards-editor .bs-feature-card-icon img,
-.bs-feature-cards-editor .bs-feature-card-icon picture,
-.bs-feature-cards-editor .bs-feature-card-icon picture img {
+.bs-feature-cards-editor .bs-feature-card-icon img {
     /* Default values - inline styles will override */
     width: 100%;
     height: 100%;
@@ -91,18 +89,6 @@
     display: block !important;
     box-sizing: border-box !important;
     transition: filter 0.3s ease;
-}
-
-.bs-feature-cards-editor .bs-feature-card-icon picture {
-    width: 100% !important;
-    height: 100% !important;
-    display: flex !important;
-    align-items: center;
-    justify-content: center;
-}
-
-.bs-feature-cards-editor .bs-feature-card-icon picture source {
-    display: none;
 }
 
 .bs-feature-cards-editor .bs-feature-card-content {
@@ -205,9 +191,7 @@
     margin-bottom: 0;
 }
 
-.bs-feature-cards .bs-feature-card-icon img,
-.bs-feature-cards .bs-feature-card-icon picture,
-.bs-feature-cards .bs-feature-card-icon picture img {
+.bs-feature-cards .bs-feature-card-icon img {
     width: 100% !important;
     height: 100% !important;
     max-width: 100% !important;
@@ -215,31 +199,6 @@
     object-fit: contain !important;
     display: block !important;
     box-sizing: border-box !important;
-    transition: filter 0.3s ease !important;
-    -webkit-transition: filter 0.3s ease !important;
-    will-change: filter;
-}
-
-.bs-feature-cards .bs-feature-card-icon picture {
-    width: 100% !important;
-    height: 100% !important;
-    display: flex !important;
-    align-items: center;
-    justify-content: center;
-    transition: filter 0.3s ease !important;
-    -webkit-transition: filter 0.3s ease !important;
-    will-change: filter;
-}
-
-.bs-feature-cards .bs-feature-card-icon picture source {
-    display: none;
-}
-
-/* SVG icon transition */
-.bs-feature-cards .bs-feature-card-icon svg {
-    transition: filter 0.3s ease !important;
-    -webkit-transition: filter 0.3s ease !important;
-    will-change: filter;
 }
 
 .bs-feature-cards .bs-feature-card-content {
