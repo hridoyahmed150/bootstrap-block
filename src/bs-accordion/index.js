@@ -1520,16 +1520,22 @@ registerBlockType("bootstrap-blocks/bs-accordion", {
         );
     },
 
-    save: ({ attributes }) => {
+    save: ({ attributes, clientId }) => {
         const blockProps = useBlockProps.save({
             className: "bs-accordion-container",
         });
+
+        // Ensure blockId is unique - use clientId if blockId is missing
+        const finalAttributes = {
+            ...attributes,
+            blockId: attributes.blockId || `bs-accordion-${clientId}`,
+        };
 
         return (
             <div
                 {...blockProps}
                 dangerouslySetInnerHTML={{
-                    __html: generateAccordionHTML(attributes),
+                    __html: generateAccordionHTML(finalAttributes),
                 }}
             />
         );

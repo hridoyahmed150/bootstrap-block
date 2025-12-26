@@ -42,7 +42,14 @@ export const generateAccordionHTML = (attributes) => {
     } = attributes;
 
     // Use the unique block ID for styling
-    const uniqueId = blockId;
+    // Generate unique ID if blockId is missing or default
+    let uniqueId = blockId;
+    if (!uniqueId || uniqueId === "bs-accordion-default") {
+        // Generate a unique ID using timestamp and random number
+        uniqueId = `bs-accordion-${Date.now()}-${Math.random()
+            .toString(36)
+            .substr(2, 9)}`;
+    }
 
     // Generate accordion items HTML
     const generateAccordionItems = () => {
@@ -225,8 +232,8 @@ export const generateAccordionHTML = (attributes) => {
                 }
 				
 				#${uniqueId} .bs-accordion-item {
-					margin-bottom: ${itemSpacing}px;
-					padding: var(--bs-accordion-item-padding);
+					margin-bottom: ${itemSpacing}px !important;
+					padding: ${itemPadding || "0"} !important;
 					${
                         showBorder
                             ? borderTop ||
@@ -236,103 +243,116 @@ export const generateAccordionHTML = (attributes) => {
                                 ? `
 						border-top: ${
                             borderTop
-                                ? `var(--bs-accordion-border-top) var(--bs-accordion-border-style, solid) var(--bs-accordion-border-color, rgba(0, 0, 0, 0.1))`
-                                : "none"
+                                ? `${borderTop} ${borderStyle || "solid"} ${
+                                      borderColor || "rgba(0, 0, 0, 0.1)"
+                                  } !important`
+                                : "none !important"
                         };
 						border-bottom: ${
                             borderBottom
-                                ? `var(--bs-accordion-border-bottom) var(--bs-accordion-border-style, solid) var(--bs-accordion-border-color, rgba(0, 0, 0, 0.1))`
-                                : "none"
+                                ? `${borderBottom} ${borderStyle || "solid"} ${
+                                      borderColor || "rgba(0, 0, 0, 0.1)"
+                                  } !important`
+                                : "none !important"
                         };
 						border-left: ${
                             borderLeft
-                                ? `var(--bs-accordion-border-left) var(--bs-accordion-border-style, solid) var(--bs-accordion-border-color, rgba(0, 0, 0, 0.1))`
-                                : "none"
+                                ? `${borderLeft} ${borderStyle || "solid"} ${
+                                      borderColor || "rgba(0, 0, 0, 0.1)"
+                                  } !important`
+                                : "none !important"
                         };
 						border-right: ${
                             borderRight
-                                ? `var(--bs-accordion-border-right) var(--bs-accordion-border-style, solid) var(--bs-accordion-border-color, rgba(0, 0, 0, 0.1))`
-                                : "none"
+                                ? `${borderRight} ${borderStyle || "solid"} ${
+                                      borderColor || "rgba(0, 0, 0, 0.1)"
+                                  } !important`
+                                : "none !important"
                         };
 					`
                                 : `
-						border-width: var(--bs-accordion-border-width, 1px);
-						border-color: var(--bs-accordion-border-color, rgba(0, 0, 0, 0.1));
-						border-style: var(--bs-accordion-border-style, solid);
+						border-width: ${borderWidth || "1px"} !important;
+						border-color: ${borderColor || "rgba(0, 0, 0, 0.1)"} !important;
+						border-style: ${borderStyle || "solid"} !important;
 					`
-                            : "border: none;"
+                            : "border: none !important;"
                     }
 					${
                         showBoxShadow
                             ? `
-						box-shadow: var(--bs-accordion-box-shadow, 0 2px 4px rgba(0, 0, 0, 0.1));
+						box-shadow: var(--bs-accordion-box-shadow, 0 2px 4px rgba(0, 0, 0, 0.1)) !important;
 					`
-                            : "box-shadow: none;"
+                            : "box-shadow: none !important;"
                     }
-					${borderRadius ? `border-radius: ${borderRadius};` : ""}
+					${borderRadius ? `border-radius: ${borderRadius} !important;` : ""}
 				}
 				
-				#${uniqueId} .bs-accordion-header {
-					background-color: ${backgroundColor};
-					color: ${textColor};
+				#${uniqueId} .bs-accordion-item .bs-accordion-header {
+					background-color: ${backgroundColor} !important;
+					color: ${textColor} !important;
+					transition: background-color 0.3s ease, color 0.3s ease !important;
+				}
+				#${uniqueId} .bs-accordion-item {
+					background-color: ${backgroundColor} !important;
+					color: ${textColor} !important;
+					transition: background-color 0.3s ease, color 0.3s ease !important;
 				}
 				
 				#${uniqueId} .bs-accordion-title,
 				#${uniqueId} .bs-accordion-title-text {
-					${titleFontSize ? `font-size: var(--bs-accordion-title-font-size);` : ""}
+					${
+                        titleFontSize
+                            ? `font-size: var(--bs-accordion-title-font-size) !important;`
+                            : ""
+                    }
 				}
 				
 				#${uniqueId} .bs-accordion-item.open {
-					background-color: ${activeBackgroundColor};
+					background-color: ${activeBackgroundColor} !important;
 				}
 				
 				#${uniqueId} .bs-accordion-item.open .bs-accordion-header {
-					background-color: transparent;
-					color: ${activeTextColor};
+					background-color: ${activeBackgroundColor} !important;
+					color: ${activeTextColor} !important;
 				}
 				
 				#${uniqueId} .bs-accordion-content {
-					background-color: ${backgroundColor};
-					color: ${textColor};
+					background-color: ${backgroundColor} !important;
+					color: ${textColor} !important;
+					transition: background-color 0.3s ease, color 0.3s ease !important;
 				}
 				
 				#${uniqueId} .bs-accordion-item.open .bs-accordion-content {
-					background-color: ${activeBackgroundColor};
-					color: ${activeTextColor};
+					background-color: ${activeBackgroundColor} !important;
+					color: ${activeTextColor} !important;
 				}
 				
-				${
-                    iconColor
-                        ? `#${uniqueId} .bs-accordion-icon { color: var(--bs-accordion-icon-color); }`
-                        : ""
-                }
+				#${uniqueId} .bs-accordion-icon {
+					${iconColor ? `color: ${iconColor} !important;` : ""}
+					${
+                        iconBackgroundColor
+                            ? `background-color: ${iconBackgroundColor} !important;`
+                            : ""
+                    }
+					${iconBackgroundWidth ? `width: ${iconBackgroundWidth} !important;` : ""}
+					${iconBackgroundHeight ? `height: ${iconBackgroundHeight} !important;` : ""}
+					${
+                        showIconBorder && iconBorderWidth
+                            ? `
+						border: ${iconBorderWidth} ${iconBorderStyle || "solid"} ${
+                            iconBorderColor || "#000000"
+                        } !important;
+						${iconBorderRadius ? `border-radius: ${iconBorderRadius} !important;` : ""}
+					`
+                            : `border: none !important;`
+                    }
+				}
 				${
                     iconSize
                         ? `#${uniqueId} .bs-accordion-icon-inner {
-					${iconStyle === "plus-minus" ? `font-size: var(--bs-accordion-icon-size);` : ""}
-				}`
-                        : ""
-                }
-				${
-                    iconBackgroundColor ||
-                    iconBackgroundWidth ||
-                    iconBackgroundHeight ||
-                    showIconBorder
-                        ? `
-				#${uniqueId} .bs-accordion-icon {
 					${
-                        iconBackgroundColor
-                            ? `background-color: var(--bs-accordion-icon-bg-color);`
-                            : ""
-                    }
-					${iconBackgroundWidth ? `width: var(--bs-accordion-icon-bg-width);` : ""}
-					${iconBackgroundHeight ? `height: var(--bs-accordion-icon-bg-height);` : ""}
-					${
-                        showIconBorder
-                            ? `
-						border: var(--bs-accordion-icon-border-width, 1px) var(--bs-accordion-icon-border-style, solid) var(--bs-accordion-icon-border-color, #000000);
-						border-radius: var(--bs-accordion-icon-border-radius, 0);
-					`
+                        iconStyle === "plus-minus"
+                            ? `font-size: var(--bs-accordion-icon-size) !important;`
                             : ""
                     }
 				}`
@@ -368,179 +388,202 @@ export const generateAccordionHTML = (attributes) => {
         return `
 			<script>
 				(function() {
-					function initAccordion() {
-						const accordion = document.getElementById('${uniqueId}');
+					const accordionId = '${uniqueId}';
+					const allowMultipleOpen = ${allowMultipleOpen};
+					const iconStyle = '${iconStyle}';
+					const imageHeightOpen = '${imageHeightOpen || ""}';
+					const imageHeightClosed = '${imageHeightClosed || ""}';
+					const imageWidth = '${imageWidth || ""}';
+					
+					// Initialize this specific accordion
+					function initThisAccordion() {
+						const accordion = document.getElementById(accordionId);
 						if (!accordion) {
-							console.log('Accordion not found with ID: ${uniqueId}');
 							return;
 						}
-					
-					const headers = accordion.querySelectorAll('.bs-accordion-header');
-					const allowMultipleOpen = ${allowMultipleOpen};
-					
-					// Function to calculate proper height
-					function getAccordionHeight(body) {
-						// Get the content div inside body
-						const content = body.querySelector('.bs-accordion-content');
-						if (content) {
-							// Return the scrollHeight of the content plus padding
-							return content.scrollHeight;
+						
+						// Check if already initialized
+						if (accordion.dataset.bsInitialized === 'true') {
+							return;
 						}
-						return body.scrollHeight;
-					}
+						
+						// Mark as initialized
+						accordion.dataset.bsInitialized = 'true';
 					
-					// Function to set initial heights
-					function setInitialHeights() {
-						accordion.querySelectorAll('.bs-accordion-item.open .bs-accordion-body').forEach(body => {
-							const height = getAccordionHeight(body);
-							body.style.maxHeight = height + 'px';
-						});
-					}
-					
-					// Function to update icons based on open/closed state
-					function updateIcons() {
-						accordion.querySelectorAll('.bs-accordion-item').forEach((item, index) => {
-							const header = item.querySelector('.bs-accordion-header');
-							const icon = header.querySelector('.bs-accordion-icon');
-							const iconInner = icon ? icon.querySelector('.bs-accordion-icon-inner') : null;
-							const isOpen = item.classList.contains('open');
-							
-							if (iconInner) {
-								if ('${iconStyle}' === 'plus-minus') {
+						const headers = accordion.querySelectorAll('.bs-accordion-header');
+						
+						// Function to calculate proper height
+						function getAccordionHeight(body) {
+							const content = body.querySelector('.bs-accordion-content');
+							if (content) {
+								return content.scrollHeight;
+							}
+							return body.scrollHeight;
+						}
+						
+						// Function to set initial heights
+						function setInitialHeights() {
+							accordion.querySelectorAll('.bs-accordion-item.open .bs-accordion-body').forEach(body => {
+								const height = getAccordionHeight(body);
+								body.style.maxHeight = height + 'px';
+							});
+						}
+						
+						// Function to update icons based on open/closed state
+						function updateIcons() {
+							accordion.querySelectorAll('.bs-accordion-item').forEach((item) => {
+								const header = item.querySelector('.bs-accordion-header');
+								const icon = header ? header.querySelector('.bs-accordion-icon') : null;
+								const iconInner = icon ? icon.querySelector('.bs-accordion-icon-inner') : null;
+								const isOpen = item.classList.contains('open');
+								
+								if (iconInner && iconStyle === 'plus-minus') {
 									iconInner.textContent = isOpen ? '−' : '+';
 								}
-							}
-						});
-					}
-					
-					// Function to update image heights
-					function updateImageHeights() {
-						accordion.querySelectorAll('.bs-accordion-item').forEach((itemEl) => {
-							const imageWrapper = itemEl.querySelector('.bs-accordion-image');
-							if (imageWrapper) {
-								const isOpen = itemEl.classList.contains('open');
-								const heightOpen = '${imageHeightOpen || ""}';
-								const heightClosed = '${imageHeightClosed || ""}';
-								const width = '${imageWidth || ""}';
+							});
+						}
+						
+						// Function to update image heights
+						function updateImageHeights() {
+							accordion.querySelectorAll('.bs-accordion-item').forEach((itemEl) => {
+								const imageWrapper = itemEl.querySelector('.bs-accordion-image');
+								if (imageWrapper) {
+									const isOpen = itemEl.classList.contains('open');
+									
+									const picture = imageWrapper.querySelector('picture');
+									const img = picture ? picture.querySelector('img') : imageWrapper.querySelector('img') || imageWrapper;
+									
+									const elementsToUpdate = [imageWrapper];
+									if (picture) elementsToUpdate.push(picture);
+									if (img) elementsToUpdate.push(img);
+									
+									elementsToUpdate.forEach((el) => {
+										if (isOpen && imageHeightOpen) {
+											el.style.height = imageHeightOpen;
+										} else if (!isOpen && imageHeightClosed) {
+											el.style.height = imageHeightClosed;
+										}
+										if (imageWidth) {
+											el.style.width = imageWidth;
+										}
+									});
+								}
+							});
+						}
+						
+						// Add click handlers to headers
+						headers.forEach(header => {
+							header.addEventListener('click', function(e) {
+								e.preventDefault();
+								e.stopPropagation();
 								
-								// Handle picture element or img element
-								const picture = imageWrapper.querySelector('picture');
-								const img = picture ? picture.querySelector('img') : imageWrapper.querySelector('img') || imageWrapper;
+								const index = parseInt(this.dataset.index);
+								const item = this.closest('.bs-accordion-item');
+								if (!item) return;
 								
-								const elementsToUpdate = [imageWrapper];
-								if (picture) elementsToUpdate.push(picture);
-								if (img) elementsToUpdate.push(img);
+								const body = item.querySelector('.bs-accordion-body');
+								if (!body) return;
 								
-								elementsToUpdate.forEach((el) => {
-									if (isOpen && heightOpen) {
-										el.style.height = heightOpen;
-									} else if (!isOpen && heightClosed) {
-										el.style.height = heightClosed;
-									}
-									if (width) {
-										el.style.width = width;
-									}
-								});
-							}
-						});
-					}
-					
-					headers.forEach(header => {
-						header.addEventListener('click', function() {
-							const index = parseInt(this.dataset.index);
-							const item = this.closest('.bs-accordion-item');
-							const body = item.querySelector('.bs-accordion-body');
-							const isOpen = item.classList.contains('open');
-							
-							// Update ARIA attributes
-							this.setAttribute('aria-expanded', !isOpen);
-							
-							if (!allowMultipleOpen && !isOpen) {
-								// Close all other items
-								headers.forEach(otherHeader => {
-									const otherIndex = parseInt(otherHeader.dataset.index);
-									if (otherIndex !== index) {
-										const otherItem = otherHeader.closest('.bs-accordion-item');
-										const otherBody = otherItem.querySelector('.bs-accordion-body');
-										
-										otherItem.classList.remove('open');
-										otherHeader.setAttribute('aria-expanded', 'false');
-										otherBody.style.maxHeight = '0';
-										// Update icons for closed items
+								const isOpen = item.classList.contains('open');
+								
+								// Update ARIA attributes
+								this.setAttribute('aria-expanded', !isOpen ? 'true' : 'false');
+								
+								if (!allowMultipleOpen && !isOpen) {
+									// Close all other items in THIS accordion only
+									headers.forEach(otherHeader => {
+										const otherIndex = parseInt(otherHeader.dataset.index);
+										if (otherIndex !== index) {
+											const otherItem = otherHeader.closest('.bs-accordion-item');
+											const otherBody = otherItem ? otherItem.querySelector('.bs-accordion-body') : null;
+											
+											if (otherItem && otherBody) {
+												otherItem.classList.remove('open');
+												otherHeader.setAttribute('aria-expanded', 'false');
+												otherBody.style.maxHeight = '0';
+											}
+										}
+									});
+								}
+								
+								// Toggle current item
+								if (isOpen) {
+									// Closing: set current height first, then animate to 0
+									body.style.maxHeight = body.scrollHeight + 'px';
+									body.offsetHeight; // Force reflow
+									
+									requestAnimationFrame(() => {
+										body.style.maxHeight = '0';
+										item.classList.remove('open');
 										setTimeout(() => {
 											updateIcons();
 											updateImageHeights();
 										}, 50);
-									}
-								});
-							}
-							
-							// Toggle current item
-							if (isOpen) {
-								// Closing: set current height first, then animate to 0
-								body.style.maxHeight = body.scrollHeight + 'px';
-								
-								// Force reflow to ensure the height is applied
-								body.offsetHeight;
-								
-								// Now animate to 0
-								requestAnimationFrame(() => {
+									});
+								} else {
+									// Opening: first set maxHeight to 0, add class, then animate
 									body.style.maxHeight = '0';
-									item.classList.remove('open');
-									// Update icons after class change
-									setTimeout(() => {
-										updateIcons();
-										updateImageHeights();
-									}, 50);
-								});
-							} else {
-								// Opening: first set maxHeight to 0, add class, then animate
-								body.style.maxHeight = '0';
-								item.classList.add('open');
-								
-								// Calculate exact height (with open state applied)
-								const content = body.querySelector('.bs-accordion-content');
-								const height = content ? content.scrollHeight : body.scrollHeight;
-								
-								// Force reflow
-								body.offsetHeight;
-								
-								// Animate to calculated height
-								requestAnimationFrame(() => {
-									body.style.maxHeight = height + 'px';
-									// Update icons after class change
-									setTimeout(() => {
-										updateIcons();
-										updateImageHeights();
-									}, 50);
+									item.classList.add('open');
 									
-									// Set to none after animation for dynamic content
-									setTimeout(() => {
-										if (item.classList.contains('open')) {
-											body.style.maxHeight = 'none';
-										}
-									}, 400);
-								});
-							}
+									const content = body.querySelector('.bs-accordion-content');
+									const height = content ? content.scrollHeight : body.scrollHeight;
+									
+									body.offsetHeight; // Force reflow
+									
+									requestAnimationFrame(() => {
+										body.style.maxHeight = height + 'px';
+										setTimeout(() => {
+											updateIcons();
+											updateImageHeights();
+										}, 50);
+										
+										setTimeout(() => {
+											if (item.classList.contains('open')) {
+												body.style.maxHeight = 'none';
+											}
+										}, 400);
+									});
+								}
+							});
 						});
-					});
-					
-					// Set initial heights and icons after a short delay to ensure content is rendered
-					setTimeout(() => {
-						setInitialHeights();
-						updateIcons();
-						updateImageHeights();
-					}, 100);
-					
-					// Also set heights on window resize
-					window.addEventListener('resize', setInitialHeights);
+						
+						// Set initial heights and icons after a short delay
+						setTimeout(() => {
+							setInitialHeights();
+							updateIcons();
+							updateImageHeights();
+						}, 100);
 					}
 					
-					// Initialize when DOM is ready
+					// Initialize when DOM is ready - multiple ways to ensure it runs
+					function runInit() {
+						// Try immediate init
+						initThisAccordion();
+						
+						// Also try after a small delay to catch late-loading content
+						setTimeout(initThisAccordion, 50);
+						setTimeout(initThisAccordion, 200);
+					}
+					
 					if (document.readyState === 'loading') {
-						document.addEventListener('DOMContentLoaded', initAccordion);
+						document.addEventListener('DOMContentLoaded', runInit);
 					} else {
-						initAccordion();
+						runInit();
+					}
+					
+					// Also listen for when the element appears (for dynamic content)
+					if (typeof MutationObserver !== 'undefined') {
+						const observer = new MutationObserver(function(mutations) {
+							const accordion = document.getElementById(accordionId);
+							if (accordion && accordion.dataset.bsInitialized !== 'true') {
+								initThisAccordion();
+							}
+						});
+						
+						observer.observe(document.body, {
+							childList: true,
+							subtree: true
+						});
 					}
 				})();
 			</script>

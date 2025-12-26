@@ -5,7 +5,6 @@
     padding: 20px;
 }
 
-
 /* Rating Star Styling */
 .rating-star {
     background-image: url(./images/rating-5star.png);
@@ -31,7 +30,7 @@
 
 /* Read More Functionality */
 .testimonial-read-more {
-    color: #007cba !important;
+    color: #0e8b25 !important;
     cursor: pointer;
     text-decoration: underline;
     font-weight: 500;
@@ -74,11 +73,11 @@
 
 /* Arrow positioning */
 .bsb-reviews .slick-next {
-    right: -40px !important;
+    right: -10px !important;
 }
 
 .bsb-reviews .slick-prev {
-    left: -40px !important;
+    left: -10px !important;
 }
 
 .bsb-reviews .slick-prev:before,
@@ -88,21 +87,33 @@
 
 /* Arrow styling */
 .bsb-reviews .slick-arrow {
-    width: 29px !important;
+    width: 32px !important;
     height: 32px !important;
     background-repeat: no-repeat !important;
     background-size: auto !important;
     background-position: center !important;
-    transition: .4s;
+    transition: 0.4s;
     z-index: 1;
+    background-color: rgba(15, 87, 28, 0.5) !important;
+    border-radius: 50% !important;
+    padding: 10px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.bsb-reviews .slick-prev:hover,
+.bsb-reviews .slick-next:hover {
+    background-color: rgba(15, 87, 28, 1) !important;
 }
 
 /* Arrow images - Light theme (default) */
 .bsb-reviews .slick-prev {
     background-image: url(./images/light/arrow-left.png) !important;
-    background-size: contain !important;
+    background-size: auto !important;
     background-repeat: no-repeat !important;
     background-position: center !important;
+    top: 40% !important;
 }
 
 .bsb-reviews .slick-prev:before {
@@ -111,9 +122,10 @@
 
 .bsb-reviews .slick-next {
     background-image: url(./images/light/arrow-right.png) !important;
-    background-size: contain !important;
+    background-size: auto !important;
     background-repeat: no-repeat !important;
     background-position: center !important;
+    top: 40% !important;
 }
 
 .bsb-reviews .slick-next:before {
@@ -139,9 +151,9 @@
 }
 
 .bsb-reviews .slick-dots li {
-    width: 17px;
-    height: 17px;
-    transition: .3s;
+    width: 10px;
+    height: 10px;
+    transition: 0.3s;
     margin: 0 7px;
 }
 
@@ -150,7 +162,7 @@
     height: 100%;
     padding: 0;
     border-radius: 50px;
-    background-color: #D0D7E0;
+    background-color: #d0d7e0;
 }
 
 .bsb-reviews .slick-dots li.slick-active button {
