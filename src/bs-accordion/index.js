@@ -51,6 +51,7 @@ registerBlockType("bootstrap-blocks/bs-accordion", {
             imageWidth,
             imageHeightClosed,
             titleFontSize,
+            titlePadding,
             showBorder,
             borderWidth,
             borderColor,
@@ -797,6 +798,17 @@ registerBlockType("bootstrap-blocks/bs-accordion", {
                                 step={1}
                                 allowReset={true}
                             />
+                            <TextControl
+                                label="Title Padding (Optional)"
+                                value={titlePadding || ""}
+                                onChange={(value) =>
+                                    setAttributes({
+                                        titlePadding: value || "",
+                                    })
+                                }
+                                placeholder="e.g., 16px 20px or 16px"
+                                help="Set padding for accordion title (header). Use CSS format like '16px 20px' or '16px'."
+                            />
                         </div>
 
                         <div
@@ -1306,6 +1318,7 @@ registerBlockType("bootstrap-blocks/bs-accordion", {
                                             color: item.isOpen
                                                 ? activeTextColor
                                                 : textColor,
+                                            padding: titlePadding || undefined,
                                         }}
                                     >
                                         <div

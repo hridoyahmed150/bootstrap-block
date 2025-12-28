@@ -137,6 +137,10 @@
       "type": "string",
       "default": ""
     },
+    "titlePadding": {
+      "type": "string",
+      "default": ""
+    },
     "showBorder": {
       "type": "boolean",
       "default": false

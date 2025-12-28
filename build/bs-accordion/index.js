@@ -60,6 +60,7 @@ __webpack_require__.r(__webpack_exports__);
       imageWidth,
       imageHeightClosed,
       titleFontSize,
+      titlePadding,
       showBorder,
       borderWidth,
       borderColor,
@@ -670,6 +671,14 @@ __webpack_require__.r(__webpack_exports__);
               max: 50,
               step: 1,
               allowReset: true
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextControl, {
+              label: "Title Padding (Optional)",
+              value: titlePadding || "",
+              onChange: value => setAttributes({
+                titlePadding: value || ""
+              }),
+              placeholder: "e.g., 16px 20px or 16px",
+              help: "Set padding for accordion title (header). Use CSS format like '16px 20px' or '16px'."
             })]
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
             style: {
@@ -1007,7 +1016,8 @@ __webpack_require__.r(__webpack_exports__);
                 onClick: () => toggleItem(index),
                 style: {
                   backgroundColor: item.isOpen ? activeBackgroundColor : backgroundColor,
-                  color: item.isOpen ? activeTextColor : textColor
+                  color: item.isOpen ? activeTextColor : textColor,
+                  padding: titlePadding || undefined
                 },
                 children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
                   className: "bs-accordion-title",
@@ -1319,12 +1329,12 @@ const generateAccordionHTML = attributes => {
 				#${uniqueId} .bs-accordion-item .bs-accordion-header {
 					background-color: ${backgroundColor} !important;
 					color: ${textColor} !important;
-					transition: background-color 0.3s ease, color 0.3s ease !important;
+					transition: all 0.3s ease !important;
 				}
 				#${uniqueId} .bs-accordion-item {
 					background-color: ${backgroundColor} !important;
 					color: ${textColor} !important;
-					transition: background-color 0.3s ease, color 0.3s ease !important;
+					
 				}
 				
 				#${uniqueId} .bs-accordion-title,
@@ -1334,17 +1344,18 @@ const generateAccordionHTML = attributes => {
 				
 				#${uniqueId} .bs-accordion-item.open {
 					background-color: ${activeBackgroundColor} !important;
+					
 				}
 				
 				#${uniqueId} .bs-accordion-item.open .bs-accordion-header {
 					background-color: ${activeBackgroundColor} !important;
 					color: ${activeTextColor} !important;
+					transition: all 0.3s ease !important;
 				}
 				
 				#${uniqueId} .bs-accordion-content {
 					background-color: ${backgroundColor} !important;
 					color: ${textColor} !important;
-					transition: background-color 0.3s ease, color 0.3s ease !important;
 				}
 				
 				#${uniqueId} .bs-accordion-item.open .bs-accordion-content {
