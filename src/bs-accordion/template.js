@@ -411,7 +411,7 @@ export const generateAccordionHTML = (attributes) => {
 						// Mark as initialized
 						accordion.dataset.bsInitialized = 'true';
 					
-						const headers = accordion.querySelectorAll('.bs-accordion-header');
+						const headers = accordion.querySelectorAll('.bs-accordion-item');
 						
 						// Function to calculate proper height
 						function getAccordionHeight(body) {

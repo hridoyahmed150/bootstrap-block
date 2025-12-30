@@ -2379,10 +2379,24 @@ registerBlockType("bootstrap-blocks/bs-feature-cards", {
         );
     },
     save: ({ attributes }) => {
+        // Get block props to extract additional CSS classes
+        const blockProps = useBlockProps.save();
+        // Extract additional classes (excluding default wp-block classes)
+        const additionalClasses = blockProps.className
+            ? blockProps.className
+                  .split(" ")
+                  .filter(
+                      (cls) =>
+                          !cls.startsWith("wp-block-") &&
+                          cls !== "bs-feature-cards-wrapper"
+                  )
+                  .join(" ")
+            : "";
+        
         return (
             <div
                 dangerouslySetInnerHTML={{
-                    __html: generateFeatureCardsHTML(attributes),
+                    __html: generateFeatureCardsHTML(attributes, additionalClasses),
                 }}
             />
         );

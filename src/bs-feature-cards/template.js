@@ -2,7 +2,7 @@
  * Generate HTML for BS Feature Cards block
  */
 
-export const generateFeatureCardsHTML = (attributes) => {
+export const generateFeatureCardsHTML = (attributes, additionalClasses = "") => {
     const {
         items = [],
         columns = 3,
@@ -230,8 +230,13 @@ export const generateFeatureCardsHTML = (attributes) => {
         `;
     };
 
+    // Combine base class with additional classes from block props
+    const wrapperClasses = ["bs-feature-cards", additionalClasses]
+        .filter(Boolean)
+        .join(" ");
+
     return `
-		<div id="${uniqueId}" class="bs-feature-cards">
+		<div id="${uniqueId}" class="${wrapperClasses}">
 			${generateStyles()}
 			<div class="bs-feature-cards-grid">
 				${generateFeatureCards()}
