@@ -309,7 +309,7 @@ export const generateAccordionHTML = (attributes) => {
 				
 				#${uniqueId} .bs-accordion-item.open {
 					background-color: ${activeBackgroundColor} !important;
-					
+					transition: all 0.3s ease !important;
 				}
 				
 				#${uniqueId} .bs-accordion-item.open .bs-accordion-header {
@@ -321,11 +321,13 @@ export const generateAccordionHTML = (attributes) => {
 				#${uniqueId} .bs-accordion-content {
 					background-color: ${backgroundColor} !important;
 					color: ${textColor} !important;
+					transition: all 0.3s ease !important;
 				}
 				
 				#${uniqueId} .bs-accordion-item.open .bs-accordion-content {
 					background-color: ${activeBackgroundColor} !important;
 					color: ${activeTextColor} !important;
+					transition: all 0.3s ease !important;
 				}
 				
 				#${uniqueId} .bs-accordion-icon {

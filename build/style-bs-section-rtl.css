@@ -1,0 +1,53 @@
+/*!******************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[2].use[2]!./src/bs-section/style.css ***!
+  \******************************************************************************************************************************************************************************/
+/* Override WordPress editor max-width for wider layout */
+
+.editor-styles-wrapper .wp-block,
+.block-editor-block-list__layout .wp-block,
+.block-editor-block-list__layout .wp-block[data-type="bootstrap-blocks/bs-section"],
+.block-editor-block-list__layout .wp-block[data-type="bootstrap-blocks/bs-row"] {
+    max-width: 90% !important;
+}
+
+div.container .editor-styles-wrapper .wp-block,
+div.container .block-editor-block-list__layout .wp-block,
+div.container .block-editor-block-list__layout .wp-block[data-type="bootstrap-blocks/bs-section"],
+div.container .block-editor-block-list__layout .wp-block[data-type="bootstrap-blocks/bs-row"] {
+    max-width: 100% !important;
+}
+
+.wp-block-bootstrap-blocks-bs-section {
+    border: 1px dashed #007cba;
+    padding: 16px;
+    margin-bottom: 16px;
+    background: transparent;
+}
+
+/* Specific styling for bootstrap-spacing-tabs */
+.bootstrap-spacing-tabs .components-tab-panel__tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px;
+    margin-bottom: 12px;
+}
+
+.bootstrap-spacing-tabs .components-tab-panel__tabs button {
+    margin-left: 0;
+    padding: 4px 6px;
+    font-size: 11px;
+    min-width: auto;
+    flex: 1;
+    text-align: center;
+    border-radius: 3px;
+    border-bottom: 2px solid transparent;
+}
+
+.bootstrap-spacing-tabs .components-tab-panel__tabs button.active-tab {
+    border-bottom: 2px solid #007cba;
+    background-color: transparent;
+    color: #007cba;
+    font-weight: 600;
+}
+
+
