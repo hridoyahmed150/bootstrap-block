@@ -136,6 +136,34 @@
             "type": "string",
             "default": ""
         },
+        "animationEnabled": {
+            "type": "boolean",
+            "default": false
+        },
+        "animationName": {
+            "type": "string",
+            "default": ""
+        },
+        "animationDuration": {
+            "type": "number",
+            "default": 1000
+        },
+        "animationDelay": {
+            "type": "number",
+            "default": 0
+        },
+        "childAnimationEnabled": {
+            "type": "boolean",
+            "default": false
+        },
+        "childAnimationInitialDelay": {
+            "type": "number",
+            "default": 0
+        },
+        "childAnimationInterval": {
+            "type": "number",
+            "default": 0
+        },
         "showBorder": {
             "type": "boolean",
             "default": false

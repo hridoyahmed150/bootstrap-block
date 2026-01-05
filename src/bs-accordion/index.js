@@ -52,6 +52,13 @@ registerBlockType("bootstrap-blocks/bs-accordion", {
             imageHeightClosed,
             titleFontSize,
             titlePadding,
+            animationEnabled,
+            animationName,
+            animationDuration,
+            animationDelay,
+            childAnimationEnabled,
+            childAnimationInitialDelay,
+            childAnimationInterval,
             showBorder,
             borderWidth,
             borderColor,
@@ -218,6 +225,149 @@ registerBlockType("bootstrap-blocks/bs-accordion", {
                                 setAttributes({ iconStyle: value })
                             }
                         />
+                    </PanelBody>
+
+                    {/* Animation Settings */}
+                    <PanelBody title="Animation" initialOpen={false}>
+                        <ToggleControl
+                            label="Enable Animation for Accordion"
+                            checked={animationEnabled || false}
+                            onChange={(value) => {
+                                const updates = { animationEnabled: value };
+                                if (value && !animationName) {
+                                    updates.animationName = "fade-up";
+                                    updates.animationDuration = 1000;
+                                    updates.animationDelay = 0;
+                                }
+                                setAttributes(updates);
+                            }}
+                        />
+
+                        {animationEnabled && (
+                            <>
+                                <SelectControl
+                                    label="Animation Name"
+                                    value={animationName || ""}
+                                    options={[
+                                        {
+                                            label: "Select Animation",
+                                            value: "",
+                                        },
+                                        { label: "Fade Up", value: "fade-up" },
+                                        {
+                                            label: "Fade Down",
+                                            value: "fade-down",
+                                        },
+                                        {
+                                            label: "Fade Left",
+                                            value: "fade-left",
+                                        },
+                                        {
+                                            label: "Fade Right",
+                                            value: "fade-right",
+                                        },
+                                        { label: "Zoom In", value: "zoom-in" },
+                                        {
+                                            label: "Zoom Out",
+                                            value: "zoom-out",
+                                        },
+                                    ]}
+                                    onChange={(value) =>
+                                        setAttributes({ animationName: value })
+                                    }
+                                />
+                                <RangeControl
+                                    label="Duration (ms)"
+                                    value={animationDuration || 1000}
+                                    onChange={(value) =>
+                                        setAttributes({
+                                            animationDuration: value || 1000,
+                                        })
+                                    }
+                                    min={100}
+                                    max={3000}
+                                    step={50}
+                                />
+                                <RangeControl
+                                    label="Delay (ms)"
+                                    value={animationDelay || 0}
+                                    onChange={(value) =>
+                                        setAttributes({
+                                            animationDelay: value || 0,
+                                        })
+                                    }
+                                    min={0}
+                                    max={3000}
+                                    step={50}
+                                />
+                            </>
+                        )}
+
+                        <div
+                            style={{
+                                marginTop: "20px",
+                                paddingTop: "20px",
+                                borderTop: "1px solid #ddd",
+                            }}
+                        >
+                            <ToggleControl
+                                label="Enable Child Animation"
+                                checked={childAnimationEnabled || false}
+                                onChange={(value) => {
+                                    const updates = {
+                                        childAnimationEnabled: value,
+                                    };
+                                    if (value && !animationName) {
+                                        updates.animationName = "fade-up";
+                                        updates.animationDuration = 1000;
+                                        updates.childAnimationInitialDelay = 0;
+                                        updates.childAnimationInterval = 0;
+                                    }
+                                    setAttributes(updates);
+                                }}
+                            />
+
+                            {childAnimationEnabled && (
+                                <>
+                                    <RangeControl
+                                        label="Initial Delay (ms)"
+                                        value={childAnimationInitialDelay || 0}
+                                        onChange={(value) =>
+                                            setAttributes({
+                                                childAnimationInitialDelay:
+                                                    value || 0,
+                                            })
+                                        }
+                                        min={0}
+                                        max={3000}
+                                        step={50}
+                                    />
+                                    <RangeControl
+                                        label="Delay Interval (ms)"
+                                        value={childAnimationInterval || 0}
+                                        onChange={(value) =>
+                                            setAttributes({
+                                                childAnimationInterval:
+                                                    value || 0,
+                                            })
+                                        }
+                                        min={0}
+                                        max={1000}
+                                        step={50}
+                                    />
+                                    <p
+                                        style={{
+                                            fontSize: "12px",
+                                            color: "#666",
+                                            marginTop: "10px",
+                                        }}
+                                    >
+                                        Child animation will apply to each
+                                        accordion item with staggered delays.
+                                    </p>
+                                </>
+                            )}
+                        </div>
                     </PanelBody>
 
                     <PanelBody title="Style Settings" initialOpen={false}>

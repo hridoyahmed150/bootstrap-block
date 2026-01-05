@@ -29,6 +29,13 @@ export const generateAccordionHTML = (attributes) => {
         imageHeightClosed = "",
         titleFontSize = "",
         titlePadding = "",
+        animationEnabled = false,
+        animationName = "",
+        animationDuration = 1000,
+        animationDelay = 0,
+        childAnimationEnabled = false,
+        childAnimationInitialDelay = 0,
+        childAnimationInterval = 0,
         showBorder = false,
         borderWidth = "",
         borderColor = "",
@@ -59,8 +66,24 @@ export const generateAccordionHTML = (attributes) => {
                 const itemId = `${uniqueId}-item-${index}`;
                 const isOpen = item.isOpen ? "open" : "";
 
+                // Build AOS attributes for child animation
+                let aosAttributes = "";
+                if (childAnimationEnabled) {
+                    const childAnimationName = animationName || "fade-up";
+                    const childDuration = animationDuration || 1000;
+                    const delay = childAnimationInitialDelay + (index * childAnimationInterval);
+                    
+                    aosAttributes = ` data-aos="${childAnimationName}"`;
+                    if (childDuration > 0) {
+                        aosAttributes += ` data-aos-duration="${childDuration}"`;
+                    }
+                    if (delay > 0) {
+                        aosAttributes += ` data-aos-delay="${delay}"`;
+                    }
+                }
+
                 return `
-				<div class="bs-accordion-item ${isOpen}" data-index="${index}">
+				<div class="bs-accordion-item ${isOpen}" data-index="${index}"${aosAttributes}>
 					${
                         item.imageUrl
                             ? `<div class="bs-accordion-image-wrapper">
