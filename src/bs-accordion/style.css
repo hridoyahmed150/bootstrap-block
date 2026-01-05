@@ -268,7 +268,7 @@
 
 .bs-accordion .bs-accordion-header {
     width: 100%;
-    padding: 16px 20px 0px;
+    padding: var(--bs-accordion-title-padding, 16px 20px 0px);
     border: none;
     outline: 0;
     text-align: left;

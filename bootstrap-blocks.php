@@ -112,6 +112,17 @@ function bootstrap_blocks_enqueue_scripts()
         wp_enqueue_style('bootstrap-blocks-bs-accordion-style');
     }
 
+    // Enqueue AOS if data-aos attributes exist (frontend only)
+    if (!is_admin()) {
+        global $post;
+        if ($post && (strpos($post->post_content, 'data-aos=') !== false || strpos($post->post_content, 'animationEnabled') !== false) && !wp_script_is('aos', 'enqueued')) {
+            $plugin_url = plugin_dir_url(__FILE__);
+            wp_enqueue_style('aos', $plugin_url . 'assets/aos/aos.css', array(), '2.3.4');
+            wp_enqueue_script('aos', $plugin_url . 'assets/aos/aos.js', array(), '2.3.4', true);
+            wp_add_inline_script('aos', 'document.addEventListener("DOMContentLoaded",function(){if(typeof AOS!=="undefined")AOS.init({once:true})});');
+        }
+    }
+
     // Add global JavaScript for Read More functionality and Map initialization
     wp_add_inline_script('jquery', '
         document.addEventListener("DOMContentLoaded", function() {

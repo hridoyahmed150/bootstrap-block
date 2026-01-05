@@ -28,6 +28,7 @@ export const generateAccordionHTML = (attributes) => {
         imageWidth = "",
         imageHeightClosed = "",
         titleFontSize = "",
+        titlePadding = "",
         showBorder = false,
         borderWidth = "",
         borderColor = "",
@@ -123,6 +124,7 @@ export const generateAccordionHTML = (attributes) => {
             <style>
                 #${uniqueId} {
                     --bs-accordion-item-padding: ${itemPadding || "unset"};
+                    --bs-accordion-title-padding: ${titlePadding || "unset"};
                     ${
                         iconColor
                             ? `--bs-accordion-icon-color: ${iconColor};`
@@ -290,12 +292,11 @@ export const generateAccordionHTML = (attributes) => {
 				#${uniqueId} .bs-accordion-item .bs-accordion-header {
 					background-color: ${backgroundColor} !important;
 					color: ${textColor} !important;
-					transition: all 0.3s ease !important;
 				}
 				#${uniqueId} .bs-accordion-item {
 					background-color: ${backgroundColor} !important;
 					color: ${textColor} !important;
-					
+					transition: all 0.3s ease !important;
 				}
 				
 				#${uniqueId} .bs-accordion-title,
@@ -309,13 +310,11 @@ export const generateAccordionHTML = (attributes) => {
 				
 				#${uniqueId} .bs-accordion-item.open {
 					background-color: ${activeBackgroundColor} !important;
-					transition: all 0.3s ease !important;
 				}
 				
 				#${uniqueId} .bs-accordion-item.open .bs-accordion-header {
 					background-color: ${activeBackgroundColor} !important;
 					color: ${activeTextColor} !important;
-					transition: all 0.3s ease !important;
 				}
 				
 				#${uniqueId} .bs-accordion-content {
@@ -327,7 +326,6 @@ export const generateAccordionHTML = (attributes) => {
 				#${uniqueId} .bs-accordion-item.open .bs-accordion-content {
 					background-color: ${activeBackgroundColor} !important;
 					color: ${activeTextColor} !important;
-					transition: all 0.3s ease !important;
 				}
 				
 				#${uniqueId} .bs-accordion-icon {
