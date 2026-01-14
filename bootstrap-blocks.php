@@ -119,7 +119,7 @@ function bootstrap_blocks_enqueue_scripts()
             $plugin_url = plugin_dir_url(__FILE__);
             wp_enqueue_style('aos', $plugin_url . 'assets/aos/aos.css', array(), '2.3.4');
             wp_enqueue_script('aos', $plugin_url . 'assets/aos/aos.js', array(), '2.3.4', true);
-            wp_add_inline_script('aos', 'document.addEventListener("DOMContentLoaded",function(){if(typeof AOS!=="undefined")AOS.init({once:true})});');
+            wp_add_inline_script('aos', 'document.addEventListener("DOMContentLoaded",function(){if(typeof AOS!=="undefined")AOS.init({once:true,offset:0,delay:0})});');
         }
     }
 

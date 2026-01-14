@@ -71,8 +71,10 @@ export const generateAccordionHTML = (attributes) => {
                 if (childAnimationEnabled) {
                     const childAnimationName = animationName || "fade-up";
                     const childDuration = animationDuration || 1000;
-                    const delay = childAnimationInitialDelay + (index * childAnimationInterval);
-                    
+                    const delay =
+                        childAnimationInitialDelay +
+                        index * childAnimationInterval;
+
                     aosAttributes = ` data-aos="${childAnimationName}"`;
                     if (childDuration > 0) {
                         aosAttributes += ` data-aos-duration="${childDuration}"`;
@@ -319,7 +321,6 @@ export const generateAccordionHTML = (attributes) => {
 				#${uniqueId} .bs-accordion-item {
 					background-color: ${backgroundColor} !important;
 					color: ${textColor} !important;
-					transition: all 0.3s ease !important;
 				}
 				
 				#${uniqueId} .bs-accordion-title,
@@ -329,6 +330,7 @@ export const generateAccordionHTML = (attributes) => {
                             ? `font-size: var(--bs-accordion-title-font-size) !important;`
                             : ""
                     }
+					transition: font-size 0.3s ease !important;
 				}
 				
 				#${uniqueId} .bs-accordion-item.open {
@@ -343,7 +345,7 @@ export const generateAccordionHTML = (attributes) => {
 				#${uniqueId} .bs-accordion-content {
 					background-color: ${backgroundColor} !important;
 					color: ${textColor} !important;
-					transition: all 0.3s ease !important;
+					transition: background-color 0.3s ease !important;
 				}
 				
 				#${uniqueId} .bs-accordion-item.open .bs-accordion-content {
@@ -568,15 +570,38 @@ export const generateAccordionHTML = (attributes) => {
 										}, 400);
 									});
 								}
-							});
 						});
-						
-						// Set initial heights and icons after a short delay
-						setTimeout(() => {
-							setInitialHeights();
-							updateIcons();
-							updateImageHeights();
-						}, 100);
+					});
+					
+					// Prevent clicks on interactive elements inside accordion body from toggling accordion
+					const bodies = accordion.querySelectorAll('.bs-accordion-body');
+					bodies.forEach(body => {
+						body.addEventListener('click', function(e) {
+							// Stop propagation for buttons, links, form elements, and other interactive elements
+							const target = e.target;
+							const isInteractive = target.tagName === 'BUTTON' || 
+								target.tagName === 'A' || 
+								target.tagName === 'INPUT' || 
+								target.tagName === 'SELECT' || 
+								target.tagName === 'TEXTAREA' ||
+								target.closest('button') ||
+								target.closest('a') ||
+								target.closest('input') ||
+								target.closest('select') ||
+								target.closest('textarea');
+							
+							if (isInteractive) {
+								e.stopPropagation();
+							}
+						});
+					});
+					
+					// Set initial heights and icons after a short delay
+					setTimeout(() => {
+						setInitialHeights();
+						updateIcons();
+						updateImageHeights();
+					}, 100);
 					}
 					
 					// Initialize when DOM is ready - multiple ways to ensure it runs
