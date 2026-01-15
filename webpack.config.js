@@ -12,6 +12,7 @@ module.exports = {
         "bs-service-area": "./src/bs-service-area/index.js",
         "bs-wrapper": "./src/bs-wrapper/index.js",
         "bs-video": "./src/bs-video/index.js",
+        "bs-video-background": "./src/bs-video-background/index.js",
         "bs-feature-cards": "./src/bs-feature-cards/index.js",
     },
     output: {

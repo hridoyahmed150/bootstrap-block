@@ -121,6 +121,32 @@ function bootstrap_blocks_enqueue_scripts()
             wp_enqueue_script('aos', $plugin_url . 'assets/aos/aos.js', array(), '2.3.4', true);
             wp_add_inline_script('aos', 'document.addEventListener("DOMContentLoaded",function(){if(typeof AOS!=="undefined")AOS.init({once:true,offset:0,delay:0})});');
         }
+
+        // Enqueue Jarallax if bs-video-background block is used
+        if ($post && has_block('bootstrap-blocks/bs-video-background', $post)) {
+            // Register and enqueue Jarallax from CDN
+            if (!wp_script_is('jarallax', 'registered')) {
+                wp_register_script('jarallax', 'https://cdn.jsdelivr.net/npm/jarallax@2/dist/jarallax.min.js', array(), '2.2.1', true);
+                wp_register_script('jarallax-video', 'https://cdn.jsdelivr.net/npm/jarallax@2/dist/jarallax-video.min.js', array('jarallax'), '2.2.1', true);
+                wp_register_style('jarallax', 'https://cdn.jsdelivr.net/npm/jarallax@2/dist/jarallax.css', array(), '2.2.1');
+            }
+            wp_enqueue_script('jarallax');
+            wp_enqueue_script('jarallax-video');
+            wp_enqueue_style('jarallax');
+
+            // Initialize Jarallax after DOM is ready
+            wp_add_inline_script('jarallax-video', '
+                document.addEventListener("DOMContentLoaded", function() {
+                    if (typeof jarallax !== "undefined") {
+                        // Initialize all elements with data-jarallax attribute
+                        const videoElements = document.querySelectorAll(".bs-video-background[data-jarallax]");
+                        if (videoElements.length > 0) {
+                            jarallax(videoElements);
+                        }
+                    }
+                });
+            ');
+        }
     }
 
     // Add global JavaScript for Read More functionality and Map initialization
@@ -421,6 +447,36 @@ function bootstrap_blocks_init()
         plugin_dir_url(__FILE__) . 'build/style-bs-video.css',
         array(),
         file_exists(plugin_dir_path(__FILE__) . 'build/style-bs-video.css') ? filemtime(plugin_dir_path(__FILE__) . 'build/style-bs-video.css') : '1.0.0'
+    );
+
+    // Register BS Video Background block
+    $bs_video_background_dir = plugin_dir_path(__FILE__) . 'build/bs-video-background/';
+    $bs_video_background_url = plugin_dir_url(__FILE__) . 'build/bs-video-background/';
+
+    register_block_type($bs_video_background_dir, [
+        'editor_script' => 'bootstrap-blocks-bs-video-background-editor',
+        'style' => 'bootstrap-blocks-bs-video-background-style',
+    ]);
+
+    wp_register_script(
+        'bootstrap-blocks-bs-video-background-editor',
+        $bs_video_background_url . 'index.js',
+        array(
+            'wp-blocks',
+            'wp-element',
+            'wp-block-editor',
+            'wp-components',
+            'wp-i18n',
+            'wp-data'
+        ),
+        file_exists($bs_video_background_dir . 'index.js') ? filemtime($bs_video_background_dir . 'index.js') : '1.0.0'
+    );
+
+    wp_register_style(
+        'bootstrap-blocks-bs-video-background-style',
+        plugin_dir_url(__FILE__) . 'build/style-bs-video-background.css',
+        array(),
+        file_exists(plugin_dir_path(__FILE__) . 'build/style-bs-video-background.css') ? filemtime(plugin_dir_path(__FILE__) . 'build/style-bs-video-background.css') : '1.0.0'
     );
 
     // Register BS Feature Cards block
