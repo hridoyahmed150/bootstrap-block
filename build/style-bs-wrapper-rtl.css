@@ -1,0 +1,61 @@
+/*!******************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[2].use[2]!./src/bs-wrapper/style.css ***!
+  \******************************************************************************************************************************************************************************/
+/* BS Wrapper Block Styles */
+
+.wp-block-emg-bs-wrapper {
+    border: 1px dashed #28a745;
+    padding: 15px 15px 30px 15px;
+    margin-bottom: 12px;
+    background: rgba(248, 255, 248, .2);
+    border-radius: 4px;
+}
+
+.wp-block-emg-bs-wrapper .emg-bs-card {
+    min-height: 20px;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    background: #ffffff;
+    padding: 20px;
+}
+
+/* Responsive spacing tabs */
+.bootstrap-spacing-tabs .components-tab-panel__tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px;
+    margin-bottom: 12px;
+}
+
+.bootstrap-spacing-tabs .components-tab-panel__tabs button {
+    margin-left: 0;
+    padding: 4px 6px;
+    font-size: 11px;
+    min-width: auto;
+    flex: 1;
+    text-align: center;
+    border-radius: 3px;
+    border-bottom: 2px solid transparent;
+}
+
+.bootstrap-spacing-tabs .components-tab-panel__tabs button.active-tab {
+    border-bottom: 2px solid #28a745;
+    background-color: transparent;
+    color: #28a745;
+    font-weight: 600;
+}
+
+/* InnerBlocks styling */
+.wp-block-emg-bs-wrapper .block-editor-block-list__layout {
+    margin: 0;
+}
+
+.wp-block-emg-bs-wrapper .block-editor-block-list__layout > * {
+    margin-top: 0;
+    margin-bottom: 8px;
+}
+
+.wp-block-emg-bs-wrapper .block-editor-block-list__layout > *:last-child {
+    margin-bottom: 0;
+}
+

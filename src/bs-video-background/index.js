@@ -14,6 +14,7 @@ import {
 } from "@wordpress/components";
 import { MediaUpload, MediaUploadCheck } from "@wordpress/block-editor";
 import { useState, useEffect } from "@wordpress/element";
+import { useSelect } from "@wordpress/data";
 import "./style.css";
 
 /**
@@ -71,6 +72,7 @@ registerBlockType("bootstrap-blocks/bs-video-background", {
             videoLoop = true,
             videoAlwaysPlay = false,
             videoMobile = false,
+            videoPlayOnlyVisible = false,
             parallax = "",
             parallaxSpeed = 0.5,
             parallaxMobile = false,
@@ -104,6 +106,36 @@ registerBlockType("bootstrap-blocks/bs-video-background", {
             hasVideo && parsedVideo.isValid
                 ? getEmbedURL(parsedVideo.provider, parsedVideo.videoId)
                 : null;
+
+        // Get poster image URL for sidebar preview
+        const posterImageUrl = useSelect(
+            (select) => {
+                if (!videoPoster || videoPoster === "") {
+                    return null;
+                }
+
+                // Parse media ID (handle both string and number)
+                let mediaId = null;
+                if (
+                    typeof videoPoster === "string" &&
+                    /^\d+$/.test(videoPoster)
+                ) {
+                    mediaId = parseInt(videoPoster, 10);
+                } else if (typeof videoPoster === "number") {
+                    mediaId = videoPoster;
+                }
+
+                if (mediaId && typeof mediaId === "number") {
+                    const media = select("core").getMedia(mediaId);
+                    if (media && media.source_url) {
+                        return media.source_url;
+                    }
+                }
+
+                return null;
+            },
+            [videoPoster]
+        );
 
         // Build editor styles
         const editorStyles = {
@@ -141,19 +173,89 @@ registerBlockType("bootstrap-blocks/bs-video-background", {
                         />
 
                         {videoType === "yt_vm_video" && (
-                            <TextControl
-                                label="Video URL"
-                                value={videoURL}
-                                onChange={(value) =>
-                                    setAttributes({ videoURL: value })
-                                }
-                                help={
-                                    parsedVideo.isValid
-                                        ? `Valid ${parsedVideo.provider} URL`
-                                        : "Enter YouTube or Vimeo URL. Examples: https://www.youtube.com/watch?v=VIDEO_ID or https://vimeo.com/VIDEO_ID"
-                                }
-                                placeholder="https://www.youtube.com/watch?v=..."
-                            />
+                            <>
+                                <TextControl
+                                    label="Video URL"
+                                    value={videoURL}
+                                    onChange={(value) =>
+                                        setAttributes({ videoURL: value })
+                                    }
+                                    help={
+                                        parsedVideo.isValid
+                                            ? `Valid ${parsedVideo.provider} URL`
+                                            : "Enter YouTube or Vimeo URL. Examples: https://www.youtube.com/watch?v=VIDEO_ID or https://vimeo.com/VIDEO_ID"
+                                    }
+                                    placeholder="https://www.youtube.com/watch?v=..."
+                                />
+
+                                <MediaUploadCheck>
+                                    <div style={{ marginTop: "15px" }}>
+                                        <p>Poster Image (Optional)</p>
+                                        {posterImageUrl && (
+                                            <div
+                                                style={{
+                                                    marginBottom: "10px",
+                                                    border: "1px solid #ddd",
+                                                    borderRadius: "4px",
+                                                    overflow: "hidden",
+                                                }}
+                                            >
+                                                <img
+                                                    src={posterImageUrl}
+                                                    alt="Poster preview"
+                                                    style={{
+                                                        width: "100%",
+                                                        height: "auto",
+                                                        maxHeight: "150px",
+                                                        objectFit: "contain",
+                                                        display: "block",
+                                                    }}
+                                                />
+                                            </div>
+                                        )}
+                                        <div
+                                            style={{
+                                                display: "flex",
+                                                gap: "8px",
+                                            }}
+                                        >
+                                            <MediaUpload
+                                                onSelect={(media) =>
+                                                    setAttributes({
+                                                        videoPoster: media.id
+                                                            ? String(media.id)
+                                                            : "",
+                                                    })
+                                                }
+                                                allowedTypes={["image"]}
+                                                render={({ open }) => (
+                                                    <Button
+                                                        onClick={open}
+                                                        isSecondary
+                                                    >
+                                                        {videoPoster
+                                                            ? "Replace Poster"
+                                                            : "Select Poster Image"}
+                                                    </Button>
+                                                )}
+                                            />
+                                            {videoPoster && (
+                                                <Button
+                                                    onClick={() =>
+                                                        setAttributes({
+                                                            videoPoster: "",
+                                                        })
+                                                    }
+                                                    isDestructive
+                                                    isSmall
+                                                >
+                                                    Remove
+                                                </Button>
+                                            )}
+                                        </div>
+                                    </div>
+                                </MediaUploadCheck>
+                            </>
                         )}
 
                         {videoType === "video" && (
@@ -266,38 +368,68 @@ registerBlockType("bootstrap-blocks/bs-video-background", {
                                     </div>
                                     <div style={{ marginTop: "15px" }}>
                                         <p>Poster Image (Optional)</p>
-                                        <MediaUpload
-                                            onSelect={(media) =>
-                                                setAttributes({
-                                                    videoPoster: media.id,
-                                                })
-                                            }
-                                            allowedTypes={["image"]}
-                                            render={({ open }) => (
-                                                <Button
-                                                    onClick={open}
-                                                    isSecondary
-                                                >
-                                                    {videoPoster
-                                                        ? "Replace Poster"
-                                                        : "Select Poster Image"}
-                                                </Button>
-                                            )}
-                                        />
-                                        {videoPoster && (
-                                            <Button
-                                                onClick={() =>
+                                        {posterImageUrl && (
+                                            <div
+                                                style={{
+                                                    marginBottom: "10px",
+                                                    border: "1px solid #ddd",
+                                                    borderRadius: "4px",
+                                                    overflow: "hidden",
+                                                }}
+                                            >
+                                                <img
+                                                    src={posterImageUrl}
+                                                    alt="Poster preview"
+                                                    style={{
+                                                        width: "100%",
+                                                        height: "auto",
+                                                        maxHeight: "150px",
+                                                        objectFit: "contain",
+                                                        display: "block",
+                                                    }}
+                                                />
+                                            </div>
+                                        )}
+                                        <div
+                                            style={{
+                                                display: "flex",
+                                                gap: "8px",
+                                            }}
+                                        >
+                                            <MediaUpload
+                                                onSelect={(media) =>
                                                     setAttributes({
-                                                        videoPoster: "",
+                                                        videoPoster: media.id
+                                                            ? String(media.id)
+                                                            : "",
                                                     })
                                                 }
-                                                isDestructive
-                                                isSmall
-                                                style={{ marginLeft: "10px" }}
-                                            >
-                                                Remove
-                                            </Button>
-                                        )}
+                                                allowedTypes={["image"]}
+                                                render={({ open }) => (
+                                                    <Button
+                                                        onClick={open}
+                                                        isSecondary
+                                                    >
+                                                        {videoPoster
+                                                            ? "Replace Poster"
+                                                            : "Select Poster Image"}
+                                                    </Button>
+                                                )}
+                                            />
+                                            {videoPoster && (
+                                                <Button
+                                                    onClick={() =>
+                                                        setAttributes({
+                                                            videoPoster: "",
+                                                        })
+                                                    }
+                                                    isDestructive
+                                                    isSmall
+                                                >
+                                                    Remove
+                                                </Button>
+                                            )}
+                                        </div>
                                     </div>
                                 </MediaUploadCheck>
                             </>
@@ -307,6 +439,20 @@ registerBlockType("bootstrap-blocks/bs-video-background", {
                     {/* Video Controls */}
                     {hasVideo && (
                         <PanelBody title="Video Controls" initialOpen={false}>
+                            <ToggleControl
+                                label="Play Only When Visible"
+                                checked={videoPlayOnlyVisible || false}
+                                onChange={(value) =>
+                                    setAttributes({
+                                        videoPlayOnlyVisible: value,
+                                    })
+                                }
+                                help={
+                                    videoPlayOnlyVisible
+                                        ? "Video will only play when it's visible on screen"
+                                        : "Video will play immediately on page load (default)"
+                                }
+                            />
                             <RangeControl
                                 label="Start Time (seconds)"
                                 value={videoStartTime || 0}

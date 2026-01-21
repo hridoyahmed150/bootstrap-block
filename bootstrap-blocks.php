@@ -133,19 +133,6 @@ function bootstrap_blocks_enqueue_scripts()
             wp_enqueue_script('jarallax');
             wp_enqueue_script('jarallax-video');
             wp_enqueue_style('jarallax');
-
-            // Initialize Jarallax after DOM is ready
-            wp_add_inline_script('jarallax-video', '
-                document.addEventListener("DOMContentLoaded", function() {
-                    if (typeof jarallax !== "undefined") {
-                        // Initialize all elements with data-jarallax attribute
-                        const videoElements = document.querySelectorAll(".bs-video-background[data-jarallax]");
-                        if (videoElements.length > 0) {
-                            jarallax(videoElements);
-                        }
-                    }
-                });
-            ');
         }
     }
 

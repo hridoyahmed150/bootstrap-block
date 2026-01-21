@@ -66,9 +66,13 @@
     },
     "videoAlwaysPlay": {
       "type": "boolean",
-      "default": false
+      "default": true
     },
     "videoMobile": {
+      "type": "boolean",
+      "default": false
+    },
+    "videoPlayOnlyVisible": {
       "type": "boolean",
       "default": false
     },

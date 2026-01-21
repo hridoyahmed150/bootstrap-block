@@ -1,1 +1,116 @@
-.bs-video-background{overflow:hidden;position:relative}.bs-video-background-full-height{align-items:center;display:flex;min-height:100vh}.bs-video-background-overlay{bottom:0;left:0;pointer-events:none;position:absolute;right:0;top:0;z-index:1}.bs-video-background-content{position:relative;z-index:2}.bs-video-background-editor{border:2px dashed #ccc;min-height:300px;overflow:hidden;position:relative}.bs-video-background-editor:focus{border-color:#0073aa}.bs-video-background-editor iframe{height:56.25vw;left:50%;min-height:100%;min-width:100%;-o-object-fit:cover;object-fit:cover;position:absolute;top:50%;transform:translate(-50%,-50%) scale(1.2);transform-origin:center center;width:177.77777778vh}.bs-video-background-editor>div:first-child{height:100%;left:0;overflow:hidden;position:absolute;top:0;width:100%}
+/*!***************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[2].use[2]!./src/bs-video-background/style.css ***!
+  \***************************************************************************************************************************************************************************************/
+/* BS Video Background Block Styles */
+
+.wp-block-bootstrap-blocks-bs-video-background,
+.bs-video-background {
+    position: relative;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.bs-video-background-full-height {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+}
+
+/* Wrap div - contains overlay and inner (like AWB's nk-awb-wrap) */
+.bs-video-background-wrap {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -99;
+    overflow: hidden;
+}
+
+/* Overlay - same z-index as wrap (like AWB) */
+.bs-video-background-overlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -99;
+    pointer-events: none;
+}
+
+/* Content - sibling of wrap, positioned relative (like AWB's nk-awb-wrap-content) */
+.bs-video-background-content {
+    position: relative;
+    z-index: 1; /* Above video background */
+}
+
+/* Ensure Jarallax container is behind overlay */
+.bs-video-background .jarallax-container {
+    z-index: -100 !important;
+}
+
+.bs-video-background .jarallax-video {
+    z-index: -101 !important;
+}
+
+/* Prevent parallax movement - force absolute positioning (AWB-style) */
+.bs-video-background-wrap .jarallax-container,
+.bs-video-background-wrap .jarallax-video {
+    position: absolute !important;
+    transform: none !important;
+    will-change: auto !important;
+}
+
+.bs-video-background-wrap .jarallax-container {
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    margin: 0 !important;
+}
+
+/* Remove any translate3d transforms that Jarallax might add */
+.bs-video-background-wrap .jarallax-container *,
+.bs-video-background-wrap .jarallax-video {
+    transform: none !important;
+}
+
+/* Editor Styles */
+.bs-video-background-editor {
+    border: 2px dashed #ccc;
+    min-height: 300px;
+    position: relative;
+    overflow: hidden;
+}
+
+.bs-video-background-editor:focus {
+    border-color: #0073aa;
+}
+
+/* Video preview in editor */
+.bs-video-background-editor iframe {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: 177.77777778vh; /* 16:9 aspect ratio */
+    height: 56.25vw; /* 16:9 aspect ratio */
+    transform: translate(-50%, -50%) scale(1.2);
+    transform-origin: center center;
+    -o-object-fit: cover;
+       object-fit: cover;
+}
+
+/* Ensure video covers the container */
+.bs-video-background-editor > div:first-child {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+
+/*# sourceMappingURL=style-bs-video-background.css.map*/
