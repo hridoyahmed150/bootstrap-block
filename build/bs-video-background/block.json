@@ -6,13 +6,11 @@
   "title": "BS Video Background",
   "category": "media",
   "icon": "video-alt3",
-  "description": "Video background block with YouTube/Vimeo and local video support, parallax effects, and overlay options.",
+  "description": "Video background block with YouTube support, autoplay, and overlay options.",
   "keywords": [
     "video",
     "background",
-    "youtube",
-    "vimeo",
-    "parallax"
+    "youtube"
   ],
   "textdomain": "bootstrap-blocks",
   "supports": {
@@ -24,23 +22,7 @@
     ]
   },
   "attributes": {
-    "videoType": {
-      "type": "string",
-      "default": "yt_vm_video"
-    },
     "videoURL": {
-      "type": "string",
-      "default": ""
-    },
-    "videoMp4": {
-      "type": "string",
-      "default": ""
-    },
-    "videoWebm": {
-      "type": "string",
-      "default": ""
-    },
-    "videoOgv": {
       "type": "string",
       "default": ""
     },
@@ -68,37 +50,9 @@
       "type": "boolean",
       "default": true
     },
-    "videoMobile": {
-      "type": "boolean",
-      "default": false
-    },
-    "videoPlayOnlyVisible": {
-      "type": "boolean",
-      "default": false
-    },
-    "parallax": {
-      "type": "string",
-      "default": ""
-    },
-    "parallaxSpeed": {
+    "minHeight": {
       "type": "number",
-      "default": 0.5
-    },
-    "parallaxMobile": {
-      "type": "boolean",
-      "default": false
-    },
-    "mouseParallax": {
-      "type": "boolean",
-      "default": false
-    },
-    "mouseParallaxSize": {
-      "type": "number",
-      "default": 30
-    },
-    "mouseParallaxSpeed": {
-      "type": "number",
-      "default": 10000
+      "default": 400
     },
     "overlayColor": {
       "type": "string",
@@ -107,14 +61,6 @@
     "overlayOpacity": {
       "type": "number",
       "default": 0
-    },
-    "fullHeight": {
-      "type": "boolean",
-      "default": false
-    },
-    "fullHeightAlign": {
-      "type": "string",
-      "default": "center"
     },
     "backgroundColor": {
       "type": "string",

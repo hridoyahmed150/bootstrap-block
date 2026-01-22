@@ -15,13 +15,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
-/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _style_css__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./style.css */ "./src/bs-video-background/style.css");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _style_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./style.css */ "./src/bs-video-background/style.css");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__);
 
 
 
@@ -29,382 +27,190 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-/**
- * Parse video URL and extract provider and video ID
- */
-
-function parseVideoURL(url) {
-  if (!url || !url.trim()) {
-    return {
-      isValid: false
-    };
-  }
-  const trimmedUrl = url.trim();
-
-  // YouTube URL patterns
-  const youtubeMatch = trimmedUrl.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]+)/);
-  if (youtubeMatch) {
-    return {
-      isValid: true,
-      provider: "youtube",
-      videoId: youtubeMatch[1]
-    };
-  }
-
-  // Vimeo URL patterns
-  const vimeoMatch = trimmedUrl.match(/vimeo\.com\/(?:.*\/)?(\d+)/);
-  if (vimeoMatch) {
-    return {
-      isValid: true,
-      provider: "vimeo",
-      videoId: vimeoMatch[1]
-    };
-  }
-  return {
-    isValid: false
-  };
-}
-
-/**
- * Get embed URL for preview (editor preview with autoplay and muted for better UX)
- */
-function getEmbedURL(provider, videoId) {
-  if (provider === "youtube" && videoId) {
-    return `https://www.youtube.com/embed/${videoId}?rel=0&controls=0&modestbranding=1&autoplay=1&mute=1&loop=1&playlist=${videoId}&enablejsapi=1`;
-  }
-  if (provider === "vimeo" && videoId) {
-    return `https://player.vimeo.com/video/${videoId}?autoplay=1&muted=1&loop=1&background=1`;
-  }
-  return null;
-}
 (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__.registerBlockType)("bootstrap-blocks/bs-video-background", {
   edit({
     attributes,
     setAttributes
   }) {
     const {
-      videoType = "yt_vm_video",
       videoURL = "",
-      videoMp4 = "",
-      videoWebm = "",
-      videoOgv = "",
       videoPoster = "",
       videoStartTime = 0,
       videoEndTime = 0,
       videoVolume = 0,
       videoLoop = true,
-      videoAlwaysPlay = false,
-      videoMobile = false,
-      videoPlayOnlyVisible = false,
-      parallax = "",
-      parallaxSpeed = 0.5,
-      parallaxMobile = false,
-      mouseParallax = false,
-      mouseParallaxSize = 30,
-      mouseParallaxSpeed = 10000,
+      videoAlwaysPlay = true,
+      minHeight = 400,
       overlayColor = "",
       overlayOpacity = 0,
-      fullHeight = false,
-      fullHeightAlign = "center",
       backgroundColor = "",
       padding = "",
       margin = ""
     } = attributes;
-    const [parsedVideo, setParsedVideo] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.useState)(() => parseVideoURL(videoURL));
-
-    // Update parsed video when videoURL changes
-    (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.useEffect)(() => {
-      const parsed = parseVideoURL(videoURL);
-      setParsedVideo(parsed);
-    }, [videoURL]);
-    const hasVideo = videoType === "yt_vm_video" && videoURL && parsedVideo.isValid || videoType === "video" && (videoMp4 || videoWebm || videoOgv);
-    const embedURL = hasVideo && parsedVideo.isValid ? getEmbedURL(parsedVideo.provider, parsedVideo.videoId) : null;
 
     // Get poster image URL for sidebar preview
-    const posterImageUrl = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_4__.useSelect)(select => {
-      if (!videoPoster || videoPoster === "") {
-        return null;
-      }
-
-      // Parse media ID (handle both string and number)
-      let mediaId = null;
-      if (typeof videoPoster === "string" && /^\d+$/.test(videoPoster)) {
-        mediaId = parseInt(videoPoster, 10);
-      } else if (typeof videoPoster === "number") {
-        mediaId = videoPoster;
-      }
-      if (mediaId && typeof mediaId === "number") {
-        const media = select("core").getMedia(mediaId);
-        if (media && media.source_url) {
-          return media.source_url;
+    const posterImageUrl = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_3__.useSelect)(select => {
+      try {
+        if (!videoPoster || videoPoster === "") {
+          return null;
         }
+        let mediaId = null;
+        if (typeof videoPoster === "string" && /^\d+$/.test(videoPoster)) {
+          mediaId = parseInt(videoPoster, 10);
+        } else if (typeof videoPoster === "number") {
+          mediaId = videoPoster;
+        }
+        if (mediaId && typeof mediaId === "number") {
+          const media = select("core").getMedia(mediaId);
+          if (media && media.source_url) {
+            return media.source_url;
+          }
+        }
+      } catch (e) {
+        console.error("Error fetching poster image URL:", e);
       }
       return null;
     }, [videoPoster]);
 
     // Build editor styles
     const editorStyles = {
-      minHeight: fullHeight ? "400px" : "300px",
+      minHeight: minHeight + "px",
       backgroundColor: backgroundColor || "#f0f0f0",
       position: "relative",
       padding: padding || "20px",
       margin: margin || "",
       overflow: "hidden"
     };
+
+    // Parse video URL to get video ID for preview
+    const parseVideoURL = url => {
+      if (!url || !url.trim()) {
+        return {
+          isValid: false
+        };
+      }
+      const trimmedUrl = url.trim();
+      const youtubeMatch = trimmedUrl.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
+      if (youtubeMatch) {
+        return {
+          isValid: true,
+          videoId: youtubeMatch[1]
+        };
+      }
+      return {
+        isValid: false
+      };
+    };
+    const parsedVideo = parseVideoURL(videoURL);
+    const hasVideo = parsedVideo.isValid;
+    const embedURL = hasVideo ? `https://www.youtube.com/embed/${parsedVideo.videoId}?autoplay=1&mute=1&loop=1&controls=0&modestbranding=1&rel=0&playsinline=1&playlist=${parsedVideo.videoId}` : null;
     const blockProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps)({
       className: "bs-video-background-editor",
       style: editorStyles
     });
-    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.Fragment, {
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.InspectorControls, {
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.Fragment, {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.InspectorControls, {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
           title: "Video Settings",
           initialOpen: true,
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
-            label: "Video Type",
-            value: videoType,
-            options: [{
-              label: "YouTube / Vimeo",
-              value: "yt_vm_video"
-            }, {
-              label: "Local Video",
-              value: "video"
-            }],
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+            label: "Video URL",
+            value: videoURL,
             onChange: value => setAttributes({
-              videoType: value
-            })
-          }), videoType === "yt_vm_video" && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.Fragment, {
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
-              label: "Video URL",
-              value: videoURL,
-              onChange: value => setAttributes({
-                videoURL: value
-              }),
-              help: parsedVideo.isValid ? `Valid ${parsedVideo.provider} URL` : "Enter YouTube or Vimeo URL. Examples: https://www.youtube.com/watch?v=VIDEO_ID or https://vimeo.com/VIDEO_ID",
-              placeholder: "https://www.youtube.com/watch?v=..."
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.MediaUploadCheck, {
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+              videoURL: value
+            }),
+            help: "Enter YouTube URL (youtube.com/watch, youtu.be, youtube.com/embed, or youtube.com/shorts)",
+            placeholder: "https://www.youtube.com/watch?v=..."
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.MediaUploadCheck, {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+              style: {
+                marginTop: "15px"
+              },
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
+                children: "Poster Image (Optional)"
+              }), posterImageUrl && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
                 style: {
-                  marginTop: "15px"
+                  marginBottom: "10px",
+                  border: "1px solid #ddd",
+                  borderRadius: "4px",
+                  overflow: "hidden"
                 },
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("p", {
-                  children: "Poster Image (Optional)"
-                }), posterImageUrl && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("img", {
+                  src: posterImageUrl,
+                  alt: "Poster preview",
                   style: {
-                    marginBottom: "10px",
-                    border: "1px solid #ddd",
-                    borderRadius: "4px",
-                    overflow: "hidden"
+                    width: "100%",
+                    height: "auto",
+                    maxHeight: "150px",
+                    objectFit: "contain",
+                    display: "block"
                   },
-                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("img", {
-                    src: posterImageUrl,
-                    alt: "Poster preview",
-                    style: {
-                      width: "100%",
-                      height: "auto",
-                      maxHeight: "150px",
-                      objectFit: "contain",
-                      display: "block"
+                  onError: e => {
+                    e.target.style.display = "none";
+                  }
+                })
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+                style: {
+                  display: "flex",
+                  gap: "8px"
+                },
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.MediaUpload, {
+                  onSelect: media => {
+                    try {
+                      setAttributes({
+                        videoPoster: media.id ? String(media.id) : ""
+                      });
+                    } catch (e) {
+                      console.error("Error setting videoPoster attribute:", e);
                     }
-                  })
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-                  style: {
-                    display: "flex",
-                    gap: "8px"
                   },
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.MediaUpload, {
-                    onSelect: media => setAttributes({
-                      videoPoster: media.id ? String(media.id) : ""
-                    }),
-                    allowedTypes: ["image"],
-                    render: ({
-                      open
-                    }) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
-                      onClick: open,
-                      isSecondary: true,
-                      children: videoPoster ? "Replace Poster" : "Select Poster Image"
-                    })
-                  }), videoPoster && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
-                    onClick: () => setAttributes({
-                      videoPoster: ""
-                    }),
-                    isDestructive: true,
-                    isSmall: true,
-                    children: "Remove"
-                  })]
-                })]
-              })
-            })]
-          }), videoType === "video" && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.Fragment, {
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.MediaUploadCheck, {
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("p", {
-                  children: "Video MP4"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.MediaUpload, {
-                  onSelect: media => setAttributes({
-                    videoMp4: media.id
-                  }),
-                  allowedTypes: ["video"],
+                  allowedTypes: ["image"],
                   render: ({
                     open
-                  }) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+                  }) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
                     onClick: open,
                     isSecondary: true,
-                    children: videoMp4 ? "Replace MP4 Video" : "Select MP4 Video"
+                    children: videoPoster ? "Replace Poster" : "Select Poster Image"
                   })
-                }), videoMp4 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
-                  onClick: () => setAttributes({
-                    videoMp4: ""
-                  }),
-                  isDestructive: true,
-                  isSmall: true,
-                  style: {
-                    marginLeft: "10px"
-                  },
-                  children: "Remove"
-                })]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-                style: {
-                  marginTop: "15px"
-                },
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("p", {
-                  children: "Video WebM (Optional)"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.MediaUpload, {
-                  onSelect: media => setAttributes({
-                    videoWebm: media.id
-                  }),
-                  allowedTypes: ["video"],
-                  render: ({
-                    open
-                  }) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
-                    onClick: open,
-                    isSecondary: true,
-                    children: videoWebm ? "Replace WebM Video" : "Select WebM Video"
-                  })
-                }), videoWebm && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
-                  onClick: () => setAttributes({
-                    videoWebm: ""
-                  }),
-                  isDestructive: true,
-                  isSmall: true,
-                  style: {
-                    marginLeft: "10px"
-                  },
-                  children: "Remove"
-                })]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-                style: {
-                  marginTop: "15px"
-                },
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("p", {
-                  children: "Video OGV (Optional)"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.MediaUpload, {
-                  onSelect: media => setAttributes({
-                    videoOgv: media.id
-                  }),
-                  allowedTypes: ["video"],
-                  render: ({
-                    open
-                  }) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
-                    onClick: open,
-                    isSecondary: true,
-                    children: videoOgv ? "Replace OGV Video" : "Select OGV Video"
-                  })
-                }), videoOgv && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
-                  onClick: () => setAttributes({
-                    videoOgv: ""
-                  }),
-                  isDestructive: true,
-                  isSmall: true,
-                  style: {
-                    marginLeft: "10px"
-                  },
-                  children: "Remove"
-                })]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-                style: {
-                  marginTop: "15px"
-                },
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("p", {
-                  children: "Poster Image (Optional)"
-                }), posterImageUrl && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
-                  style: {
-                    marginBottom: "10px",
-                    border: "1px solid #ddd",
-                    borderRadius: "4px",
-                    overflow: "hidden"
-                  },
-                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("img", {
-                    src: posterImageUrl,
-                    alt: "Poster preview",
-                    style: {
-                      width: "100%",
-                      height: "auto",
-                      maxHeight: "150px",
-                      objectFit: "contain",
-                      display: "block"
+                }), videoPoster && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+                  onClick: () => {
+                    try {
+                      setAttributes({
+                        videoPoster: ""
+                      });
+                    } catch (e) {
+                      console.error("Error removing videoPoster attribute:", e);
                     }
-                  })
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-                  style: {
-                    display: "flex",
-                    gap: "8px"
                   },
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.MediaUpload, {
-                    onSelect: media => setAttributes({
-                      videoPoster: media.id ? String(media.id) : ""
-                    }),
-                    allowedTypes: ["image"],
-                    render: ({
-                      open
-                    }) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
-                      onClick: open,
-                      isSecondary: true,
-                      children: videoPoster ? "Replace Poster" : "Select Poster Image"
-                    })
-                  }), videoPoster && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
-                    onClick: () => setAttributes({
-                      videoPoster: ""
-                    }),
-                    isDestructive: true,
-                    isSmall: true,
-                    children: "Remove"
-                  })]
+                  isDestructive: true,
+                  isSmall: true,
+                  children: "Remove"
                 })]
               })]
             })
           })]
-        }), hasVideo && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
+        }), videoURL && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
           title: "Video Controls",
           initialOpen: false,
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ToggleControl, {
-            label: "Play Only When Visible",
-            checked: videoPlayOnlyVisible || false,
-            onChange: value => setAttributes({
-              videoPlayOnlyVisible: value
-            }),
-            help: videoPlayOnlyVisible ? "Video will only play when it's visible on screen" : "Video will play immediately on page load (default)"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.RangeControl, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.RangeControl, {
             label: "Start Time (seconds)",
             value: videoStartTime || 0,
             onChange: value => setAttributes({
               videoStartTime: value || 0
             }),
             min: 0,
-            max: 600,
+            max: 3600,
             step: 1
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.RangeControl, {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.RangeControl, {
             label: "End Time (seconds)",
             value: videoEndTime || 0,
             onChange: value => setAttributes({
               videoEndTime: value || 0
             }),
             min: 0,
-            max: 600,
-            step: 1,
-            help: "0 = play until end"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.RangeControl, {
+            max: 3600,
+            step: 1
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.RangeControl, {
             label: "Volume (0-100)",
             value: videoVolume || 0,
             onChange: value => setAttributes({
@@ -413,120 +219,61 @@ function getEmbedURL(provider, videoId) {
             min: 0,
             max: 100,
             step: 1
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ToggleControl, {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ToggleControl, {
             label: "Loop Video",
-            checked: videoLoop !== false,
+            checked: videoLoop || false,
             onChange: value => setAttributes({
               videoLoop: value
             })
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ToggleControl, {
-            label: "Always Play",
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ToggleControl, {
+            label: "Always Play Video (Autoplay)",
             checked: videoAlwaysPlay || false,
             onChange: value => setAttributes({
               videoAlwaysPlay: value
             }),
-            help: "Keep video playing even when not in viewport"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ToggleControl, {
-            label: "Show on Mobile",
-            checked: videoMobile || false,
-            onChange: value => setAttributes({
-              videoMobile: value
-            })
+            help: "Video will attempt to autoplay on page load. May be blocked by browser policies if not muted."
           })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
-          title: "Parallax Effects",
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
+          title: "Layout & Spacing",
           initialOpen: false,
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
-            label: "Parallax Type",
-            value: parallax || "",
-            options: [{
-              label: "None",
-              value: ""
-            }, {
-              label: "Scroll",
-              value: "scroll"
-            }, {
-              label: "Scale",
-              value: "scale"
-            }, {
-              label: "Opacity",
-              value: "opacity"
-            }, {
-              label: "Scroll + Opacity",
-              value: "scroll-opacity"
-            }, {
-              label: "Scale + Opacity",
-              value: "scale-opacity"
-            }],
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.RangeControl, {
+            label: "Minimum Height (px)",
+            value: minHeight || 400,
             onChange: value => setAttributes({
-              parallax: value || ""
-            })
-          }), parallax && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.Fragment, {
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.RangeControl, {
-              label: "Parallax Speed",
-              value: parallaxSpeed || 0.5,
-              onChange: value => setAttributes({
-                parallaxSpeed: value || 0.5
-              }),
-              min: 0.1,
-              max: 2,
-              step: 0.1
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ToggleControl, {
-              label: "Enable on Mobile",
-              checked: parallaxMobile || false,
-              onChange: value => setAttributes({
-                parallaxMobile: value
-              })
-            })]
-          })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
-          title: "Mouse Parallax",
-          initialOpen: false,
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ToggleControl, {
-            label: "Enable Mouse Parallax",
-            checked: mouseParallax || false,
+              minHeight: value || 400
+            }),
+            min: 100,
+            max: 2000,
+            step: 50
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+            label: "Padding",
+            value: padding,
             onChange: value => setAttributes({
-              mouseParallax: value
-            })
-          }), mouseParallax && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.Fragment, {
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.RangeControl, {
-              label: "Parallax Size",
-              value: mouseParallaxSize || 30,
-              onChange: value => setAttributes({
-                mouseParallaxSize: value || 30
-              }),
-              min: 1,
-              max: 100,
-              step: 1
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.RangeControl, {
-              label: "Parallax Speed",
-              value: mouseParallaxSpeed || 10000,
-              onChange: value => setAttributes({
-                mouseParallaxSpeed: value || 10000
-              }),
-              min: 1000,
-              max: 20000,
-              step: 1000
-            })]
+              padding: value
+            }),
+            placeholder: "e.g., 20px 0",
+            help: "CSS padding value (e.g., 20px, 1em 2em)"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+            label: "Margin",
+            value: margin,
+            onChange: value => setAttributes({
+              margin: value
+            }),
+            placeholder: "e.g., 20px 0",
+            help: "CSS margin value (e.g., 20px, 1em 2em)"
           })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
           title: "Overlay",
           initialOpen: false,
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("p", {
-              children: "Overlay Color"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("input", {
-              type: "color",
-              value: overlayColor || "#000000",
-              onChange: e => setAttributes({
-                overlayColor: e.target.value
-              }),
-              style: {
-                width: "100%",
-                height: "40px"
-              }
-            })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.RangeControl, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+            label: "Overlay Color",
+            value: overlayColor,
+            onChange: value => setAttributes({
+              overlayColor: value
+            }),
+            placeholder: "#000000",
+            help: "Hex color code (e.g., #000000)"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.RangeControl, {
             label: "Overlay Opacity (%)",
             value: overlayOpacity || 0,
             onChange: value => setAttributes({
@@ -536,75 +283,23 @@ function getEmbedURL(provider, videoId) {
             max: 100,
             step: 1
           })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
-          title: "Spacing",
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
+          title: "Background",
           initialOpen: false,
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
-            label: "Padding",
-            value: padding || "",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+            label: "Background Color",
+            value: backgroundColor,
             onChange: value => setAttributes({
-              padding: value
+              backgroundColor: value
             }),
-            placeholder: "e.g., 20px or 20px 30px",
-            help: "CSS padding values (e.g., 20px, 20px 30px, 10px 20px 30px 40px)"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
-            label: "Margin",
-            value: margin || "",
-            onChange: value => setAttributes({
-              margin: value
-            }),
-            placeholder: "e.g., 20px or 20px auto",
-            help: "CSS margin values (e.g., 20px, 20px auto, 10px 20px 30px 40px)"
-          })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
-          title: "Layout",
-          initialOpen: false,
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ToggleControl, {
-            label: "Full Height",
-            checked: fullHeight || false,
-            onChange: value => setAttributes({
-              fullHeight: value
-            }),
-            help: "Make section full viewport height"
-          }), fullHeight && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
-            label: "Vertical Alignment",
-            value: fullHeightAlign || "center",
-            options: [{
-              label: "Top",
-              value: "flex-start"
-            }, {
-              label: "Center",
-              value: "center"
-            }, {
-              label: "Bottom",
-              value: "flex-end"
-            }],
-            onChange: value => setAttributes({
-              fullHeightAlign: value
-            })
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-            style: {
-              marginTop: "15px"
-            },
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("p", {
-              children: "Background Color"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("input", {
-              type: "color",
-              value: backgroundColor || "#ffffff",
-              onChange: e => setAttributes({
-                backgroundColor: e.target.value
-              }),
-              style: {
-                width: "100%",
-                height: "40px"
-              }
-            })]
-          })]
+            placeholder: "#ffffff",
+            help: "Hex color code (e.g., #ffffff)"
+          })
         })]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
         ...blockProps,
-        children: hasVideo && embedURL ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.Fragment, {
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+        children: hasVideo && embedURL ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.Fragment, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
             style: {
               position: "absolute",
               top: 0,
@@ -617,14 +312,14 @@ function getEmbedURL(provider, videoId) {
               overflow: "hidden",
               backgroundColor: "#000"
             },
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("iframe", {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("iframe", {
               src: embedURL,
               style: {
                 position: "absolute",
                 top: "50%",
                 left: "50%",
-                width: "177.77777778vh" /* 16:9 aspect ratio for portrait containers */,
-                height: "56.25vw" /* 16:9 aspect ratio for landscape containers */,
+                width: "177.77777778vh",
+                height: "56.25vw",
                 minWidth: "100%",
                 minHeight: "100%",
                 border: "none",
@@ -636,77 +331,41 @@ function getEmbedURL(provider, videoId) {
               allow: "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture",
               allowFullScreen: true
             })
-          }), overlayOpacity > 0 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
-            style: {
-              position: "absolute",
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              backgroundColor: overlayColor || "#000000",
-              opacity: (overlayOpacity || 0) / 100,
-              zIndex: 2,
-              pointerEvents: "none"
-            }
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
             style: {
               position: "relative",
               zIndex: 3,
-              minHeight: fullHeight ? "400px" : "auto"
+              minHeight: "auto"
             },
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.InnerBlocks, {})
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.InnerBlocks, {})
           })]
-        }) : videoType === "video" && (videoMp4 || videoWebm || videoOgv) ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.Fragment, {
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+        }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.Fragment, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
             style: {
-              position: "absolute",
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              backgroundColor: "#000",
-              opacity: 0.7,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              color: "#fff",
-              fontSize: "14px",
-              zIndex: 1
+              textAlign: "center",
+              padding: "40px 20px",
+              color: "#666"
             },
-            children: "Local Video Background"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
-            style: {
-              position: "relative",
-              zIndex: 2,
-              minHeight: fullHeight ? "400px" : "auto"
-            },
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.InnerBlocks, {})
-          })]
-        }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-          style: {
-            textAlign: "center",
-            padding: "40px 20px",
-            color: "#666"
-          },
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("p", {
-            style: {
-              margin: 0,
-              fontWeight: "bold"
-            },
-            children: "BS Video Background Block"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("p", {
-            style: {
-              margin: "10px 0 0",
-              fontSize: "14px"
-            },
-            children: "Configure video settings in the sidebar to add a video background."
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.InnerBlocks, {})]
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
+              style: {
+                margin: 0,
+                fontWeight: "bold"
+              },
+              children: "BS Video Background Block"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
+              style: {
+                margin: "10px 0 0",
+                fontSize: "14px"
+              },
+              children: "Enter YouTube URL in the sidebar to add a video background."
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.InnerBlocks, {})]
         })
       })]
     });
   },
   save() {
-    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.InnerBlocks.Content, {});
+    return null;
   }
 });
 
@@ -761,16 +420,6 @@ module.exports = window["wp"]["components"];
 /***/ ((module) => {
 
 module.exports = window["wp"]["data"];
-
-/***/ }),
-
-/***/ "@wordpress/element":
-/*!*********************************!*\
-  !*** external ["wp","element"] ***!
-  \*********************************/
-/***/ ((module) => {
-
-module.exports = window["wp"]["element"];
 
 /***/ }),
 

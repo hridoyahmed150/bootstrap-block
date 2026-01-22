@@ -1,0 +1,40 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "bootstrap-blocks/emg-video-background",
+  "version": "1.0.0",
+  "title": "EMG Video Background",
+  "category": "media",
+  "icon": "video-alt3",
+  "description": "Video background block with YouTube and local video support, parallax effects, and overlay options.",
+  "keywords": [
+    "video",
+    "background",
+    "youtube",
+    "vimeo",
+    "parallax"
+  ],
+  "textdomain": "bootstrap-blocks",
+  "supports": {
+    "html": false,
+    "className": true,
+    "align": [
+      "wide",
+      "full"
+    ]
+  },
+  "attributes": {
+    "videoURL": {
+      "type": "string",
+      "default": ""
+    },
+    "minHeight": {
+      "type": "number",
+      "default": 400
+    }
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./style.css",
+  "style": "file:./style.css",
+  "render": "file:./template.php"
+}
