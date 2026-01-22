@@ -71,14 +71,12 @@
 }
 
 /* Video iframe - full cover */
+/* Note: Width/height set dynamically by JavaScript for proper aspect ratio */
 .bs-video-background .jarallax-video {
     position: absolute !important;
     top: 50% !important;
     right: 50% !important;
-    width: 177.77777778vh !important;
-    height: 56.25vw !important;
-    min-width: 100% !important;
-    min-height: 100% !important;
+    /* width and height set by JavaScript resizeVideoCover() */
     transform: translate(50%, -50%) !important;
     transform-origin: center center !important;
     pointer-events: none !important;

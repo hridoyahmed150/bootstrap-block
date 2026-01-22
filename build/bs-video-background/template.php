@@ -235,6 +235,80 @@ $jarallax_options_json = json_encode($jarallax_options);
                         iframe.setAttribute('tabindex', '-1');
                         iframe.setAttribute('aria-hidden', 'true');
 
+                        // Fix video aspect ratio to always cover container (background-size: cover logic)
+                        // Scoped ONLY to this block - isolated function
+                        var resizeVideoCover = function () {
+                            // Use the iframe we already found
+                            var videoIframe = iframe;
+                            if (!videoIframe) return;
+
+                            // Get actual container dimensions (block itself, not wrap)
+                            var containerRect = block.getBoundingClientRect();
+                            var containerWidth = containerRect.width;
+                            var containerHeight = containerRect.height;
+
+                            // Wait if container not ready
+                            if (containerWidth === 0 || containerHeight === 0) {
+                                setTimeout(resizeVideoCover, 100);
+                                return;
+                            }
+
+                            var videoAspectRatio = 16 / 9; // YouTube default
+                            var containerAspectRatio = containerWidth / containerHeight;
+
+                            var videoWidth, videoHeight;
+
+                            // background-size: cover logic
+                            if (containerAspectRatio > videoAspectRatio) {
+                                // Container is wider - scale based on height to cover
+                                videoHeight = containerHeight;
+                                videoWidth = videoHeight * videoAspectRatio;
+                            } else {
+                                // Container is taller - scale based on width to cover
+                                videoWidth = containerWidth;
+                                videoHeight = videoWidth / videoAspectRatio;
+                            }
+
+                            // Ensure video is at least container size (cover behavior)
+                            if (videoWidth < containerWidth) {
+                                videoWidth = containerWidth;
+                                videoHeight = videoWidth / videoAspectRatio;
+                            }
+                            if (videoHeight < containerHeight) {
+                                videoHeight = containerHeight;
+                                videoWidth = videoHeight * videoAspectRatio;
+                            }
+
+                            // Apply inline styles with !important to override CSS vh/vw units
+                            videoIframe.style.setProperty('width', videoWidth + 'px', 'important');
+                            videoIframe.style.setProperty('height', videoHeight + 'px', 'important');
+                            videoIframe.style.setProperty('transform', 'translate(-50%, -50%)', 'important');
+                            videoIframe.style.setProperty('transform-origin', 'center center', 'important');
+                            videoIframe.style.setProperty('position', 'absolute', 'important');
+                            videoIframe.style.setProperty('top', '50%', 'important');
+                            videoIframe.style.setProperty('left', '50%', 'important');
+                        };
+
+                        // Run multiple times to catch content load and container expansion
+                        var runResize = function () {
+                            resizeVideoCover();
+                        };
+                        requestAnimationFrame(runResize);
+                        setTimeout(runResize, 100);
+                        setTimeout(runResize, 300);
+                        setTimeout(runResize, 600);
+                        setTimeout(runResize, 1000);
+
+                        // Recalculate on window resize (debounced)
+                        var resizeTimeout;
+                        var handleResize = function () {
+                            clearTimeout(resizeTimeout);
+                            resizeTimeout = setTimeout(function () {
+                                requestAnimationFrame(resizeVideoCover);
+                            }, 100);
+                        };
+                        window.addEventListener('resize', handleResize);
+
                         // Hide poster when video starts playing
                         var poster = inner.querySelector('.jarallax-img');
                         if (poster) {
