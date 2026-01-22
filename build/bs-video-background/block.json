@@ -19,7 +19,8 @@
     "align": [
       "wide",
       "full"
-    ]
+    ],
+    "anchor": true
   },
   "attributes": {
     "videoURL": {

@@ -108,6 +108,20 @@ __webpack_require__.r(__webpack_exports__);
       className: "bs-video-background-editor",
       style: editorStyles
     });
+
+    /* Preview layer: always present, content varies. Does NOT wrap InnerBlocks. */
+    const previewLayerStyles = {
+      position: "absolute",
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      width: "100%",
+      height: "100%",
+      zIndex: 1,
+      overflow: "hidden",
+      backgroundColor: hasVideo ? "#000" : "transparent"
+    };
     return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.Fragment, {
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.InspectorControls, {
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
@@ -296,55 +310,44 @@ __webpack_require__.r(__webpack_exports__);
             help: "Hex color code (e.g., #ffffff)"
           })
         })]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
         ...blockProps,
-        children: hasVideo && embedURL ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.Fragment, {
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+          className: "bs-video-background-editor-preview",
+          style: previewLayerStyles,
+          children: hasVideo && embedURL ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("iframe", {
+            src: embedURL,
             style: {
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              width: "177.77777778vh",
+              height: "56.25vw",
+              minWidth: "100%",
+              minHeight: "100%",
+              border: "none",
+              pointerEvents: "none",
+              transform: "translate(-50%, -50%) scale(1.1)",
+              transformOrigin: "center center"
+            },
+            title: "Video Background Preview",
+            allow: "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture",
+            allowFullScreen: true
+          }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+            className: "bs-video-background-editor-placeholder",
+            style: {
+              textAlign: "center",
+              padding: "40px 20px",
+              color: "#666",
               position: "absolute",
               top: 0,
               left: 0,
               right: 0,
               bottom: 0,
-              width: "100%",
-              height: "100%",
-              zIndex: 1,
-              overflow: "hidden",
-              backgroundColor: "#000"
-            },
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("iframe", {
-              src: embedURL,
-              style: {
-                position: "absolute",
-                top: "50%",
-                left: "50%",
-                width: "177.77777778vh",
-                height: "56.25vw",
-                minWidth: "100%",
-                minHeight: "100%",
-                border: "none",
-                pointerEvents: "none",
-                transform: "translate(-50%, -50%) scale(1.1)",
-                transformOrigin: "center center"
-              },
-              title: "Video Background Preview",
-              allow: "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture",
-              allowFullScreen: true
-            })
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
-            style: {
-              position: "relative",
-              zIndex: 3,
-              minHeight: "auto"
-            },
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.InnerBlocks, {})
-          })]
-        }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.Fragment, {
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
-            style: {
-              textAlign: "center",
-              padding: "40px 20px",
-              color: "#666"
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center"
             },
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
               style: {
@@ -359,13 +362,24 @@ __webpack_require__.r(__webpack_exports__);
               },
               children: "Enter YouTube URL in the sidebar to add a video background."
             })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.InnerBlocks, {})]
-        })
+          })
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+          className: "bs-video-background-inner-content",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.InnerBlocks, {
+            template: [],
+            templateLock: false
+          })
+        })]
       })]
     });
   },
   save() {
-    return null;
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+      ..._wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps.save({
+        className: "bs-video-background"
+      }),
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.InnerBlocks.Content, {})
+    });
   }
 });
 

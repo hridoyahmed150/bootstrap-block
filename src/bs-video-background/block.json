@@ -12,7 +12,8 @@
     "supports": {
         "html": false,
         "className": true,
-        "align": ["wide", "full"]
+        "align": ["wide", "full"],
+        "anchor": true
     },
     "attributes": {
         "videoURL": {

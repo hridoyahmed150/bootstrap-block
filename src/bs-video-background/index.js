@@ -101,6 +101,20 @@ registerBlockType("bootstrap-blocks/bs-video-background", {
             style: editorStyles,
         });
 
+        /* Preview layer: always present, content varies. Does NOT wrap InnerBlocks. */
+        const previewLayerStyles = {
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            width: "100%",
+            height: "100%",
+            zIndex: 1,
+            overflow: "hidden",
+            backgroundColor: hasVideo ? "#000" : "transparent",
+        };
+
         return (
             <>
                 <InspectorControls>
@@ -319,80 +333,83 @@ registerBlockType("bootstrap-blocks/bs-video-background", {
                 </InspectorControls>
 
                 <div {...blockProps}>
-                    {hasVideo && embedURL ? (
-                        <>
-                            {/* Video Preview - Cover entire container like background */}
-                            <div
+                    {/* Preview layer: always present, same DOM. Content varies (iframe vs placeholder). */}
+                    <div
+                        className="bs-video-background-editor-preview"
+                        style={previewLayerStyles}
+                    >
+                        {hasVideo && embedURL ? (
+                            <iframe
+                                src={embedURL}
                                 style={{
+                                    position: "absolute",
+                                    top: "50%",
+                                    left: "50%",
+                                    width: "177.77777778vh",
+                                    height: "56.25vw",
+                                    minWidth: "100%",
+                                    minHeight: "100%",
+                                    border: "none",
+                                    pointerEvents: "none",
+                                    transform:
+                                        "translate(-50%, -50%) scale(1.1)",
+                                    transformOrigin: "center center",
+                                }}
+                                title="Video Background Preview"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowFullScreen
+                            />
+                        ) : (
+                            <div
+                                className="bs-video-background-editor-placeholder"
+                                style={{
+                                    textAlign: "center",
+                                    padding: "40px 20px",
+                                    color: "#666",
                                     position: "absolute",
                                     top: 0,
                                     left: 0,
                                     right: 0,
                                     bottom: 0,
-                                    width: "100%",
-                                    height: "100%",
-                                    zIndex: 1,
-                                    overflow: "hidden",
-                                    backgroundColor: "#000",
-                                }}
-                            >
-                                <iframe
-                                    src={embedURL}
-                                    style={{
-                                        position: "absolute",
-                                        top: "50%",
-                                        left: "50%",
-                                        width: "177.77777778vh",
-                                        height: "56.25vw",
-                                        minWidth: "100%",
-                                        minHeight: "100%",
-                                        border: "none",
-                                        pointerEvents: "none",
-                                        transform: "translate(-50%, -50%) scale(1.1)",
-                                        transformOrigin: "center center",
-                                    }}
-                                    title="Video Background Preview"
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                    allowFullScreen
-                                />
-                            </div>
-                            {/* Content */}
-                            <div
-                                style={{
-                                    position: "relative",
-                                    zIndex: 3,
-                                    minHeight: "auto",
-                                }}
-                            >
-                                <InnerBlocks />
-                            </div>
-                        </>
-                    ) : (
-                        <>
-                            <div
-                                style={{
-                                    textAlign: "center",
-                                    padding: "40px 20px",
-                                    color: "#666",
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    alignItems: "center",
+                                    justifyContent: "center",
                                 }}
                             >
                                 <p style={{ margin: 0, fontWeight: "bold" }}>
                                     BS Video Background Block
                                 </p>
-                                <p style={{ margin: "10px 0 0", fontSize: "14px" }}>
-                                    Enter YouTube URL in the sidebar to add a video
-                                    background.
+                                <p
+                                    style={{
+                                        margin: "10px 0 0",
+                                        fontSize: "14px",
+                                    }}
+                                >
+                                    Enter YouTube URL in the sidebar to add a
+                                    video background.
                                 </p>
                             </div>
-                            <InnerBlocks />
-                        </>
-                    )}
+                        )}
+                    </div>
+                    {/* Permanent wrapper: InnerBlocks always here, never move. */}
+                    <div className="bs-video-background-inner-content">
+                        <InnerBlocks template={[]} templateLock={false} />
+                    </div>
                 </div>
             </>
         );
     },
 
     save() {
-        return null;
+        return (
+            <div
+                {...useBlockProps.save({
+                    className: "bs-video-background",
+                })}
+            >
+                <InnerBlocks.Content />
+            </div>
+        );
     },
 });

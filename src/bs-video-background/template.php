@@ -118,7 +118,7 @@ $block_id = isset($block->attributes['anchor']) && !empty($block->attributes['an
     ? $block->attributes['anchor']
     : 'bs-video-bg-' . wp_unique_id();
 
-// Build Jarallax options as JSON
+// Build Jarallax options as JSON. Parallax OFF by default.
 $jarallax_options = array(
     'type' => 'scroll',
     'speed' => 1,
@@ -142,11 +142,13 @@ $jarallax_options_json = json_encode($jarallax_options);
 ?>
 <div <?php echo get_block_wrapper_attributes(); ?> class="bs-video-background" <?php if ($inline_styles): ?>style="<?php echo esc_attr($inline_styles); ?>" <?php endif; ?> id="<?php echo esc_attr($block_id); ?>">
     <div class="bs-video-background-content">
-        <?php
-        if (!empty($content)) {
-            echo $content;
-        }
-        ?>
+        <div class="bs-video-background-inner-content">
+            <?php
+            if (!empty($content)) {
+                echo $content;
+            }
+            ?>
+        </div>
     </div>
     <div class="bs-video-background-wrap">
         <?php if ($overlay_style): ?>
@@ -154,7 +156,7 @@ $jarallax_options_json = json_encode($jarallax_options);
         <?php endif; ?>
         <?php if ($has_video): ?>
             <div class="bs-video-background-inner" data-jarallax-video="<?php echo esc_attr($youtube_embed_url); ?>"
-                data-jarallax-disable-parallax="true">
+                data-disable-parallax="true">
                 <?php if (!empty($poster_image_url)): ?>
                     <?php if ($poster_attachment_id): ?>
                         <?php echo wp_get_attachment_image(
@@ -192,10 +194,34 @@ $jarallax_options_json = json_encode($jarallax_options);
                     return;
                 }
 
-                // Initialize Jarallax with options
+                // Initialize Jarallax with options (parallax OFF by default)
                 var options = <?php echo $jarallax_options_json; ?>;
+                options.disableParallax = true;
 
                 window.jarallax(inner, options);
+
+                // Force parallax OFF: Jarallax video mode often ignores disableParallax
+                var inst = inner.jarallax || inner.jarallaxInstance;
+                if (inst) {
+                    inst.options.disableParallax = true;
+                    inst.onScroll = function () { };
+                }
+
+                function forceNoParallax() {
+                    var container = block.querySelector('.jarallax-container');
+                    if (container) {
+                        container.style.setProperty('position', 'absolute', 'important');
+                        container.style.setProperty('transform', 'none', 'important');
+                        container.style.setProperty('will-change', 'auto', 'important');
+                        container.style.setProperty('top', '0', 'important');
+                        container.style.setProperty('left', '0', 'important');
+                        container.style.setProperty('right', '0', 'important');
+                        container.style.setProperty('bottom', '0', 'important');
+                    }
+                }
+                forceNoParallax();
+                var noParallaxInterval = setInterval(forceNoParallax, 150);
+                setTimeout(function () { clearInterval(noParallaxInterval); }, 3000);
 
                 // Watch for video iframe insertion
                 var checkInterval = setInterval(function () {
