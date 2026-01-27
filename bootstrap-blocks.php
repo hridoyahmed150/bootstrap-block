@@ -4,7 +4,6 @@ Plugin Name: Bootstrap Blocks
 Description: Provides custom Gutenberg blocks styled with Bootstrap.
 Version: 1.0.2
 Author: Himel Kazi
-Author URI: https://www.linkedin.com/in/itshimelkazi/
 */
 
 // Exit if accessed directly.
@@ -494,6 +493,29 @@ function bootstrap_blocks_init()
         plugin_dir_url(__FILE__) . 'build/style-bs-feature-cards.css',
         array(),
         file_exists(plugin_dir_path(__FILE__) . 'build/style-bs-feature-cards.css') ? filemtime(plugin_dir_path(__FILE__) . 'build/style-bs-feature-cards.css') : '1.0.0'
+    );
+
+    // Register Image Slider block
+    $image_slider_dir = plugin_dir_path(__FILE__) . 'build/image-slider/';
+    $image_slider_url = plugin_dir_url(__FILE__) . 'build/image-slider/';
+
+    register_block_type($image_slider_dir, [
+        'editor_script' => 'bootstrap-blocks-image-slider-editor',
+        'style' => 'bootstrap-blocks-image-slider-style',
+    ]);
+
+    wp_register_script(
+        'bootstrap-blocks-image-slider-editor',
+        $image_slider_url . 'index.js',
+        array('wp-blocks', 'wp-element', 'wp-block-editor', 'wp-components', 'wp-i18n', 'wp-data'),
+        file_exists($image_slider_dir . 'index.js') ? filemtime($image_slider_dir . 'index.js') : '1.0.0'
+    );
+
+    wp_register_style(
+        'bootstrap-blocks-image-slider-style',
+        plugin_dir_url(__FILE__) . 'build/style-image-slider.css',
+        array(),
+        file_exists(plugin_dir_path(__FILE__) . 'build/style-image-slider.css') ? filemtime(plugin_dir_path(__FILE__) . 'build/style-image-slider.css') : '1.0.0'
     );
 }
 add_action('init', 'bootstrap_blocks_init');

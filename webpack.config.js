@@ -14,6 +14,7 @@ module.exports = {
         "bs-video": "./src/bs-video/index.js",
         "bs-video-background": "./src/bs-video-background/index.js",
         "bs-feature-cards": "./src/bs-feature-cards/index.js",
+        "image-slider": "./src/image-slider/index.js",
     },
     output: {
         ...defaultConfig.output,

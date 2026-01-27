@@ -1,0 +1,123 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "bootstrap-blocks/image-slider",
+    "version": "1.0.0",
+    "title": "Image Slider",
+    "category": "media",
+    "icon": "images-alt2",
+    "description": "A minimal image slider block. Upload images; Slick slider on frontend.",
+    "keywords": ["slider", "images", "slick", "carousel"],
+    "textdomain": "bootstrap-blocks",
+    "supports": {
+        "html": false,
+        "className": true,
+        "align": ["wide", "full"]
+    },
+    "attributes": {
+        "images": {
+            "type": "array",
+            "default": []
+        },
+        "slidesToShow": {
+            "type": "number",
+            "default": 3
+        },
+        "slidesToShowTablet": {
+            "type": "number",
+            "default": 2
+        },
+        "slidesToShowMobile": {
+            "type": "number",
+            "default": 1
+        },
+        "gap": {
+            "type": "number",
+            "default": 16
+        },
+        "borderRadius": {
+            "type": "number",
+            "default": 0
+        },
+        "arrows": {
+            "type": "boolean",
+            "default": true
+        },
+        "dots": {
+            "type": "boolean",
+            "default": true
+        },
+        "autoplay": {
+            "type": "boolean",
+            "default": false
+        },
+        "autoplaySpeed": {
+            "type": "number",
+            "default": 3000
+        },
+        "equalHeight": {
+            "type": "boolean",
+            "default": false
+        },
+        "imageHeight": {
+            "type": "number",
+            "default": 300
+        },
+        "arrowPosition": {
+            "type": "string",
+            "default": "outside"
+        },
+        "arrowStyle": {
+            "type": "string",
+            "default": "chevron"
+        },
+        "arrowColor": {
+            "type": "string",
+            "default": "#333333"
+        },
+        "arrowBgColor": {
+            "type": "string",
+            "default": "#ffffff"
+        },
+        "arrowSize": {
+            "type": "number",
+            "default": 40
+        },
+        "arrowPadding": {
+            "type": "number",
+            "default": 10
+        },
+        "arrowOffset": {
+            "type": "number",
+            "default": 16
+        },
+        "arrowPrevImage": {
+            "type": "object",
+            "default": { "id": 0, "url": "" }
+        },
+        "arrowNextImage": {
+            "type": "object",
+            "default": { "id": 0, "url": "" }
+        },
+        "arrowSameImage": {
+            "type": "boolean",
+            "default": false
+        },
+        "dotColor": {
+            "type": "string",
+            "default": "#D0D7E0"
+        },
+        "dotActiveColor": {
+            "type": "string",
+            "default": "#007cba"
+        },
+        "dotSize": {
+            "type": "number",
+            "default": 12
+        }
+    },
+    "editorScript": "file:./index.js",
+    "editorStyle": "file:../style-image-slider.css",
+    "style": "file:../style-image-slider.css",
+    "render": "file:./template.php"
+}
