@@ -67,10 +67,6 @@
             "type": "string",
             "default": "outside"
         },
-        "arrowStyle": {
-            "type": "string",
-            "default": "chevron"
-        },
         "arrowColor": {
             "type": "string",
             "default": "#333333"
@@ -114,6 +110,22 @@
         "dotSize": {
             "type": "number",
             "default": 12
+        },
+        "layoutMode": {
+            "type": "string",
+            "default": "normal"
+        },
+        "centerPaddingDesktop": {
+            "type": "string",
+            "default": "25%"
+        },
+        "centerPaddingTablet": {
+            "type": "string",
+            "default": "18%"
+        },
+        "centerPaddingMobile": {
+            "type": "string",
+            "default": "10%"
         }
     },
     "editorScript": "file:./index.js",

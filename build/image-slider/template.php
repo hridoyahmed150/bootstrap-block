@@ -54,21 +54,47 @@ if ($arrow_same_image && $arrow_prev_url) {
 $dot_color = isset($attributes['dotColor']) ? $attributes['dotColor'] : '#D0D7E0';
 $dot_active_color = isset($attributes['dotActiveColor']) ? $attributes['dotActiveColor'] : '#007cba';
 $dot_size = isset($attributes['dotSize']) ? (int) $attributes['dotSize'] : 12;
+$layout_mode = isset($attributes['layoutMode']) ? $attributes['layoutMode'] : 'normal';
+$center_padding_d = isset($attributes['centerPaddingDesktop']) ? $attributes['centerPaddingDesktop'] : '25%';
+$center_padding_t = isset($attributes['centerPaddingTablet']) ? $attributes['centerPaddingTablet'] : '18%';
+$center_padding_m = isset($attributes['centerPaddingMobile']) ? $attributes['centerPaddingMobile'] : '10%';
 
-$slick_config = [
-    'slidesToShow'   => $slides_d,
-    'slidesToScroll' => 1,
-    'infinite'       => true,
-    'fade'           => false,
-    'dots'           => $dots,
-    'arrows'         => $arrows,
-    'autoplay'       => $autoplay,
-    'autoplaySpeed'  => $autoplay_s,
-    'responsive'     => [
-        [ 'breakpoint' => 1024, 'settings' => [ 'slidesToShow' => $slides_t, 'slidesToScroll' => 1 ] ],
-        [ 'breakpoint' => 600,  'settings' => [ 'slidesToShow' => $slides_m, 'slidesToScroll' => 1 ] ],
-    ],
-];
+// Build slick config based on layout mode
+if ($layout_mode === 'center-peek') {
+    // Center-peek mode: centerMode with configurable padding
+    $slick_config = [
+        'slidesToShow'   => 1,
+        'slidesToScroll' => 1,
+        'infinite'       => true,
+        'fade'           => false,
+        'centerMode'     => true,
+        'centerPadding'  => $center_padding_d,
+        'dots'           => $dots,
+        'arrows'         => $arrows,
+        'autoplay'       => $autoplay,
+        'autoplaySpeed'  => $autoplay_s,
+        'responsive'     => [
+            [ 'breakpoint' => 1024, 'settings' => [ 'centerPadding' => $center_padding_t ] ],
+            [ 'breakpoint' => 600,  'settings' => [ 'centerPadding' => $center_padding_m ] ],
+        ],
+    ];
+} else {
+    // Normal mode: standard multi-slide configuration
+    $slick_config = [
+        'slidesToShow'   => $slides_d,
+        'slidesToScroll' => 1,
+        'infinite'       => true,
+        'fade'           => false,
+        'dots'           => $dots,
+        'arrows'         => $arrows,
+        'autoplay'       => $autoplay,
+        'autoplaySpeed'  => $autoplay_s,
+        'responsive'     => [
+            [ 'breakpoint' => 1024, 'settings' => [ 'slidesToShow' => $slides_t, 'slidesToScroll' => 1 ] ],
+            [ 'breakpoint' => 600,  'settings' => [ 'slidesToShow' => $slides_m, 'slidesToScroll' => 1 ] ],
+        ],
+    ];
+}
 
 $wrapper_class = 'bs-image-slider';
 if ($equal_height) {

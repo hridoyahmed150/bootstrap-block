@@ -11,11 +11,6 @@
 }
 
 /* Frontend: Slick slider */
-.bs-image-slider .bs-image-slider-track {
-    display: flex;
-    flex-wrap: nowrap;
-}
-
 .bs-image-slider .bs-image-slider-slide {
     flex: 0 0 auto;
 }
@@ -129,15 +124,15 @@
 /* Equal height support */
 .bs-image-slider-equal-height .bs-image-slider-slide,
 .bs-image-slider-equal-height.slick-initialized .slick-slide {
-    height: var(--bs-is-height, 300px);
+    height: var(--bs-is-height, 300px) !important;
 }
 
 .bs-image-slider-equal-height .bs-image-slider-slide img,
 .bs-image-slider-equal-height.slick-initialized .slick-slide img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center !important;
 }
 
 /* Editor equal height */
@@ -152,81 +147,98 @@
     object-position: center;
 }
 
-/* Arrow styling */
+/* Arrow styling - base styles for all arrows */
 .bs-image-slider .slick-arrow {
-    width: var(--bs-arrow-size, 40px);
-    height: var(--bs-arrow-size, 40px);
-    padding: var(--bs-arrow-padding, 10px);
-    box-sizing: border-box;
-    z-index: 2;
-    background-color: var(--bs-arrow-bg, #ffffff);
-    border-radius: 50%;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    width: var(--bs-arrow-size, 40px) !important;
+    height: var(--bs-arrow-size, 40px) !important;
+    padding: var(--bs-arrow-padding, 10px) !important;
+    box-sizing: border-box !important;
+    z-index: 2 !important;
+    background-color: var(--bs-arrow-bg, #ffffff) !important;
+    border-radius: 50% !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
+    position: absolute !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
 }
 
+/* Default arrow icons - show when no custom image */
 .bs-image-slider .slick-arrow:before {
-    color: var(--bs-arrow-color, #333333);
-    font-size: max(14px, calc(var(--bs-arrow-size, 40px) - 2 * var(--bs-arrow-padding, 10px)));
-    line-height: 1;
-    display: block;
-    text-align: center;
+    color: var(--bs-arrow-color, #333333) !important;
+    font-size: max(14px, calc(var(--bs-arrow-size, 40px) - 2 * var(--bs-arrow-padding, 10px))) !important;
+    line-height: 1 !important;
+    display: block !important;
+    text-align: center !important;
+    opacity: 1 !important;
+    font-family: 'slick' !important;
 }
 
-/* Custom arrow images (upload) */
-.bs-image-slider.bs-arrow-prev-custom .slick-prev:before {
-    display: none !important;
+.bs-image-slider .slick-prev:before {
+    content: '\2190' !important;
 }
 
-.bs-image-slider.bs-arrow-prev-custom .slick-prev {
-    background-image: var(--bs-arrow-prev-url) !important;
-    background-repeat: no-repeat !important;
-    background-position: center !important;
-    background-size: contain !important;
-    background-color: transparent !important;
-    box-shadow: none !important;
+.bs-image-slider .slick-next:before {
+    content: '\2192' !important;
 }
 
+/* Custom arrow images - hide default icon, show custom image in ::after */
+.bs-image-slider.bs-arrow-prev-custom .slick-prev:before,
 .bs-image-slider.bs-arrow-next-custom .slick-next:before {
     display: none !important;
+    content: '' !important;
 }
 
-.bs-image-slider.bs-arrow-next-custom .slick-next {
-    background-image: var(--bs-arrow-next-url) !important;
-    background-repeat: no-repeat !important;
+.bs-image-slider.bs-arrow-prev-custom .slick-prev::after,
+.bs-image-slider.bs-arrow-next-custom .slick-next::after {
+    content: '' !important;
+    display: block !important;
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    width: calc(100% - var(--bs-arrow-padding, 10px) * 2) !important;
+    height: calc(100% - var(--bs-arrow-padding, 10px) * 2) !important;
     background-position: center !important;
+    background-repeat: no-repeat !important;
     background-size: contain !important;
-    background-color: transparent !important;
-    box-shadow: none !important;
+}
+
+.bs-image-slider.bs-arrow-prev-custom .slick-prev::after {
+    background-image: var(--bs-arrow-prev-url) !important;
+}
+
+.bs-image-slider.bs-arrow-next-custom .slick-next::after {
+    background-image: var(--bs-arrow-next-url) !important;
 }
 
 /* Same image for both: flip prev */
-.bs-image-slider.bs-arrow-same-image.bs-arrow-prev-custom .slick-prev {
-    transform: scaleX(-1);
+.bs-image-slider.bs-arrow-same-image.bs-arrow-prev-custom .slick-prev::after {
+    transform: translate(-50%, -50%) scaleX(-1) !important;
 }
 
 /* Outside: distance from slider edge */
 .bs-image-slider .slick-prev {
-    left: calc(-1 * (var(--bs-arrow-size, 40px) + var(--bs-arrow-offset, 16px)));
+    left: calc(-1 * (var(--bs-arrow-size, 40px) + var(--bs-arrow-offset, 16px))) !important;
 }
 
 .bs-image-slider .slick-next {
-    right: calc(-1 * (var(--bs-arrow-size, 40px) + var(--bs-arrow-offset, 16px)));
+    right: calc(-1 * (var(--bs-arrow-size, 40px) + var(--bs-arrow-offset, 16px))) !important;
 }
 
-/* Arrow position: Inside – no hover */
+/* Arrow position: Inside */
 .bs-image-slider-arrows-inside .slick-prev {
-    left: 10px;
+    left: 10px !important;
 }
 
 .bs-image-slider-arrows-inside .slick-next {
-    right: 10px;
+    right: 10px !important;
 }
 
 .bs-image-slider-arrows-inside .slick-arrow {
-    background-color: rgba(255, 255, 255, 0.9);
+    background-color: var(--bs-arrow-bg, #ffffff) !important;
 }
 
 /* Dot styling – space below slider when dots enabled */

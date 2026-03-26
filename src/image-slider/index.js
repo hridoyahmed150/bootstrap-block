@@ -31,7 +31,6 @@ registerBlockType("bootstrap-blocks/image-slider", {
             equalHeight = false,
             imageHeight = 300,
             arrowPosition = "outside",
-            arrowStyle = "chevron",
             arrowColor = "#333333",
             arrowBgColor = "#ffffff",
             arrowSize = 40,
@@ -43,6 +42,10 @@ registerBlockType("bootstrap-blocks/image-slider", {
             dotColor = "#D0D7E0",
             dotActiveColor = "#007cba",
             dotSize = 12,
+            layoutMode = "normal",
+            centerPaddingDesktop = "25%",
+            centerPaddingTablet = "18%",
+            centerPaddingMobile = "10%",
         } = attributes;
 
         const blockProps = useBlockProps({
@@ -112,31 +115,87 @@ registerBlockType("bootstrap-blocks/image-slider", {
                         title={__("Slider settings", "bootstrap-blocks")}
                         initialOpen={true}
                     >
-                        <RangeControl
-                            label={__("Slides (desktop)", "bootstrap-blocks")}
-                            value={slidesToShow}
-                            onChange={(v) => setAttributes({ slidesToShow: v })}
-                            min={1}
-                            max={8}
+                        <SelectControl
+                            label={__("Layout mode", "bootstrap-blocks")}
+                            value={layoutMode}
+                            options={[
+                                { label: __("Normal", "bootstrap-blocks"), value: "normal" },
+                                { label: __("Center peek", "bootstrap-blocks"), value: "center-peek" },
+                            ]}
+                            onChange={(v) => setAttributes({ layoutMode: v })}
+                            help={__("Center peek shows middle slide fully, with partial preview of adjacent slides", "bootstrap-blocks")}
                         />
-                        <RangeControl
-                            label={__("Slides (tablet)", "bootstrap-blocks")}
-                            value={slidesToShowTablet}
-                            onChange={(v) =>
-                                setAttributes({ slidesToShowTablet: v })
-                            }
-                            min={1}
-                            max={6}
-                        />
-                        <RangeControl
-                            label={__("Slides (mobile)", "bootstrap-blocks")}
-                            value={slidesToShowMobile}
-                            onChange={(v) =>
-                                setAttributes({ slidesToShowMobile: v })
-                            }
-                            min={1}
-                            max={4}
-                        />
+                        {layoutMode === "normal" ? (
+                            <>
+                                <RangeControl
+                                    label={__("Slides (desktop)", "bootstrap-blocks")}
+                                    value={slidesToShow}
+                                    onChange={(v) => setAttributes({ slidesToShow: v })}
+                                    min={1}
+                                    max={8}
+                                />
+                                <RangeControl
+                                    label={__("Slides (tablet)", "bootstrap-blocks")}
+                                    value={slidesToShowTablet}
+                                    onChange={(v) =>
+                                        setAttributes({ slidesToShowTablet: v })
+                                    }
+                                    min={1}
+                                    max={6}
+                                />
+                                <RangeControl
+                                    label={__("Slides (mobile)", "bootstrap-blocks")}
+                                    value={slidesToShowMobile}
+                                    onChange={(v) =>
+                                        setAttributes({ slidesToShowMobile: v })
+                                    }
+                                    min={1}
+                                    max={4}
+                                />
+                            </>
+                        ) : (
+                            <>
+                                <div style={{ marginBottom: "16px" }}>
+                                    <label style={{ display: "block", marginBottom: "8px", fontSize: "13px", fontWeight: 600 }}>
+                                        {__("Center padding (desktop)", "bootstrap-blocks")}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        value={centerPaddingDesktop}
+                                        onChange={(e) => setAttributes({ centerPaddingDesktop: e.target.value })}
+                                        style={{ width: "100%", padding: "6px" }}
+                                        placeholder="25%"
+                                    />
+                                    <p style={{ marginTop: "4px", fontSize: "11px", color: "#757575" }}>
+                                        {__("Padding on each side (e.g., '25%', '50px')", "bootstrap-blocks")}
+                                    </p>
+                                </div>
+                                <div style={{ marginBottom: "16px" }}>
+                                    <label style={{ display: "block", marginBottom: "8px", fontSize: "13px", fontWeight: 600 }}>
+                                        {__("Center padding (tablet)", "bootstrap-blocks")}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        value={centerPaddingTablet}
+                                        onChange={(e) => setAttributes({ centerPaddingTablet: e.target.value })}
+                                        style={{ width: "100%", padding: "6px" }}
+                                        placeholder="18%"
+                                    />
+                                </div>
+                                <div style={{ marginBottom: "16px" }}>
+                                    <label style={{ display: "block", marginBottom: "8px", fontSize: "13px", fontWeight: 600 }}>
+                                        {__("Center padding (mobile)", "bootstrap-blocks")}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        value={centerPaddingMobile}
+                                        onChange={(e) => setAttributes({ centerPaddingMobile: e.target.value })}
+                                        style={{ width: "100%", padding: "6px" }}
+                                        placeholder="10%"
+                                    />
+                                </div>
+                            </>
+                        )}
                         <RangeControl
                             label={__("Gap (px)", "bootstrap-blocks")}
                             value={gap}
